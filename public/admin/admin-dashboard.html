@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #1e1e1e;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      width: 240px;
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(12px);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 600;
+      font-size: 22px;
+    }
+
+    .sidebar button {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 12px 16px;
+      margin: 10px 0;
+      color: #f1f1f1;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.3s, transform 0.2s;
+      font-size: 15px;
+    }
+
+    .sidebar button:hover {
+      background: rgba(255, 215, 0, 0.15);
+      transform: translateX(3px);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      overflow-x: auto;
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    #section-title {
+      margin-top: 0;
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      background: #2a2a2a;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border: 1px solid #3d3d3d;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    th {
+      background-color: #333;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: #383838;
+    }
+
+    .message {
+      font-size: 16px;
+      padding: 20px;
+      background-color: #222;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+        z-index: 1000;
+        background: rgba(30, 30, 30, 0.95);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .main-content {
+        padding: 20px;
+      }
+
+      table, th, td {
+        font-size: 14px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Admin Dashboard</h2>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+  </div>
+
+  <div class="container">
+    <div class="sidebar" id="sidebar">
+      <h2>Admin Panel</h2>
+      <button onclick="showUsers()">👤 Manage Users</button>
+      <button onclick="showSubscribers()">📧 Subscribers</button>
+      <button onclick="window.location.href='/admin/post-flipbook.html'">📘 Post Flipbook</button>
+    </div>
+
+    <div class="main-content">
+      <h2 id="section-title">Welcome, Admin</h2>
+      <div id="data-table" class="message">📌 Select an option from the sidebar to begin.</div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+
+    async function showUsers() {
+      document.getElementById('section-title').innerText = 'Manage Users';
+      try {
+        const res = await fetch('/api/admin/users');
+        const users = await res.json();
+
+        let html = '<table><tr><th>Email</th><th>Role</th></tr>';
+        users.forEach(user => {
+          html += `<tr><td>${user.email}</td><td>${user.role}</td></tr>`;
+        });
+        html += '</table>';
+
+        document.getElementById('data-table').innerHTML = html;
+        closeSidebarOnMobile();
+      } catch (err) {
+        document.getElementById('data-table').innerHTML = '⚠️ Failed to load users.';
+      }
+    }
+
+    async function showSubscribers() {
+      document.getElementById('section-title').innerText = 'Subscribers';
+      try {
+        const res = await fetch('/api/admin/subscribers');
+        const subs = await res.json();
+
+        let html = '<table><tr><th>Email</th><th>Subscribed At</th></tr>';
+        subs.forEach(sub => {
+          html += `<tr><td>${sub.email}</td><td>${new Date(sub.subscribedAt).toLocaleString()}</td></tr>`;
+        });
+        html += '</table>';
+
+        document.getElementById('data-table').innerHTML = html;
+        closeSidebarOnMobile();
+      } catch (err) {
+        document.getElementById('data-table').innerHTML = '⚠️ Failed to load subscribers.';
+      }
+    }
+
+    function closeSidebarOnMobile() {
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

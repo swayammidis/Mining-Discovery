@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post Flipbook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #1e1e2f, #3c3c64);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input,
+    button,
+    select {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    input[type="file"] {
+      background: white;
+      color: black;
+    }
+
+    button {
+      background-color: #f0c36d;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #e5b14c;
+    }
+
+    label {
+      margin-top: 10px;
+      display: block;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <h2>Upload New Flipbook</h2>
+    <form id="flipbook-form" enctype="multipart/form-data" method="POST">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" placeholder="Flipbook Title" required />
+
+      <label for="date">Date</label>
+      <input type="date" name="date" id="date" required />
+
+      <label for="image">Cover Image (JPEG/PNG)</label>
+      <input type="file" name="image" id="image" accept="image/*" required />
+
+      <label for="uploadType">PDF Source</label>
+      <select id="uploadType" name="uploadType" required>
+        <option value="file" selected>Upload PDF File</option>
+        <option value="url">Enter PDF URL</option>
+      </select>
+
+      <div id="pdfFileInput">
+        <label for="pdf">PDF File</label>
+        <input type="file" name="pdf" id="pdf" accept="application/pdf" />
+      </div>
+
+      <div id="pdfUrlInput" class="hidden">
+        <label for="pdfUrl">PDF URL</label>
+        <input type="url" name="pdfUrl" id="pdfUrl" placeholder="https://..." />
+      </div>
+
+      <button type="submit" id="submitBtn">Post Flipbook</button>
+    </form>
+  </div>
+
+  <script>
+    const uploadTypeSelect = document.getElementById('uploadType');
+    const pdfFileInput = document.getElementById('pdfFileInput');
+    const pdfUrlInput = document.getElementById('pdfUrlInput');
+    const pdfInput = document.getElementById('pdf');
+    const pdfUrl = document.getElementById('pdfUrl');
+    const submitBtn = document.getElementById('submitBtn');
+
+    uploadTypeSelect.addEventListener('change', () => {
+      const type = uploadTypeSelect.value;
+      if (type === 'file') {
+        pdfFileInput.classList.remove('hidden');
+        pdfUrlInput.classList.add('hidden');
+        pdfInput.required = true;
+        pdfUrl.required = false;
+      } else {
+        pdfUrlInput.classList.remove('hidden');
+        pdfFileInput.classList.add('hidden');
+        pdfInput.required = false;
+        pdfUrl.required = true;
+      }
+    });
+
+    document.getElementById('flipbook-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      const title = document.getElementById('title').value;
+      const date = document.getElementById('date').value;
+      const image = document.getElementById('image').files[0];
+      const uploadType = uploadTypeSelect.value;
+
+      if (!title || !date || !image) {
+        return alert('Please fill all required fields.');
+      }
+
+      formData.append('title', title);
+      formData.append('date', date);
+      formData.append('image', image);
+
+      if (uploadType === 'file') {
+        const pdfFile = pdfInput.files[0];
+        if (!pdfFile) return alert('Please select a PDF file.');
+        formData.append('pdf', pdfFile);
+      } else {
+        const url = pdfUrl.value.trim();
+        if (!url) return alert('Please enter a PDF URL.');
+        formData.append('pdfUrl', url);
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Uploading...';
+
+      try {
+        const res = await fetch('/api/flipbooks/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+        const contentType = res.headers.get('content-type');
+        const data = contentType?.includes('application/json') ? await res.json() : await res.text();
+
+        if (res.ok) {
+          alert('✅ Flipbook uploaded successfully!');
+          e.target.reset();
+          pdfUrlInput.classList.add('hidden');
+          pdfFileInput.classList.remove('hidden');
+        } else {
+          alert('❌ Upload failed: ' + (data?.message || data || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ Server error. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Post Flipbook';
+      }
+    });
+  </script>
+</body>
+</html>
