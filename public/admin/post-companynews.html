@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Company News - Admin Dashboard</title>
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    form {
+      background: #fff;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 1rem 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .ck-editor__editable_inline {
+      min-height: 200px;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align: center;">Post Company News Article</h2>
+
+  <form id="newsForm">
+    <label>Title</label>
+    <input type="text" name="title" required />
+
+    <label>Date</label>
+    <input type="date" name="date" required />
+
+    <label>By</label>
+    <input type="text" name="by" required />
+
+    <label>Description</label>
+    <textarea name="description" id="editor"></textarea>
+
+    <label>Image URL (optional)</label>
+    <input type="text" name="image" />
+
+    <button type="submit">Post News</button>
+  </form>
+
+  <script>
+    let editorInstance;
+
+    // Initialize CKEditor
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .then(editor => {
+        editorInstance = editor;
+      })
+      .catch(error => {
+        console.error('CKEditor initialization error:', error);
+      });
+
+    document.getElementById("newsForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitBtn = form.querySelector("button[type='submit']");
+      const title = form.title.value.trim();
+      const date = form.date.value;
+      const by = form.by.value.trim();
+      const description = editorInstance.getData().trim();
+      const image = form.image.value.trim();
+
+      if (!title || !by || !date || !description) {
+        alert("All fields except Image are required.");
+        return;
+      }
+
+      const data = {
+        title,
+        date,
+        by,
+        description,
+        image
+      };
+
+      try {
+        submitBtn.disabled = true;
+        const response = await fetch("/api/company", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("✅ Company news posted successfully!");
+          form.reset();
+          editorInstance.setData('');
+        } else {
+          alert("❌ Error: " + (result.message || "Unable to post news."));
+        }
+      } catch (err) {
+        console.error("Request failed:", err);
+        alert("Failed to post news. Please check the server logs.");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

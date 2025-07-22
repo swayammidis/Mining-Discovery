@@ -176,13 +176,15 @@
     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
   </div>
 
-  <div class="container">
-    <div class="sidebar" id="sidebar">
-      <h2>Admin Panel</h2>
-      <button onclick="showUsers()">👤 Manage Users</button>
-      <button onclick="showSubscribers()">📧 Subscribers</button>
-      <button onclick="window.location.href='/admin/post-flipbook.html'">📘 Post Flipbook</button>
-    </div>
+<div class="container">
+  <div class="sidebar" id="sidebar">
+    <h2>Admin Panel</h2>
+    <button onclick="window.location.href='/admin/manage-users.html'">👤 Manage Users</button>
+    <button onclick="window.location.href='/admin/subscribers.html'">📧 Subscribers</button>
+    <button onclick="window.location.href='/admin/post-flipbook.html'">📘 Post Flipbook</button>
+    <button onclick="window.location.href='/admin/post-news.html'">📢 Post News</button>
+    <button onclick="window.location.href='/admin/post-companynews.html'">📎 Post Company News</button>
+  </div>
 
     <div class="main-content">
       <h2 id="section-title">Welcome, Admin</h2>
@@ -242,3 +244,6 @@
   </script>
 </body>
 </html>
+
+
+

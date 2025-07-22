@@ -31,14 +31,19 @@ app.get('/api/health', (req, res) => {
 const subscribeRoute = require('./routes/subscribe');
 const authRoute = require('./routes/auth');
 const flipbookRoute = require('./routes/flipbook');
-const adminRoute = require('./routes/admin'); // ✅ add this
+const adminRoute = require('./routes/admin'); 
+const newsRoutes = require('./routes/news');
+const companyRoutes = require('./routes/company');
+
 
 
 // Mount all API routes
 app.use('/api/subscribe', subscribeRoute);
 app.use('/api/auth', authRoute);
-app.use('/api/flipbooks', flipbookRoute); // ✅ Note: changed from /flipbook to /flipbooks
-app.use('/api/admin', adminRoute);            // ✅ add this
+app.use('/api/flipbooks', flipbookRoute); 
+app.use('/api/admin', adminRoute);            
+app.use('/api/news', newsRoutes);
+app.use('/api/company', companyRoutes);
 
 
 // Serve index.html for all other non-API GET routes

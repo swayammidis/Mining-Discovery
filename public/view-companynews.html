@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Company News</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #1c1c1c;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    .news-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: #bbb;
+      margin-bottom: 20px;
+    }
+
+    .news-content {
+      line-height: 1.6;
+    }
+
+    .news-content :is(p, h1, h2, h3, h4, h5, h6) {
+      color: #eee;
+    }
+
+    .news-content a {
+      color: orange;
+    }
+
+    /* ✅ Fix embedded images */
+    .news-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 10px;
+      border: 1px solid #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="newsContent">
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <script>
+    async function fetchAndRenderCompanyNews() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      if (!id) {
+        document.getElementById('newsContent').innerHTML = '<p>Invalid news ID.</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/company/${id}`);
+        if (!res.ok) throw new Error('News not found');
+
+        const news = await res.json();
+
+        document.getElementById('newsContent').innerHTML = `
+          <div class="news-title">${news.title}</div>
+          <div class="meta">${new Date(news.date).toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'long', year: 'numeric'
+          })} &nbsp; <b>By:</b> ${news.by}</div>
+          <div class="news-content">${news.description}</div>
+        `;
+      } catch (err) {
+        console.error(err);
+        document.getElementById('newsContent').innerHTML = '<p>Failed to load news content.</p>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchAndRenderCompanyNews);
+  </script>
+</body>
+</html>
