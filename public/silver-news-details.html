@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Silver News Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+      color: #222;
+    }
+    .news-container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .news-container img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    .news-container h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .news-content {
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="news-container">
+    <img id="silverImage" src="" alt="News Image">
+    <h1 id="silverTitle">Loading...</h1>
+    <div class="news-content" id="silverDescription"></div>
+  </div>
+
+  <script>
+    async function loadSilverDetails() {
+      const id = new URLSearchParams(window.location.search).get('id');
+      if (!id) return document.getElementById('silverTitle').textContent = 'Invalid ID';
+
+      const res = await fetch(`/api/silver-news/${id}`);
+      const news = await res.json();
+
+      document.getElementById('silverTitle').textContent = news.title;
+      document.getElementById('silverImage').src = news.image;
+      document.getElementById('silverDescription').innerHTML = news.description;
+    }
+
+    loadSilverDetails();
+  </script>
+</body>
+</html>

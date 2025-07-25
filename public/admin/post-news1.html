@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Company News</title>
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #0f0f0f;
+      color: #fff;
+    }
+
+    form {
+      background: #1f1f1f;
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 1rem 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+      color: #000;
+      font-size: 1rem;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .ck-editor__editable_inline {
+      min-height: 250px;
+    }
+
+    button {
+      padding: 0.8rem 1.6rem;
+      background: #ffcc00;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background: #e6b800;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    p.or {
+      text-align: center;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Post Company News</h2>
+
+  <form id="companyNewsForm" enctype="multipart/form-data">
+    <label for="title">Title</label>
+    <input type="text" name="title" required />
+
+    <label for="author">Author</label>
+    <input type="text" name="author" required />
+
+    <label for="date">Date</label>
+    <input type="date" name="date" required />
+
+    <label for="image">Upload Image (optional)</label>
+    <input type="file" name="image" id="image" accept="image/*" />
+
+    <p class="or">OR</p>
+
+    <label for="imageUrl">Image URL (optional)</label>
+    <input type="url" name="imageUrl" id="imageUrl" placeholder="https://example.com/image.jpg" />
+
+    <label for="description">News Content</label>
+    <textarea name="description" id="editor"></textarea>
+
+    <button type="submit">Post Company News</button>
+  </form>
+
+  <script>
+    let editorInstance;
+
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .then(editor => {
+        editorInstance = editor;
+      })
+      .catch(error => {
+        console.error('CKEditor init failed:', error);
+      });
+
+    const imageFileInput = document.getElementById('image');
+    const imageUrlInput = document.getElementById('imageUrl');
+
+    // Disable one input if the other is used
+    imageFileInput.addEventListener('input', () => {
+      if (imageFileInput.files.length > 0) {
+        imageUrlInput.disabled = true;
+      } else {
+        imageUrlInput.disabled = false;
+      }
+    });
+
+    imageUrlInput.addEventListener('input', () => {
+      if (imageUrlInput.value.trim() !== '') {
+        imageFileInput.disabled = true;
+      } else {
+        imageFileInput.disabled = false;
+      }
+    });
+
+    document.getElementById("companyNewsForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = form.querySelector("button[type='submit']");
+
+      const title = form.title.value.trim();
+      const author = form.author.value.trim();
+      const date = form.date.value;
+      const description = editorInstance.getData().trim();
+      const imageFile = imageFileInput.files[0];
+      const imageUrl = imageUrlInput.value.trim();
+
+      if (!title || !author || !date || !description) {
+        alert("All fields except image are required.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("author", author);
+      formData.append("date", date);
+      formData.append("description", description);
+
+      if (imageFile) {
+        formData.append("image", imageFile); // Corrected to match backend field name
+      } else if (imageUrl) {
+        formData.append("imageUrl", imageUrl);
+      }
+
+      try {
+        submitBtn.disabled = true;
+
+        const response = await fetch("/api/company/post", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("✅ Company news posted successfully!");
+          form.reset();
+          editorInstance.setData('');
+          imageUrlInput.disabled = false;
+          imageFileInput.disabled = false;
+        } else {
+          alert("❌ Error: " + (result.message || "Unable to post news."));
+        }
+      } catch (err) {
+        console.error("Submission failed:", err);
+        alert("❌ Something went wrong. Check console or server.");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

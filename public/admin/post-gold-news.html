@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Gold News</title>
+  <script src="https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"], input[type="file"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background: #2d89ef;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1c6ed5;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Post Gold News</h2>
+
+  <form id="goldNewsForm" enctype="multipart/form-data">
+    <label>News Title</label>
+    <input type="text" name="title" placeholder="Enter News Title" required>
+
+    <label>Author</label>
+    <input type="text" name="author" placeholder="Enter Author Name" required>
+
+    <label>Cover Image</label>
+    <input type="file" name="image" accept="image/*" required>
+
+    <label>Full Content (Supports images, tables, formatting, etc)</label>
+    <textarea name="description" id="editor" required></textarea>
+
+    <button type="submit">Post News</button>
+  </form>
+
+  <script>
+    // Initialize CKEditor
+    CKEDITOR.replace('editor', {
+      extraPlugins: 'image2,table,uploadimage',
+      height: 300,
+      removeButtons: '',
+    });
+
+    document.getElementById('goldNewsForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const content = CKEDITOR.instances.editor.getData();
+      formData.set('description', content);
+
+      try {
+        const response = await fetch('/api/gold-news', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        alert(result.message || 'Gold news posted successfully!');
+        this.reset();
+        CKEDITOR.instances.editor.setData('');
+      } catch (error) {
+        alert('Something went wrong while posting news.');
+        console.error(error);
+      }
+    });
+  </script>
+
+</body>
+</html>

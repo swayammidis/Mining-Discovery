@@ -22,20 +22,20 @@
       </div>
 
       <div class="nav-links">
-        <a href="#">About Us</a>
+        <a href="about.html">About Us</a>
         <a href="#">News Section</a>
         <a href="#">Morning Chatter</a>
         <a href="magazine.html">Magazine</a>
         <a href="#">Services</a>
         <a href="#">Contact Us</a>
         <a href="login.html">Login</a>
-     
+
 
       </div>
 
       <div class="header-buttons">
-       
-      
+
+
         <button class="subscribe-btn" id="open-subscribe">Subscribe</button>
       </div>
     </div>
@@ -67,42 +67,105 @@
     </div>
   </header>
 
-
-
-  <div class="left">
-    <aside class="company-news-section">
-      <h2>Company News</h2>
-      <div class="company-news-container" id="companyNewsContainer">
-        <!-- Company news cards will be inserted here -->
-      </div>
-
-      <div class="btn">
-        <button class="more-button" onclick="window.location.href='all-companynews.html'">
-          More <span>→</span>
-        </button>
-      </div>
-    </aside>
-  
-
-
-
-
-
-  <h2>Latest News</h2>
-  <div class="news-container" id="latestNewsContainer">
-    <!-- News cards will be inserted here -->
+   <!-- Header + Dropdown -->
+  <div class="topbar">
+    <h1 onclick="toggleDropdown()" id="newsToggle">
+      News Section
+      <i class="fas fa-chevron-down"></i>
+    </h1>
   </div>
 
-  <!-- Corrected button structure -->
-  <div class="btn">
-    <button class="more-button" onclick="window.location.href='all-news.html'">
-      More <span>→</span>
-    </button>
+  <!-- Dropdown Links -->
+  <div class="dropdown-links" id="dropdownMenu">
+    <a href="latest-news.html">Latest News</a>
+    <a href="gold.html">Gold News</a>
+    <a href="silver.html">Silver News</a>
+    <a href="cooper.html">Copper News</a>
+    <a href="metal.html">Precious Metals</a>
+    <a href="#">Corporate News</a>
+    <a href="#">World News</a>
+    <a href="#">Leadership Thoughts</a>
+    <a href="#">Morning Chatter</a>
+    <a href="#">Announcement</a>
+    <a href="#">Popular This Week</a>
+    <a href="#">Projects</a>
+    <a href="#">Research Reports</a>
+    <a href="#">Sponsored Post</a>
   </div>
 
+  <div class="contsiner">
+    <div class="left">
+      <aside class="banner-section">
+        <div id="bannerContainer">
+          <p>Loading banners...</p>
+        </div>
+      </aside>
+    </div>
 
 
+    <!-- Center -->
+    <div class="center">
+      <div id="main-news">
+      </div>
+      <div class="advertisement-section" id="advertisementSection">
+        Advertisements will be loaded here
+      </div>
+    </div>
+
+
+    <!-- Right Sidebar -->
+    <div class="right">
+      <aside class="news-section">
+        <h2>Latest News</h2>
+        <div class="news-container" id="latestNewsContainer">
+          <!-- Only load latest news here -->
+        </div>
+        <div class="btn">
+          <button class="more-button" onclick="window.location.href='all-news.html'">
+            More <span>→</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+
+  </div>
   </button>
+
+ <!-- <div class="split-section">
+  <div class="corporate-news">
+    <h3>Corporate News</h3>
+
+    <div class="card">
+      Phenom Announces up to $1,350,000 Private Placement Financing<br />
+      <small>30th April 2025</small><br />
+      <span class="author">by: Michael Clark</span>
+    </div>
+
+    <div class="card">
+      U.S. Gold Corp Announces Participation in THE Mining Investment Event, Quebec City, Canada, June 3–5, 2025<br />
+      <small>30th April 2025</small><br />
+      <span class="author">by: Michael Clark</span>
+    </div>
+
+  </div>
+
+  <div class="magazine-section">
+    <h3>Magazine</h3>
+    <div class="magazine-list" id="topMagazines">
+
+    </div>
+  </div>
+</div> -->
+
+
+
+      </div>
+
+    </div>
+  </div>
+
 
 
   <script src="script.js"></script>

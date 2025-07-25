@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Advertisement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="file"], input[type="text"], button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 1rem;
+      display: none;
+    }
+    .preview {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align: center;">Post Advertisement</h2>
+
+  <form id="adForm" enctype="multipart/form-data">
+    <label for="imageFile">Upload Image File (Optional):</label>
+    <input type="file" name="image" id="imageFile" accept="image/*" />
+
+    <label for="imageUrl">Or Provide Image URL:</label>
+    <input type="text" name="imageUrl" id="imageUrl" placeholder="https://example.com/ad.jpg" />
+
+    <button type="submit">Post Advertisement</button>
+
+    <div class="preview">
+      <img id="previewImage" alt="Advertisement Preview" />
+    </div>
+  </form>
+
+  <script>
+    const imageFileInput = document.getElementById('imageFile');
+    const imageUrlInput = document.getElementById('imageUrl');
+    const previewImage = document.getElementById('previewImage');
+    const form = document.getElementById('adForm');
+
+    // Preview image on file selection or URL input
+    imageFileInput.addEventListener('change', () => {
+      const file = imageFileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+        imageUrlInput.value = '';
+      }
+    });
+
+    imageUrlInput.addEventListener('input', () => {
+      if (imageUrlInput.value.trim()) {
+        previewImage.src = imageUrlInput.value.trim();
+        previewImage.style.display = 'block';
+        imageFileInput.value = '';
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch('/api/ads/post', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert('Advertisement posted successfully!');
+          form.reset();
+          previewImage.src = '';
+          previewImage.style.display = 'none';
+        } else {
+          alert(data.error || 'Failed to post advertisement.');
+        }
+      } catch (err) {
+        alert('Error submitting advertisement. Please try again.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

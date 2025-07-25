@@ -1,26 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const upload = multer(); // for parsing multipart/form-data
 const companyController = require('../controllers/companyController');
-const CompanyNews = require('../models/CompanyNews');
 
-// POST: Add new company news
-router.post('/', companyController.postCompanyNews);
+// ✅ Accept both image file and imageUrl (text field)
+router.post(
+  '/post',
+  upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'imageUrl', maxCount: 1 }
+  ]),
+  companyController.postCompanyNews
+);
 
-// GET: Latest 4 company news
-router.get('/latest', companyController.getLatestCompanyNews);
+// GET route to fetch all news
+router.get('/', companyController.getCompanyNews);
 
-// GET: All company news for listing page
-router.get('/all', async (req, res) => {
-  try {
-    const allNews = await CompanyNews.find().sort({ date: -1 });
-    res.json(allNews);
-  } catch (err) {
-    console.error('Error fetching all company news:', err);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
-
-// ✅ GET: Single news article by ID (for full view page)
-router.get('/:id', companyController.getCompanyNewsById);
+// GET route to fetch single news by ID
+router.get('/:id', companyController.getSingleCompanyNews);
 
 module.exports = router;

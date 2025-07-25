@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Banner - Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    form {
+      background: #fff;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 1rem 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align: center;">Post Banner Image</h2>
+
+  <form id="bannerForm" enctype="multipart/form-data">
+    <label>Select Banner Image</label>
+    <input type="file" name="image" accept="image/*" required />
+
+    <button type="submit">Upload Banner</button>
+  </form>
+
+  <script>
+    document.getElementById("bannerForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitBtn = form.querySelector("button[type='submit']");
+      const formData = new FormData(form); // auto-includes file with name="image"
+
+      try {
+        submitBtn.disabled = true;
+
+        const response = await fetch("/api/banners", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("✅ Banner uploaded successfully!");
+          form.reset();
+        } else {
+          alert("❌ Error: " + (result.message || "Unable to upload banner."));
+        }
+      } catch (err) {
+        console.error("Upload failed:", err);
+        alert("❌ Upload failed. Check server logs.");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>
