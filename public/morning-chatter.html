@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gold Page</title>
+  <title>Morning chatter</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     * {
@@ -14,7 +14,7 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Pontano Sans', sans-serif;
       background: white;
     }
 
@@ -295,81 +295,16 @@
       }
     }
 
-
-    #subscribe-popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #111;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      display: none;
-      z-index: 100;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    #subscribe-popup h3 {
-      margin-bottom: 1rem;
-      color: #ffcc00;
-    }
-
-    #email-input {
-      width: 90%;
-      padding: 0.7rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-
-    #subscribe-popup button {
-      padding: 0.6rem 1.2rem;
-      margin: 0.3rem;
-      font-size: 0.9rem;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #submit-subscribe {
-      background-color: #ffcc00;
-      color: #000;
-    }
-
-    #submit-subscribe:hover {
-      background-color: black;
-    }
-
-    #subscribe-popup button:last-child {
-      background-color: #444;
-      color: #fff;
-    }
-
-    #subscribe-popup button:last-child:hover {
-      background-color: #666;
-    }
-
-    #status-msg {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-
-
-
     /* === Header / Dropdown Toggle === */
     .topbar {
       background: #1f1f1f;
       color: #fff;
-      padding: 15px 30px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: relative;
+      flex-wrap: wrap;
     }
 
     .topbar h1 {
@@ -393,9 +328,9 @@
     .dropdown-links {
       display: none;
       background: #1f1f1f;
-      padding: 10px 30px;
+      padding: 10px 20px;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
       font-size: 14px;
       border-top: 1px solid #333;
     }
@@ -416,9 +351,67 @@
 
     .dropdown-links.show {
       display: flex;
+      flex-wrap: wrap;
+    }
+
+    /* === Media Queries === */
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
+
+      .topbar h1 {
+        font-size: 18px;
+        gap: 6px;
+      }
+
+      .dropdown-links {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      .dropdown-links a {
+        margin: 5px 0;
+      }
+    }
+
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+    }
+
+    /* Desktops (already optimized, but just in case) */
+    @media (min-width: 769px) {
+      .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        gap: 15px;
+      }
     }
 
     /* === Main Layout === */
+    /* Base Styles - Desktop (default) */
     .container {
       display: flex;
       padding: 30px;
@@ -433,7 +426,6 @@
       background: white;
       padding: 15px;
       margin-bottom: 20px;
-
     }
 
     .left-sidebar .box img {
@@ -451,7 +443,6 @@
 
     .main-content h2 {
       margin-bottom: 15px;
-
     }
 
     .btn {
@@ -459,7 +450,31 @@
       justify-content: center;
       align-items: center;
       background-color: white;
+    }
 
+    span {
+      color: #8d6d2a;
+    }
+
+    .btn-more,
+    .gold-btn {
+      border: 1px solid #AC8A4A;
+      padding: 5px;
+      border-radius: 20px;
+      background-color: white;
+      color: #AC8A4A;
+    }
+
+    .gold-btn {
+      margin-bottom: 10px;
+    }
+
+    .heading,
+    .report,
+    .gold {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
     .news-card {
@@ -468,14 +483,13 @@
       margin-bottom: 20px;
       background: #D9D9D9;
       border-radius: 10px;
-
       border: 1px solid #ddd;
     }
 
     .news-card img {
       width: 200px;
       height: 150px;
-
+      object-fit: cover;
     }
 
     .text-content {
@@ -489,79 +503,28 @@
     .section-box {
       background: white;
       margin-bottom: 20px;
-
       padding: 10px;
     }
 
     .section-box img {
       width: 100%;
       height: 120px;
-
+      object-fit: cover;
     }
 
-    .project-news-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.project-card {
-  display: flex;
-  gap: 15px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-3px);
-}
-
-.project-card img {
-  width: 120px;
-  height: 100px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.project-card .content {
-  padding: 10px;
-  flex: 1;
-}
-
-.project-card h4 {
-  margin: 0 0 6px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.project-card p {
-  margin: 0;
-  font-size: 14px;
-  color: #555;
-}
-
-    /* === Gold Cards Section === */
     .gold-news {
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      padding: 0 0 30px 0;
-    }
-
-    .gold {
-      display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      padding-bottom: 30px;
     }
 
     .gold-card {
-      border-radius: 10px;
       flex: 1;
-      background: white;
+      min-width: 150px;
+      border-radius: 10px;
+      background: #AC8A4A;
       border: 1px solid #ddd;
       text-align: center;
     }
@@ -575,6 +538,66 @@
     .gold-card p {
       padding: 10px;
       font-weight: bold;
+    }
+
+    /* === Responsive: Tablet === */
+    @media (max-width: 992px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-sidebar,
+      .right-sidebar,
+      .main-content {
+        width: 100%;
+      }
+
+      .news-card {
+        flex-direction: column;
+      }
+
+      .news-card img {
+        width: 100%;
+        height: auto;
+      }
+
+      .gold-news {
+        flex-direction: column;
+      }
+
+      .gold-card {
+        width: 100%;
+      }
+    }
+
+    /* === Responsive: Phone === */
+    @media (max-width: 576px) {
+      .container {
+        padding: 15px;
+        gap: 15px;
+      }
+
+      .news-card {
+        gap: 10px;
+      }
+
+      .text-content {
+        padding: 10px;
+      }
+
+      .gold-card img {
+        height: auto;
+      }
+
+      .btn-more,
+      .gold-btn {
+        font-size: 14px;
+        padding: 4px 10px;
+      }
+
+      .gold-news {
+        gap: 15px;
+      }
     }
 
     .footer-container {
@@ -724,24 +747,81 @@
       color: #aaa;
     }
 
+    /* -------- RESPONSIVE -------- */
+
+    @media (max-width: 1024px) {
+      .footer-container {
+        padding: 50px 30px 25px;
+      }
+
+      .footer-content {
+        gap: 25px;
+      }
+    }
+
     @media (max-width: 768px) {
+      .footer-container {
+        padding: 40px 20px 20px;
+      }
+
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
+        gap: 40px;
       }
 
+      .footer-left,
       .footer-center,
       .footer-right {
-        padding-left: 0;
-        margin-top: 30px;
+        padding: 0;
+        min-width: 100%;
       }
 
       .footer-right {
-        justify-content: center;
+        justify-content: flex-start;
       }
 
-      .logo-slider {
-        justify-content: flex-start;
+      .divider {
+        display: none;
+      }
+
+      .footer-left p {
+        max-width: 100%;
+      }
+
+      .search-boxs {
+        width: 50%;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+      .left-sidebar {
+        display: none;
+      }
+
+      .footer-left img,
+      .footer-right img {
+        height: 50px;
+        width: 90px;
+      }
+
+      .footer-left p {
+        font-size: 14px;
+      }
+
+      .footer-center li,
+      .footer-left .socials i {
+        font-size: 14px;
+      }
+
+      .footer-center li:first-child {
+        font-size: 15px;
+      }
+
+      .footer-bottom {
+        font-size: 12px;
+        margin-top: 30px;
       }
     }
   </style>
@@ -751,7 +831,8 @@
   <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
-        <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" />
+        <a href="index.html"> <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
+
       </div>
 
       <button class="hamburger" onclick="toggleMenu()">
@@ -762,30 +843,16 @@
         <a href="about.html">About Us</a>
         <a href="#">News Section</a>
         <a href="#">Morning Chatter</a>
-        <a href="magazine.html">Magazine</a>
+        <a href="#">Magazine</a>
         <a href="#">Services</a>
         <a href="#">Contact Us</a>
       </div>
 
       <div class="header-buttons" id="headerButtons">
-        <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-        <button class="subscribe-btn" id="open-subscribe">Subscribe</button>
+        <button class="login-btn">Login</button>
+        <button class="subscribe-btn">Subscribe</button>
       </div>
     </div>
-
-
-    <!-- Overlay -->
-    <div id="overlay"></div>
-
-    <!-- Popup -->
-    <div id="subscribe-popup">
-      <h3>Subscribe to Our Newsletter</h3>
-      <input type="email" id="email-input" placeholder="Enter your email" required /><br />
-      <button id="submit-subscribe">Submit</button>
-      <button onclick="closePopup()">Close</button>
-      <p id="status-msg"></p>
-    </div>
-
 
     <div class="search-bar-container" id="searchContainer">
       <div class="social-icons">
@@ -834,7 +901,7 @@
 
   <!-- Dropdown Links -->
   <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html" class="active">Latest News</a>
+    <a href="latest-news.html">Latest News</a>
     <a href="gold.html">Gold News</a>
     <a href="silver.html">Silver News</a>
     <a href="cooper.html">Copper News</a>
@@ -845,7 +912,7 @@
     <a href="morning-chatter.html">Morning Chatter</a>
     <a href="#">Announcement</a>
     <a href="#">Popular This Week</a>
-    <a href="#">Projects</a>
+    <a href="project.html">Projects</a>
     <a href="#">Research Reports</a>
     <a href="#">Sponsored Post</a>
   </div>
@@ -860,53 +927,76 @@
     </div>
 
     <!-- Main -->
-    <div class="main-content" id="goldNewsContainer">
-      <h2>Gold News</h2>
-    </div>
-
-    <div class="btn">
-      <button type="button" class="btn-more" onclick="loadMore()">show more</button>
-    </div>
+    <div class="main-content">
+      <h2>Morning chatter</h2>
 
 
-    <!-- <div class="gold">
-      <h2>Gold News</h2>
-      <button type="button" class="btns">show more</button>
+
+
+
+      <div class="news-card">
+        <img src="./image/mrng5.png" alt="">
+        <div class="text-content">
+          <h3>Carlin Gold-Vanadium Property Description and Ownership</h3>
+          <p> The property has exceptional infrastructural advantages. The property is road accessible from Carlin and
+            Elko. Carlin is a major rail hub to both coasts. Power is 3 miles from the property.</p>
+          <span>July 23, 2025</span>
+          <p>By: ARRAS MINERALS</p>
+        </div>
+
+      </div>
+      <div class="btn"><button type="button" class="btn-more">show more</button></div>
+
+
+
+      <div class="gold">
+        <h2>Gold News</h2>
+        <button type="button" class="gold-btn">show more</button>
+      </div>
+      <div class="gold-news">
+        <div class="gold-card">
+          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
+          <p>US Gold Corp.</p>
+        </div>
+        <div class="gold-card">
+          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
+          <p>Andorra Solid & Silver</p>
+        </div>
+        <div class="gold-card">
+          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
+          <p>Astro Drills</p>
+        </div>
+      </div>
     </div>
-    <div class="gold-news">
-      <div class="gold-card">
-        <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-        <p>US Gold Corp.</p>
-      </div>
-      <div class="gold-card">
-        <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-        <p>Andorra Solid & Silver</p>
-      </div>
-      <div class="gold-card">
-        <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-        <p>Astro Drills</p>
-      </div>
-    </div>
-  </div> -->
 
     <!-- Right -->
     <div class="right-sidebar">
+
       <div class="section-box">
         <div class="heading">
           <h3>Projects</h3>
-          <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show More</button>
+          <button type="button" class="gold-btn">show more</button>
         </div>
+        <img src="./image/pexels-tomfisk-2101137.png" alt="">
+        <p>Gold Eagle Corp Latest Exploration</p>
+      </div>
+      <div class="section-box">
 
-        <div class="project-news-container" id="projectNewsSection">
-          <!-- Project news cards will be injected here -->
-        </div>
+        <img src="./image/pexels-tomfisk-2101137.png" alt="">
+        <p>Gold Eagle Corp Latest Exploration</p>
+      </div>
+      <div class="section-box">
+
+        <img src="./image/pexels-tomfisk-2101137.png" alt="">
+        <p>Gold Eagle Corp Latest Exploration</p>
       </div>
 
-
-
-
       <div class="section-box">
-        <h3>Reports</h3>
+        <div class="report">
+          <h3>Reports</h3>
+
+          <button type="button" class="gold-btn">show more</button>
+        </div>
         <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
         <p>Global Mining Report 2025</p>
       </div>
@@ -971,6 +1061,7 @@
   </div>
 
   <script>
+    // for dropdown
     function toggleDropdown() {
       const dropdown = document.getElementById("dropdownMenu");
       const header = document.getElementById("newsToggle");
@@ -979,63 +1070,6 @@
         header.classList.toggle("rotate");
       }
     }
-
-    // ====== Subscribe Popup ======
-    const popup = document.getElementById('subscribe-popup');
-    const overlay = document.getElementById('overlay');
-    const openBtn = document.getElementById('open-subscribe');
-    const submitBtn = document.getElementById('submit-subscribe');
-    const statusMsg = document.getElementById('status-msg');
-    const emailInput = document.getElementById('email-input');
-
-    if (openBtn && overlay && popup) {
-      openBtn.addEventListener('click', () => {
-        popup.style.display = 'block';
-        overlay.style.display = 'block';
-      });
-
-      overlay.addEventListener('click', closePopup);
-    }
-
-    function closePopup() {
-      if (popup && overlay && emailInput && statusMsg) {
-        popup.style.display = 'none';
-        overlay.style.display = 'none';
-        emailInput.value = '';
-        statusMsg.textContent = '';
-      }
-    }
-
-    if (submitBtn && emailInput && statusMsg) {
-      submitBtn.addEventListener('click', async () => {
-        const email = emailInput.value.trim();
-        if (!email) {
-          statusMsg.textContent = 'Please enter an email.';
-          statusMsg.style.color = 'red';
-          return;
-        }
-
-        try {
-          const res = await fetch('/api/subscribe', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
-          });
-
-          const data = await res.json();
-          statusMsg.textContent = data.message;
-          statusMsg.style.color = res.ok ? '#80ff80' : 'red';
-
-          if (res.ok) {
-            setTimeout(closePopup, 2000);
-          }
-        } catch (err) {
-          statusMsg.textContent = 'Something went wrong.';
-          statusMsg.style.color = 'red';
-        }
-      });
-    }
-
     // ====== Load Banners ======
     async function loadBanners() {
       try {
@@ -1077,100 +1111,10 @@
       }
     }
 
-    // ====== Gold News Section ======
-    let allNews = [];
-    let loadedCount = 0;
-    const perPage = 3;
-
-    async function fetchGoldNews() {
-      try {
-        const res = await fetch('/api/gold-news');
-        const data = await res.json();
-        allNews = data;
-        loadMore();
-      } catch (err) {
-        console.error("Failed to fetch news:", err);
-      }
-    }
-
-    function loadMore() {
-      const container = document.getElementById('goldNewsContainer');
-      if (!container) return;
-
-      const nextBatch = allNews.slice(loadedCount, loadedCount + perPage);
-
-      nextBatch.forEach(news => {
-        const card = document.createElement('div');
-        card.className = 'news-card';
-
-        const firstParagraph = extractFirstParagraph(news.description);
-
-        card.innerHTML = `
-        <img src="${news.image}" alt="">
-        <div class="text-content">
-          <h3>
-            <a href="gold-news-details.html?id=${news._id}" style="text-decoration: none; color: inherit;">
-              ${news.title}
-            </a>
-          </h3>
-          <p>${firstParagraph} <span>read more.....</span></p>
-        </div>
-      `;
-
-        container.appendChild(card);
-      });
-
-      loadedCount += perPage;
-
-      if (loadedCount >= allNews.length) {
-        const btn = document.querySelector('.btn-more');
-        if (btn) btn.style.display = 'none';
-      }
-    }
-
-    function extractFirstParagraph(html) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      const p = tempDiv.querySelector('p');
-      return p?.innerText || tempDiv.innerText.substring(0, 150);
-    }
-
-    async function fetchProjectNews() {
-    try {
-      const res = await fetch('/api/project-news');
-      const data = await res.json();
-      const container = document.getElementById('projectNewsSection');
-
-      const latest = data.slice(0, 3); // Display only 3
-
-      latest.forEach(news => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
-
-        card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
-          <div class="content">
-            <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 80)}...</p>
-          </div>
-        `;
-
-        container.appendChild(card);
-      });
-    } catch (err) {
-      console.error('Failed to load project news:', err);
-    }
-  }
-
-
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();
-      fetchGoldNews();
-      fetchProjectNews();
     });
   </script>
-
 
 </body>
 

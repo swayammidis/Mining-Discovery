@@ -100,67 +100,67 @@
     }
 
     #subscribe-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #111;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  display: none;
-  z-index: 100;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-}
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      display: none;
+      z-index: 100;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
 
-#subscribe-popup h3 {
-  margin-bottom: 1rem;
-  color: #ffcc00;
-}
+    #subscribe-popup h3 {
+      margin-bottom: 1rem;
+      color: #ffcc00;
+    }
 
-#email-input {
-  width: 90%;
-  padding: 0.7rem;
-  margin-bottom: 1rem;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-}
+    #email-input {
+      width: 90%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
 
-#subscribe-popup button {
-  padding: 0.6rem 1.2rem;
-  margin: 0.3rem;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: 600;
-}
+    #subscribe-popup button {
+      padding: 0.6rem 1.2rem;
+      margin: 0.3rem;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-#submit-subscribe {
-  background-color: #ffcc00;
-  color: #000;
-}
+    #submit-subscribe {
+      background-color: #ffcc00;
+      color: #000;
+    }
 
-#submit-subscribe:hover {
-  background-color: black;
-}
+    #submit-subscribe:hover {
+      background-color: black;
+    }
 
-#subscribe-popup button:last-child {
-  background-color: #444;
-  color: #fff;
-}
+    #subscribe-popup button:last-child {
+      background-color: #444;
+      color: #fff;
+    }
 
-#subscribe-popup button:last-child:hover {
-  background-color: #666;
-}
+    #subscribe-popup button:last-child:hover {
+      background-color: #666;
+    }
 
-#status-msg {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
+    #status-msg {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
 
     .search-bar-container {
       display: flex;
@@ -483,22 +483,41 @@
 
     .news-card {
       display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      background: #D9D9D9;
+      gap: 1rem;
+      padding: 10px;
+      background: #f0f0f0;
       border-radius: 10px;
-
-      border: 1px solid #ddd;
+      margin-bottom: 15px;
+      align-items: flex-start;
     }
 
-    .news-card img {
-      width: 200px;
-      height: 150px;
-
+    .news-image {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
     }
 
     .text-content {
-      padding: 15px;
+      flex: 1;
+    }
+
+    .news-title h3 {
+      margin: 0 0 8px;
+      color: #4b0082;
+      text-decoration: underline;
+      font-size: 18px;
+    }
+
+    .text-content p {
+      margin: 0;
+      color: #333;
+      line-height: 1.4;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* 👈 2 lines only */
+      -webkit-box-orient: vertical;
     }
 
     .right-sidebar {
@@ -508,14 +527,13 @@
     .section-box {
       background: white;
       margin-bottom: 20px;
-
       padding: 10px;
     }
 
     .section-box img {
       width: 100%;
       height: 120px;
-
+      object-fit: cover;
     }
 
     /* === Gold Cards Section === */
@@ -746,10 +764,10 @@
       </div>
     </div>
 
-      <!-- Overlay -->
+    <!-- Overlay -->
     <div id="overlay"></div>
 
-      <!-- Popup -->
+    <!-- Popup -->
     <div id="subscribe-popup">
       <h3>Subscribe to Our Newsletter</h3>
       <input type="email" id="email-input" placeholder="Enter your email" required /><br />
@@ -814,10 +832,10 @@
     <a href="#">Corporate News</a>
     <a href="#">World News</a>
     <a href="#">Leadership Thoughts</a>
-    <a href="#">Morning Chatter</a>
+    <a href="morning-chatter.html">Morning Chatter</a>
     <a href="#">Announcement</a>
     <a href="#">Popular This Week</a>
-    <a href="#">Projects</a>
+    <a href="project.html">Projects</a>
     <a href="#">Research Reports</a>
     <a href="#">Sponsored Post</a>
   </div>
@@ -828,63 +846,35 @@
     <div class="left-sidebar">
       <div class="box" id="bannerContainer">
         <p>Loading banners...</p>
-
-
       </div>
     </div>
 
 
 
+    <!-- Main -->
 
-    <div class="main-content" >
+    <div class="main-content">
       <h2>Latest News</h2>
 
-      <div class="news-card">
-        <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-        <div class="text-content">
-          <h3>ARRAS MINERALS TO MOBILIZE SECOND DRILL</h3>
-         <p>Silver mining continues to heat up amid surging prices and dwindling supplies. Hochschild Mining reported a robust recovery in H1 2025, producing 3.8 million <span>read more.....</span></p>
-        </div>
+      <div id="latestNewsContainer">
+        <!-- Cards will be dynamically injected here -->
       </div>
 
-      <div class="news-card">
-        <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-        <div class="text-content">
-          <h3>Digi Power X bets big on Data Centers</h3>
-        <p>The next wave of artificial intelligence infrastructure won’t come from tech giants alone—but from nimble operators who already own the power read more.....</p>
-        </div>
+      <div class="btn"><button type="button" class="btn-more">Show More</button></div>
+
+
+
+      <!-- === Gold News Section === -->
+      <div class="gold">
+        <h2>Gold News</h2>
+        <button type="button" class="gold-btn">show more</button>
       </div>
 
-      <div class="news-card">
-       <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-        <div class="text-content">
-          <h3>Power Metallic Acquires 167KM²</h3>
-       <p>TORONTO, June 9, 2025 - Power Metallic Mines Inc. (the "Company" or "Power Metallic") (TSXV: PNPN) (OTCBB: PNPNF) (Frankfurt: IVV) is pleased to announce it has executed a definitive agreement dated June 9, 2025 read more.....</p>
-        </div>
-       
-      </div>
-      <div class="btn"><button type="button" class="btn-more">show more</button></div>
-
-
-  <div class="gold">
-      <h2>Gold News</h2>
-      <button type="button" class="gold-btn">show more</button>
-  </div>
-      <div class="gold-news">
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>US Gold Corp.</p>
-        </div>
-        <div class="gold-card">
-         <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>Andorra Solid & Silver</p>
-        </div>
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>Astro Drills</p>
-        </div>
+      <div class="gold-news" id="goldNewsContainer">
+        <!-- Gold news cards will be injected here dynamically -->
       </div>
     </div>
+
 
 
 
@@ -894,32 +884,31 @@
     <!-- Right -->
     <div class="right-sidebar">
 
+     <div class="section-box">
+  <div class="heading">
+    <h3>Projects</h3>
+    <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show More</button>
+  </div>
+
+  <div class="project-card-container" id="projectCardContainer">
+    <!-- Project news cards will be injected here -->
+  </div>
+</div>
+
+     
+
       <div class="section-box">
-        <div class="heading">
-          <h3>Projects</h3>
+        <div class="report">
+          <h3>Reports</h3>
+
           <button type="button" class="gold-btn">show more</button>
         </div>
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
-
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
-
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-
-      <div class="section-box">
-        <h3>Reports</h3>
         <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
         <p>Global Mining Report 2025</p>
       </div>
     </div>
   </div>
+
   <!-- Footer Section -->
   <div class="footer-container">
     <div class="footer-content">
@@ -982,7 +971,7 @@
 
     // for dropdown menu
 
-  
+
     function toggleDropdown() {
       const dropdown = document.getElementById("dropdownMenu");
       const header = document.getElementById("newsToggle");
@@ -992,54 +981,54 @@
 
     // for subscribe button 
 
-const popup = document.getElementById('subscribe-popup');
-const overlay = document.getElementById('overlay');
-const openBtn = document.getElementById('open-subscribe');
-const submitBtn = document.getElementById('submit-subscribe');
-const statusMsg = document.getElementById('status-msg');
-const emailInput = document.getElementById('email-input');
+    const popup = document.getElementById('subscribe-popup');
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('open-subscribe');
+    const submitBtn = document.getElementById('submit-subscribe');
+    const statusMsg = document.getElementById('status-msg');
+    const emailInput = document.getElementById('email-input');
 
-openBtn.addEventListener('click', () => {
-  popup.style.display = 'block';
-  overlay.style.display = 'block';
-});
-
-overlay.addEventListener('click', closePopup);
-
-function closePopup() {
-  popup.style.display = 'none';
-  overlay.style.display = 'none';
-  emailInput.value = '';
-  statusMsg.textContent = '';
-}
-
-submitBtn.addEventListener('click', async () => {
-  const email = emailInput.value.trim();
-  if (!email) {
-    statusMsg.textContent = 'Please enter an email.';
-    statusMsg.style.color = 'red';
-    return;
-  }
-
-  try {
-    const res = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
+    openBtn.addEventListener('click', () => {
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
     });
 
-    const data = await res.json();
-    statusMsg.textContent = data.message;
-    statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+    overlay.addEventListener('click', closePopup);
 
-    if (res.ok) {
-      setTimeout(closePopup, 2000);
+    function closePopup() {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+      emailInput.value = '';
+      statusMsg.textContent = '';
     }
-  } catch (err) {
-    statusMsg.textContent = 'Something went wrong.';
-    statusMsg.style.color = 'red';
-  }
-});
+
+    submitBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      if (!email) {
+        statusMsg.textContent = 'Please enter an email.';
+        statusMsg.style.color = 'red';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+        statusMsg.textContent = data.message;
+        statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+
+        if (res.ok) {
+          setTimeout(closePopup, 2000);
+        }
+      } catch (err) {
+        statusMsg.textContent = 'Something went wrong.';
+        statusMsg.style.color = 'red';
+      }
+    });
 
     // ✅ Load Banners
     async function loadBanners() {
@@ -1101,23 +1090,34 @@ submitBtn.addEventListener('click', async () => {
           const card = document.createElement('div');
           card.className = 'news-card';
 
+          // ✅ Image
+          const image = document.createElement('img');
+          image.src = news.image || './image/placeholder.png';
+          image.alt = news.title;
+          image.className = 'news-image';
+
+          // ✅ Text content container
+          const textContent = document.createElement('div');
+          textContent.className = 'text-content';
+
+          // ✅ News title (clickable)
           const link = document.createElement('a');
           link.href = `view-news.html?id=${news._id}`;
+          link.innerHTML = `<h3>${news.title}</h3>`;
           link.className = 'news-title';
-          link.textContent = news.title;
 
-          const date = new Date(news.date).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-          });
+          // ✅ Clean description: strip HTML tags from `news.description`
+          const para = document.createElement('p');
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = news.description || '';
+          const plainText = tempDiv.textContent || tempDiv.innerText || '';
+          para.textContent = plainText.slice(0, 160) + '...';
 
-          const meta = document.createElement('p');
-          meta.className = 'news-meta';
-          meta.innerHTML = `${date} &nbsp; <b>By:</b> ${news.by}`;
-
-          card.appendChild(link);
-          card.appendChild(meta);
+          // 🧱 Assemble
+          textContent.appendChild(link);
+          textContent.appendChild(para);
+          card.appendChild(image);
+          card.appendChild(textContent);
           container.appendChild(card);
         });
       } catch (error) {
@@ -1125,9 +1125,72 @@ submitBtn.addEventListener('click', async () => {
       }
     }
 
+    // ====== Gold News Section on Latest News Page ======
+
+    async function fetchTopGoldNews() {
+      try {
+        const res = await fetch('/api/gold-news');
+        const data = await res.json();
+
+        // Only take top 3 items
+        const topThree = data.slice(0, 3);
+
+        const container = document.getElementById('goldNewsContainer');
+        if (!container) return;
+
+        topThree.forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'gold-card';
+
+          card.innerHTML = `
+          <img src="${news.image}" alt="">
+          <p>${news.title}</p>
+        `;
+
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error("Failed to fetch gold news:", err);
+      }
+    }
+
+    // load project news 
+
+  async function loadProjectCards() {
+    try {
+      const res = await fetch('/api/project-news');
+      const data = await res.json();
+      const container = document.getElementById('projectCardContainer');
+
+      const limitedProjects = data.slice(0, 2); // Show top 2 projects
+
+      limitedProjects.forEach(project => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.onclick = () => window.location.href = `project-news-details.html?id=${project._id}`;
+
+        card.innerHTML = `
+          <img src="${project.image}" alt="Project Image">
+          <p>${project.title}</p>
+        `;
+
+        container.appendChild(card);
+      });
+
+    } catch (error) {
+      console.error("Error loading project news:", error);
+    }
+  }
+
+ 
+
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();
       loadLatestNews();
+      fetchTopGoldNews();
+      loadProjectCards();
+
     });
   </script>
 

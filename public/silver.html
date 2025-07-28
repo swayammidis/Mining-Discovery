@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Silver Page</title>
+  <title>News Section</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     * {
@@ -14,7 +14,7 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Pontano Sans', sans-serif;
       background: white;
     }
 
@@ -295,81 +295,16 @@
       }
     }
 
-
-    #subscribe-popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #111;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      display: none;
-      z-index: 100;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    #subscribe-popup h3 {
-      margin-bottom: 1rem;
-      color: #ffcc00;
-    }
-
-    #email-input {
-      width: 90%;
-      padding: 0.7rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-
-    #subscribe-popup button {
-      padding: 0.6rem 1.2rem;
-      margin: 0.3rem;
-      font-size: 0.9rem;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #submit-subscribe {
-      background-color: #ffcc00;
-      color: #000;
-    }
-
-    #submit-subscribe:hover {
-      background-color: black;
-    }
-
-    #subscribe-popup button:last-child {
-      background-color: #444;
-      color: #fff;
-    }
-
-    #subscribe-popup button:last-child:hover {
-      background-color: #666;
-    }
-
-    #status-msg {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-
-
-
     /* === Header / Dropdown Toggle === */
     .topbar {
       background: #1f1f1f;
       color: #fff;
-      padding: 15px 30px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: relative;
+      flex-wrap: wrap;
     }
 
     .topbar h1 {
@@ -393,9 +328,9 @@
     .dropdown-links {
       display: none;
       background: #1f1f1f;
-      padding: 10px 30px;
+      padding: 10px 20px;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
       font-size: 14px;
       border-top: 1px solid #333;
     }
@@ -416,9 +351,67 @@
 
     .dropdown-links.show {
       display: flex;
+      flex-wrap: wrap;
+    }
+
+    /* === Media Queries === */
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
+
+      .topbar h1 {
+        font-size: 18px;
+        gap: 6px;
+      }
+
+      .dropdown-links {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      .dropdown-links a {
+        margin: 5px 0;
+      }
+    }
+
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+    }
+
+    /* Desktops (already optimized, but just in case) */
+    @media (min-width: 769px) {
+      .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        gap: 15px;
+      }
     }
 
     /* === Main Layout === */
+    /* Base Styles - Desktop (default) */
     .container {
       display: flex;
       padding: 30px;
@@ -433,7 +426,6 @@
       background: white;
       padding: 15px;
       margin-bottom: 20px;
-
     }
 
     .left-sidebar .box img {
@@ -451,7 +443,6 @@
 
     .main-content h2 {
       margin-bottom: 15px;
-
     }
 
     .btn {
@@ -459,7 +450,27 @@
       justify-content: center;
       align-items: center;
       background-color: white;
+    }
 
+    .btn-more,
+    .gold-btn {
+      border: 1px solid #AC8A4A;
+      padding: 5px;
+      border-radius: 20px;
+      background-color: white;
+      color: #AC8A4A;
+    }
+
+    .gold-btn {
+      margin-bottom: 10px;
+    }
+
+    .heading,
+    .report,
+    .gold {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
     .news-card {
@@ -468,14 +479,13 @@
       margin-bottom: 20px;
       background: #D9D9D9;
       border-radius: 10px;
-
       border: 1px solid #ddd;
     }
 
     .news-card img {
       width: 200px;
       height: 150px;
-
+      object-fit: cover;
     }
 
     .text-content {
@@ -489,33 +499,28 @@
     .section-box {
       background: white;
       margin-bottom: 20px;
-
       padding: 10px;
     }
 
     .section-box img {
       width: 100%;
       height: 120px;
-
+      object-fit: cover;
     }
 
-    /* === Gold Cards Section === */
     .gold-news {
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      padding: 0 0 30px 0;
-    }
-
-    .gold {
-      display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      padding-bottom: 30px;
     }
 
     .gold-card {
-      border-radius: 10px;
       flex: 1;
-      background: white;
+      min-width: 150px;
+      border-radius: 10px;
+      background: #AC8A4A;
       border: 1px solid #ddd;
       text-align: center;
     }
@@ -530,6 +535,111 @@
       padding: 10px;
       font-weight: bold;
     }
+
+    /* === Responsive: Tablet === */
+    @media (max-width: 992px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-sidebar,
+      .right-sidebar,
+      .main-content {
+        width: 100%;
+      }
+
+      .news-card {
+        flex-direction: column;
+      }
+
+      .news-card img {
+        width: 100%;
+        height: auto;
+      }
+
+      .gold-news {
+        flex-direction: column;
+      }
+
+      .gold-card {
+        width: 100%;
+      }
+    }
+
+    /* === Responsive: Phone === */
+    @media (max-width: 576px) {
+      .container {
+        padding: 15px;
+        gap: 15px;
+      }
+
+      .news-card {
+        gap: 10px;
+      }
+
+      .text-content {
+        padding: 10px;
+      }
+
+      .gold-card img {
+        height: auto;
+      }
+
+      .btn-more,
+      .gold-btn {
+        font-size: 14px;
+        padding: 4px 10px;
+      }
+
+      .gold-news {
+        gap: 15px;
+      }
+    }
+.project-news-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.project-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+}
+
+.project-card img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.project-card .content {
+  padding: 10px;
+  flex: 1;
+}
+
+.project-card h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.project-card p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #555;
+}
 
     .footer-container {
       background-image: url(./image/footer-bg\ 1.png);
@@ -678,24 +788,85 @@
       color: #aaa;
     }
 
+    /* -------- RESPONSIVE -------- */
+
+    @media (max-width: 1024px) {
+      .footer-container {
+        padding: 50px 30px 25px;
+      }
+
+      .footer-content {
+        gap: 25px;
+      }
+    }
+
     @media (max-width: 768px) {
+      .footer-container {
+        padding: 40px 20px 20px;
+      }
+
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
+        gap: 40px;
       }
 
+      .footer-left,
       .footer-center,
       .footer-right {
-        padding-left: 0;
-        margin-top: 30px;
+        padding: 0;
+        min-width: 100%;
       }
 
       .footer-right {
-        justify-content: center;
+        justify-content: flex-start;
       }
 
-      .logo-slider {
-        justify-content: flex-start;
+      .divider {
+        display: none;
+      }
+
+      .footer-left p {
+        max-width: 100%;
+      }
+
+      .search-boxs {
+        width: 50%;
+      }
+
+    }
+
+    span {
+      color: #8d6d2a;
+    }
+
+    @media (max-width: 480px) {
+      .left-sidebar {
+        display: none;
+      }
+
+      .footer-left img,
+      .footer-right img {
+        height: 50px;
+        width: 90px;
+      }
+
+      .footer-left p {
+        font-size: 14px;
+      }
+
+      .footer-center li,
+      .footer-left .socials i {
+        font-size: 14px;
+      }
+
+      .footer-center li:first-child {
+        font-size: 15px;
+      }
+
+      .footer-bottom {
+        font-size: 12px;
+        margin-top: 30px;
       }
     }
   </style>
@@ -705,7 +876,8 @@
   <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
-        <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" />
+        <a href="index.html"> <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
+
       </div>
 
       <button class="hamburger" onclick="toggleMenu()">
@@ -713,7 +885,7 @@
       </button>
 
       <div class="nav-links" id="navMenu">
-        <a href="about.html">About Us</a>
+        <a href="./about.html">About Us</a>
         <a href="#">News Section</a>
         <a href="#">Morning Chatter</a>
         <a href="#">Magazine</a>
@@ -722,23 +894,10 @@
       </div>
 
       <div class="header-buttons" id="headerButtons">
-        <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-        <button class="subscribe-btn" id="open-subscribe">Subscribe</button>
+        <button class="login-btn">Login</button>
+        <button class="subscribe-btn">Subscribe</button>
       </div>
     </div>
-
-    <!-- Overlay -->
-    <div id="overlay"></div>
-
-    <!-- Popup -->
-    <div id="subscribe-popup">
-      <h3>Subscribe to Our Newsletter</h3>
-      <input type="email" id="email-input" placeholder="Enter your email" required /><br />
-      <button id="submit-subscribe">Submit</button>
-      <button onclick="closePopup()">Close</button>
-      <p id="status-msg"></p>
-    </div>
-
 
     <div class="search-bar-container" id="searchContainer">
       <div class="social-icons">
@@ -787,18 +946,18 @@
 
   <!-- Dropdown Links -->
   <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html" class="active">Latest News</a>
+    <a href="latest-news.html">Latest News</a>
     <a href="gold.html">Gold News</a>
-    <a href="#">Silver News</a>
+    <a href="silver.html">Silver News</a>
     <a href="cooper.html">Copper News</a>
-    <a href="#">Precious Metals</a>
-    <a href="#">Corporate News</a>
-    <a href="#">World News</a>
-    <a href="#">Leadership Thoughts</a>
-    <a href="#">Morning Chatter</a>
+    <a href="metal.html">Precious Metals</a>
+    <a href="corporate.html">Corporate News</a>
+    <a href="world.html">World News</a>
+    <a href="leader.html">Leadership Thoughts</a>
+    <a href="morning-chatter.html">Morning Chatter</a>
     <a href="#">Announcement</a>
     <a href="#">Popular This Week</a>
-    <a href="#">Projects</a>
+    <a href="project.html">Projects</a>
     <a href="#">Research Reports</a>
     <a href="#">Sponsored Post</a>
   </div>
@@ -813,27 +972,27 @@
     </div>
 
     <!-- Main -->
-    <div class="main-content" id="silverNewsContainer">
-      <h2>Latest News</h2>
-    </div>
-    <div class="btn">
+    <div class="main-content">
+      <h2>Silver News</h2>
+      <div id="silverNewsContainer">
+      </div>
+
+
       <button type="button" class="btn-more" onclick="loadMoreSilver()">Show More</button>
-    </div>
+      <div class="gold">
 
 
 
-    <!-- 
-  <div class="gold">
-      <h2>Gold News</h2>
-      <button type="button" class="btns">show more</button>
-  </div>
+        <h2>Gold News</h2>
+        <button type="button" class="btns">show more</button>
+      </div>
       <div class="gold-news">
         <div class="gold-card">
           <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
           <p>US Gold Corp.</p>
         </div>
         <div class="gold-card">
-         <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
+          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
           <p>Andorra Solid & Silver</p>
         </div>
         <div class="gold-card">
@@ -841,25 +1000,23 @@
           <p>Astro Drills</p>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Right -->
     <div class="right-sidebar">
-      <div class="section-box">
-        <h3>Projects</h3>
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
+    <div class="section-box">
+  <div class="heading">
+    <h3>Projects</h3>
+    <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show More</button>
+  </div>
 
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
+  <div class="project-news-container" id="projectNewsCards">
+    <!-- Project news cards will be loaded here -->
+  </div>
+</div>
 
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
+      
+      
 
       <div class="section-box">
         <h3>Reports</h3>
@@ -933,58 +1090,6 @@
       dropdown.classList.toggle("show");
       header.classList.toggle("rotate");
     }
-
-    // for subscribe button 
-
-    const popup = document.getElementById('subscribe-popup');
-    const overlay = document.getElementById('overlay');
-    const openBtn = document.getElementById('open-subscribe');
-    const submitBtn = document.getElementById('submit-subscribe');
-    const statusMsg = document.getElementById('status-msg');
-    const emailInput = document.getElementById('email-input');
-
-    openBtn.addEventListener('click', () => {
-      popup.style.display = 'block';
-      overlay.style.display = 'block';
-    });
-
-    overlay.addEventListener('click', closePopup);
-
-    function closePopup() {
-      popup.style.display = 'none';
-      overlay.style.display = 'none';
-      emailInput.value = '';
-      statusMsg.textContent = '';
-    }
-
-    submitBtn.addEventListener('click', async () => {
-      const email = emailInput.value.trim();
-      if (!email) {
-        statusMsg.textContent = 'Please enter an email.';
-        statusMsg.style.color = 'red';
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
-
-        const data = await res.json();
-        statusMsg.textContent = data.message;
-        statusMsg.style.color = res.ok ? '#80ff80' : 'red';
-
-        if (res.ok) {
-          setTimeout(closePopup, 2000);
-        }
-      } catch (err) {
-        statusMsg.textContent = 'Something went wrong.';
-        statusMsg.style.color = 'red';
-      }
-    });
-
     // ✅ Load Banners
     async function loadBanners() {
       try {
@@ -1025,7 +1130,6 @@
         }
       }
     }
-
     // for fetching silver news 
 
     let silverNews = [];
@@ -1081,10 +1185,42 @@
     }
 
 
+    // load project news 
+  async function loadProjectNewsCards() {
+    try {
+      const res = await fetch('/api/project-news');
+      const newsItems = await res.json();
+
+      const container = document.getElementById('projectNewsCards');
+      const display = newsItems.slice(0, 3); // Show only 3
+
+      display.forEach(news => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
+
+        card.innerHTML = `
+          <img src="${news.image}" alt="Project Image">
+          <div class="content">
+            <h4>${news.title}</h4>
+            <p>${news.description.slice(0, 70)}...</p>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    } catch (error) {
+      console.error('Error loading project news:', error);
+    }
+  }
+
+
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();
       fetchSilverNews();
+      loadProjectNewsCards();
     });
+
   </script>
 
 </body>

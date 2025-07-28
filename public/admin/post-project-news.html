@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Project News</title>
+  <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+
+    form {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .image-preview {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Post Project News</h2>
+
+  <form id="projectNewsForm">
+    <label for="title">News Title:</label>
+    <input type="text" id="title" name="title" required />
+
+    <label for="by">Author:</label>
+    <input type="text" id="by" name="by" required />
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="image">Choose Image (optional):</label>
+    <input type="file" id="imageInput" accept="image/*" />
+
+    <label for="imageUrl">Or Paste Image URL (optional):</label>
+    <input type="text" id="imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg" />
+
+    <img id="preview" class="image-preview" alt="Image Preview" />
+
+    <label for="description">News Content:</label>
+    <textarea name="description" id="description" rows="10"></textarea>
+
+    <button type="submit">Post News</button>
+  </form>
+
+  <script>
+    CKEDITOR.replace('description');
+
+    const imageInput = document.getElementById('imageInput');
+    const imageUrl = document.getElementById('imageUrl');
+    const preview = document.getElementById('preview');
+
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+          imageUrl.value = ''; // Clear URL input if file is chosen
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    imageUrl.addEventListener('input', () => {
+      if (imageUrl.value) {
+        preview.src = imageUrl.value;
+        preview.style.display = 'block';
+        imageInput.value = ''; // Clear file input if URL is typed
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    document.getElementById('projectNewsForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const by = document.getElementById('by').value;
+      const date = document.getElementById('date').value;
+      const description = CKEDITOR.instances.description.getData();
+
+      let image = '';
+
+      if (imageInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = async function (event) {
+          image = event.target.result;
+          await submitData();
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        image = imageUrl.value.trim();
+        await submitData();
+      }
+
+      async function submitData() {
+        try {
+          const res = await fetch('/api/project-news', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, by, date, description, image })
+          });
+
+          const data = await res.json();
+          if (res.ok) {
+            alert('Project news posted successfully!');
+            document.getElementById('projectNewsForm').reset();
+            CKEDITOR.instances.description.setData('');
+            preview.style.display = 'none';
+          } else {
+            alert('Failed to post news: ' + data.error);
+          }
+        } catch (err) {
+          alert('Submission failed: ' + err.message);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

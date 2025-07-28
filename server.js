@@ -40,7 +40,11 @@ const bannerRoutes = require('./routes/banners');
 const companyRoutes = require('./routes/company');
 const advertisementRoutes = require('./routes/advertisement');
 const goldNewsRoutes = require('./routes/goldNews');
-const silverRoutes = require('./routes/silver'); // ✅ fix name
+const silverRoutes = require('./routes/silver'); 
+const copperRoutes = require('./routes/copper'); 
+const projectNewsRoutes = require('./routes/projectNews');
+
+
 
 // 🧭 Mount routes
 app.use('/api/subscribe', subscribeRoute);
@@ -52,7 +56,10 @@ app.use('/api/banners', bannerRoutes);
 app.use('/api/company', companyRoutes);
 app.use('/api/ads', advertisementRoutes);
 app.use('/api/gold-news', goldNewsRoutes);
-app.use('/api/silver-news', silverRoutes); // ✅ correct usage
+app.use('/api/silver-news', silverRoutes); 
+app.use('/api/copper-news', copperRoutes); 
+app.use('/api', projectNewsRoutes);
+
 
 // 🔁 Fallback: Serve index.html for non-API GET routes (SPA behavior)
 app.use((req, res, next) => {

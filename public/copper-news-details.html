@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Copper News Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f8f9fa;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: gray;
+      margin-bottom: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+
+    .content {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="newsDetailContainer">
+    <p>Loading...</p>
+  </div>
+
+  <script>
+    async function fetchCopperNewsDetails() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const container = document.getElementById("newsDetailContainer");
+
+      if (!id) {
+        container.innerHTML = "<p>Invalid news ID.</p>";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/copper-news/${id}`);
+        const news = await res.json();
+
+        if (!res.ok) {
+          container.innerHTML = `<p>Failed to load news: ${news.message}</p>`;
+          return;
+        }
+
+        const date = new Date(news.createdAt).toLocaleDateString();
+
+        container.innerHTML = `
+          <h1>${news.title}</h1>
+          <p class="meta">By ${news.author || "Admin"} | ${date}</p>
+          <img src="${news.image}" alt="News Image" />
+          <div class="content">${news.description}</div>
+        `;
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = "<p>Error loading news. Please try again later.</p>";
+      }
+    }
+
+    fetchCopperNewsDetails();
+  </script>
+
+</body>
+</html>
