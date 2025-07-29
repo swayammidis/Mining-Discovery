@@ -838,7 +838,7 @@
     <a href="gold.html">Gold News</a>
     <a href="silver.html">Silver News</a>
     <a href="cooper.html">Copper News</a>
-    <a href="#">Precious Metals</a>
+    <a href="precious-metal.html">Precious Metals</a>
     <a href="#">Corporate News</a>
     <a href="#">World News</a>
     <a href="#">Leadership Thoughts</a>
@@ -1135,6 +1135,8 @@
       return p?.innerText || tempDiv.innerText.substring(0, 150);
     }
 
+
+    // fetch project news
     async function fetchProjectNews() {
     try {
       const res = await fetch('/api/project-news');

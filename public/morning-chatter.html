@@ -477,19 +477,41 @@
       flex-wrap: wrap;
     }
 
-    .news-card {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      background: #D9D9D9;
-      border-radius: 10px;
-      border: 1px solid #ddd;
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
     }
 
-    .news-card img {
-      width: 200px;
-      height: 150px;
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
       object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      color: #007bff;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .card h3:hover {
+      text-decoration: underline;
+    }
+
+    .card .meta {
+      font-size: 14px;
+      color: #666;
     }
 
     .text-content {
@@ -539,6 +561,22 @@
       padding: 10px;
       font-weight: bold;
     }
+    .announcement-card {
+  background: #fff;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.announcement-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.announcement-content img {
+  max-width: 100%;
+  height: auto;
+}
+
 
     /* === Responsive: Tablet === */
     @media (max-width: 992px) {
@@ -905,10 +943,10 @@
     <a href="gold.html">Gold News</a>
     <a href="silver.html">Silver News</a>
     <a href="cooper.html">Copper News</a>
-    <a href="#">Precious Metals</a>
-    <a href="#">Corporate News</a>
+    <a href="precious-metal.html">Precious Metals</a>
+    <a href="coporate-news.html">Corporate News</a>
     <a href="#">World News</a>
-    <a href="#">Leadership Thoughts</a>
+    <a href="leadership-thoughts.html">Leadership Thoughts</a>
     <a href="morning-chatter.html">Morning Chatter</a>
     <a href="#">Announcement</a>
     <a href="#">Popular This Week</a>
@@ -928,68 +966,36 @@
 
     <!-- Main -->
     <div class="main-content">
-      <h2>Morning chatter</h2>
+      <h2>Morning Chatter</h2>
 
-
-
-
-
-      <div class="news-card">
-        <img src="./image/mrng5.png" alt="">
-        <div class="text-content">
-          <h3>Carlin Gold-Vanadium Property Description and Ownership</h3>
-          <p> The property has exceptional infrastructural advantages. The property is road accessible from Carlin and
-            Elko. Carlin is a major rail hub to both coasts. Power is 3 miles from the property.</p>
-          <span>July 23, 2025</span>
-          <p>By: ARRAS MINERALS</p>
-        </div>
-
-      </div>
-      <div class="btn"><button type="button" class="btn-more">show more</button></div>
-
+  <div class="card-container" id="morningChatterContainer">
+    <!-- Cards will be injected here -->
+  </div>
 
 
       <div class="gold">
-        <h2>Gold News</h2>
-        <button type="button" class="gold-btn">show more</button>
-      </div>
-      <div class="gold-news">
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>US Gold Corp.</p>
-        </div>
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>Andorra Solid & Silver</p>
-        </div>
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>Astro Drills</p>
-        </div>
+        <h2>Announcements</h2>
+       <div class="gold-news" id="announcement-container">
+  <!-- Announcement cards will be injected here -->
+</div>
+
       </div>
     </div>
 
     <!-- Right -->
     <div class="right-sidebar">
-
       <div class="section-box">
         <div class="heading">
           <h3>Projects</h3>
-          <button type="button" class="gold-btn">show more</button>
+          <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show
+            More</button>
         </div>
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
 
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
+        <div class="project-news-container" id="projectNewsSection">
+          <!-- Project news cards will be injected here -->
+        </div>
       </div>
-      <div class="section-box">
 
-        <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
 
       <div class="section-box">
         <div class="report">
@@ -1111,8 +1117,95 @@
       }
     }
 
+    // ====== Fetch Project News ======
+    async function fetchProjectNews() {
+      try {
+        const res = await fetch('/api/project-news');
+        const data = await res.json();
+        const container = document.getElementById('projectNewsSection');
+        if (!container) return;
+
+        const latest = data.slice(0, 3);
+
+        latest.forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
+
+          card.innerHTML = `
+          <img src="${news.image}" alt="Project Image">
+          <div class="content">
+            <h4>${news.title}</h4>
+            <p>${news.description.slice(0, 80)}...</p>
+          </div>
+        `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Failed to load project news:', err);
+      }
+    }
+
+    // for fetching morning chatter 
+    async function fetchMorningChatters() {
+      const res = await fetch('/api/morning-chatter');
+      const data = await res.json();
+
+      const container = document.getElementById('morningChatterContainer');
+      container.innerHTML = '';
+
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          ${item.image ? `<img src="${item.image}" alt="Image">` : ''}
+          <h3 onclick="goToDetail('${item._id}')">${item.title}</h3>
+          <div class="meta">By ${item.author} on ${new Date(item.date).toLocaleDateString()}</div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function goToDetail(id) {
+      window.location.href = `morning-chatter-detail.html?id=${id}`;
+    }
+
+// for fetching announcements 
+    async function fetchAnnouncements() {
+    try {
+      const res = await fetch('/api/announcement');
+      const data = await res.json();
+
+      const container = document.getElementById('announcement-container');
+      container.innerHTML = ''; // Clear if any
+
+      data.reverse().forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'announcement-card';
+
+        card.innerHTML = `
+          <h3 class="announcement-title">${item.title}</h3>
+          <div class="announcement-content">${item.content}</div>
+        `;
+
+        container.appendChild(card);
+      });
+    } catch (err) {
+      console.error('Failed to load announcements:', err);
+    }
+  }
+
+  fetchAnnouncements();
+
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();
+      fetchProjectNews();
+      fetchMorningChatters();
+        fetchAnnouncements();
+
     });
   </script>
 

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>World News Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .news-detail {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .news-title {
+      font-size: 28px;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .news-meta {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+    .news-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    .news-description {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="news-detail">
+    <div id="newsContent">Loading...</div>
+  </div>
+
+  <script>
+    async function fetchNewsDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const newsId = urlParams.get('id');
+
+      if (!newsId) {
+        document.getElementById('newsContent').innerHTML = '<p>News ID not found in URL.</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/world-news/${newsId}`);
+        if (!res.ok) throw new Error('Failed to fetch');
+
+        const data = await res.json();
+        const { title, description, image, author, date } = data;
+
+        const formattedDate = new Date(date).toLocaleDateString('en-IN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+
+        document.getElementById('newsContent').innerHTML = `
+          <h1 class="news-title">${title}</h1>
+          <p class="news-meta">By ${author} | ${formattedDate}</p>
+          ${image ? `<img class="news-image" src="${image}" alt="${title}">` : ''}
+          <div class="news-description">${description}</div>
+        `;
+      } catch (err) {
+        console.error('Error loading news:', err);
+        document.getElementById('newsContent').innerHTML = '<p>Failed to load news content.</p>';
+      }
+    }
+
+    fetchNewsDetail();
+  </script>
+</body>
+</html>

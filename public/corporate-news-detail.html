@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Corporate News Detail</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .news-detail {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 1000px;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .news-title {
+      font-size: 26px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .news-meta {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .news-image {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .news-description {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.7;
+      word-wrap: break-word;
+    }
+
+    /* Make all images in the description responsive */
+    .news-description img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    /* Responsive typography */
+    @media (max-width: 768px) {
+      .news-title {
+        font-size: 22px;
+      }
+
+      .news-description {
+        font-size: 15px;
+      }
+
+      .news-detail {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .news-title {
+        font-size: 20px;
+      }
+
+      .news-meta {
+        font-size: 13px;
+      }
+
+      .news-description {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="news-detail">
+    <div id="newsContent">
+      <!-- Dynamic content will be inserted here -->
+    </div>
+  </div>
+
+  <script>
+    async function fetchNewsDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const newsId = urlParams.get('id');
+
+      if (!newsId) {
+        document.getElementById('newsContent').innerHTML = '<p>News ID not found in URL.</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/corporate-news/${newsId}`);
+        if (!res.ok) throw new Error('Failed to fetch');
+
+        const data = await res.json();
+        const { title, description, image, author, date } = data;
+
+        const formattedDate = new Date(date).toLocaleDateString('en-IN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+
+        document.getElementById('newsContent').innerHTML = `
+          <h1 class="news-title">${title}</h1>
+          <p class="news-meta">By ${author} | ${formattedDate}</p>
+          ${image ? `<img class="news-image" src="${image}" alt="${title}">` : ''}
+          <div class="news-description">${description}</div>
+        `;
+      } catch (err) {
+        console.error('Error loading news:', err);
+        document.getElementById('newsContent').innerHTML = '<p>Failed to load news content.</p>';
+      }
+    }
+
+    fetchNewsDetail();
+  </script>
+</body>
+</html>

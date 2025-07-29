@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Announcement</title>
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 800px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    input, textarea, button, label {
+      width: 100%;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .small-note {
+      font-size: 13px;
+      color: #666;
+      margin-top: -15px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Post Announcement</h2>
+    <form id="announcementForm">
+      <label for="title">Title</label>
+      <input type="text" id="title" required>
+
+      <label for="author">Author</label>
+      <input type="text" id="author" placeholder="Default: Admin">
+
+      <label for="image">Image URL</label>
+      <input type="text" id="image" placeholder="Optional image URL">
+
+      <label for="upload">Or Upload Image</label>
+      <input type="file" id="upload" accept="image/*">
+      <div class="small-note">If both are filled, uploaded image will be used.</div>
+
+      <label for="description">Description</label>
+      <textarea id="description" rows="10"></textarea>
+
+      <label for="date">Date</label>
+      <input type="date" id="date">
+
+      <button type="submit">Post Announcement</button>
+    </form>
+  </div>
+
+  <script>
+    let ckEditorInstance;
+
+    ClassicEditor
+      .create(document.querySelector('#description'))
+      .then(editor => {
+        ckEditorInstance = editor;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    async function uploadImage(file) {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) throw new Error('Image upload failed');
+      const data = await res.json();
+      return data.url; // backend must return { url: 'http://...' }
+    }
+
+    document.getElementById('announcementForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const author = document.getElementById('author').value || 'Admin';
+      const imageURL = document.getElementById('image').value.trim();
+      const imageFile = document.getElementById('upload').files[0];
+      const date = document.getElementById('date').value;
+      const description = ckEditorInstance.getData();
+
+      let finalImage = imageURL;
+
+      if (imageFile) {
+        try {
+          finalImage = await uploadImage(imageFile);
+        } catch (err) {
+          alert('Image upload failed. Try again.');
+          return;
+        }
+      }
+
+      const body = {
+        title,
+        author,
+        image: finalImage,
+        date,
+        description
+      };
+
+      try {
+        const res = await fetch('/api/announcement', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert('Announcement posted successfully!');
+          window.location.reload();
+        } else {
+          alert('Error: ' + (data.error || 'Failed to post'));
+        }
+      } catch (err) {
+        console.error('Submit error:', err);
+        alert('Something went wrong.');
+      }
+    });
+  </script>
+</body>
+</html>

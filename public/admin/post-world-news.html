@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post World News</title>
+  <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 30px;
+    }
+    form {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    label {
+      font-weight: bold;
+    }
+    button {
+      padding: 12px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .preview {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="worldNewsForm">
+    <h2>Post World News</h2>
+
+    <label for="title">News Title</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="author">Author</label>
+    <input type="text" id="author" name="author" required>
+
+    <label for="imageUrl">Image URL</label>
+    <input type="text" id="imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg">
+
+    <label for="imageFile">Or Upload Image</label>
+    <input type="file" id="imageFile" accept="image/*">
+
+    <img id="imagePreview" class="preview" alt="Image Preview">
+
+    <label for="description">News Content</label>
+    <textarea name="description" id="description" rows="10"></textarea>
+
+    <button type="submit">Post News</button>
+  </form>
+
+  <script>
+    CKEDITOR.replace('description');
+
+    const imageFileInput = document.getElementById('imageFile');
+    const imageUrlInput = document.getElementById('imageUrl');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageFileInput.addEventListener('change', function () {
+      const file = imageFileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('worldNewsForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const author = document.getElementById('author').value;
+      const description = CKEDITOR.instances.description.getData();
+
+      let image = imageUrlInput.value;
+
+      // If file was selected, override image with base64 string
+      if (imageFileInput.files.length > 0) {
+        const file = imageFileInput.files[0];
+        const reader = new FileReader();
+        reader.onloadend = async function () {
+          image = reader.result;
+
+          await submitNews({ title, author, description, image });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        await submitNews({ title, author, description, image });
+      }
+    });
+
+    async function submitNews(newsData) {
+      try {
+        const res = await fetch('/api/world-news', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newsData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('World News posted successfully!');
+          document.getElementById('worldNewsForm').reset();
+          CKEDITOR.instances.description.setData('');
+          imagePreview.style.display = 'none';
+        } else {
+          alert(data.error || 'Something went wrong.');
+        }
+      } catch (err) {
+        alert('Error submitting form');
+      }
+    }
+  </script>
+
+</body>
+</html>

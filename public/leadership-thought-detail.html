@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leadership Thought Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+      background: #f7f7f7;
+    }
+
+    .leadership-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    #newsImage {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    /* 🛠️ Ensure all images inside content scale properly */
+    .content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+
+    @media screen and (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="leadership-container">
+    <img id="newsImage" src="" alt="Leadership Image" />
+    <h1 id="newsTitle">Loading...</h1>
+    <div class="meta" id="newsMeta"></div>
+    <div class="content" id="newsDescription"></div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    async function loadLeadershipThought() {
+      try {
+        const res = await fetch(`/api/leadership-thought/${id}`);
+        const news = await res.json();
+
+        document.getElementById('newsImage').src = news.imageUrl || '/default.jpg';
+        document.getElementById('newsTitle').innerText = news.title;
+        document.getElementById('newsMeta').innerText = `By: ${news.author} | ${new Date(news.date).toLocaleDateString()}`;
+        document.getElementById('newsDescription').innerHTML = news.description;
+      } catch (err) {
+        console.error('Failed to load leadership thought:', err);
+        document.getElementById('newsTitle').innerText = 'Failed to load news.';
+      }
+    }
+
+    loadLeadershipThought();
+  </script>
+
+</body>
+</html>
