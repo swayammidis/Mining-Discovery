@@ -398,6 +398,7 @@ body {
 
 /* === Split Section Layout === */
 .split-section {
+
   display: flex;
   gap: 30px;
   align-items: flex-start;
@@ -607,7 +608,7 @@ body {
     width: 100%;
   }
 
-  .main-news-image {
+  .-image {
     width: 100%;
   }
 }
