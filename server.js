@@ -44,6 +44,9 @@ const leadershipThoughtRoutes = require('./routes/leadershipThought');
 const morningChatterRoutes = require('./routes/morningChatter');
 const announcementRoutes = require('./routes/announcement');
 const uploadRoute = require('./routes/upload'); // ✅ multer-based upload
+const researchReportRoutes = require('./routes/researchReport');
+const sponsoredRoutes = require('./routes/sponsored');
+
 
 // Mount routes
 app.use('/api/subscribe', subscribeRoute);
@@ -65,6 +68,9 @@ app.use('/api/leadership-thought', leadershipThoughtRoutes);
 app.use('/api/morning-chatter', morningChatterRoutes);
 app.use('/api/announcement', announcementRoutes);
 app.use('/api/upload', uploadRoute); // ✅
+app.use('/api/research-reports', researchReportRoutes);
+app.use('/api/sponsored', sponsoredRoutes);
+
 
 app.get('/api/health', (req, res) => {
   res.json({ message: 'API is working fine.' });

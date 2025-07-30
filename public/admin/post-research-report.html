@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Research Report</title>
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 40px;
+    }
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea, button, select {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    input[type="file"] {
+      padding: 5px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Post Research Report</h2>
+
+  <form id="researchForm">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required />
+
+    <label for="author">Author (optional):</label>
+    <input type="text" id="author" name="author" />
+
+    <label for="date">Date (optional):</label>
+    <input type="date" id="date" name="date" />
+
+    <label for="image">Thumbnail Image (optional):</label>
+    <input type="file" id="image" accept="image/*" />
+
+    <label for="description">Description:</label>
+    <textarea id="editor" name="description"></textarea>
+
+    <button type="submit">Post Research Report</button>
+  </form>
+
+  <script>
+    let editorInstance;
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .then(editor => {
+        editorInstance = editor;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    document.getElementById('researchForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const date = document.getElementById('date').value;
+      const description = editorInstance.getData();
+      const imageFile = document.getElementById('image').files[0];
+
+      let imageUrl = '';
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('image', imageFile); // ✅ Use "image" key to match multer config
+
+        try {
+          const uploadRes = await fetch('http://localhost:5000/api/upload', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!uploadRes.ok) throw new Error('Upload failed');
+
+          const uploadData = await uploadRes.json();
+          imageUrl = uploadData.url;
+        } catch (err) {
+          console.error('Upload error:', err);
+          return alert('Image upload failed.');
+        }
+      }
+
+      try {
+        const res = await fetch('http://localhost:5000/api/research-reports', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title,
+            author,
+            image: imageUrl,
+            description,
+            date
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert('Research report posted successfully!');
+          location.reload();
+        } else {
+          alert(data.error || 'Failed to post.');
+        }
+      } catch (err) {
+        alert('Something went wrong.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

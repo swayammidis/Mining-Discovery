@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Research Report Detail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    img {
+      max-width: 100%;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    .meta {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #007BFF;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Style CKEditor content */
+    #description {
+      line-height: 1.6;
+    }
+    #description h2, #description h3 {
+      margin-top: 20px;
+    }
+    #description p {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title">Loading...</h1>
+    <div class="meta" id="meta"></div>
+    <img id="image" src="" alt="Research image" style="display:none;" />
+    <div id="description"></div>
+    <a class="back-link" href="research-reports.html">← Back to Research Reports</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const reportId = params.get('id');
+
+    async function fetchResearchReport() {
+      try {
+        const res = await fetch(`http://localhost:5000/api/research-reports/${reportId}`);
+        if (!res.ok) throw new Error('Failed to fetch report');
+        
+        const data = await res.json();
+
+        document.getElementById('title').innerText = data.title || 'Untitled';
+
+        const publishedDate = data.date || data.createdAt || new Date();
+        document.getElementById('meta').innerText = `Author: ${data.author || 'Anonymous'} | Date: ${new Date(publishedDate).toLocaleDateString()}`;
+        
+        if (data.image) {
+          const imageEl = document.getElementById('image');
+          imageEl.src = data.image.startsWith('/uploads') ? `http://localhost:5000${data.image}` : data.image;
+          imageEl.style.display = 'block';
+        }
+
+        document.getElementById('description').innerHTML = data.description || 'No content available.';
+      } catch (err) {
+        document.getElementById('title').innerText = 'Failed to load report.';
+        console.error('Error loading research report:', err);
+      }
+    }
+
+    fetchResearchReport();
+  </script>
+</body>
+</html>

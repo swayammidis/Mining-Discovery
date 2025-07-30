@@ -492,6 +492,153 @@
             object-fit: cover;
         }
 
+        /* Container styling (applies to researchReportsContainer or sponsoredPostsContainer) */
+        #researchReportsContainer,
+        #sponsoredPostsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            padding: 10px 0;
+        }
+
+        /* Individual report card styling */
+        .report-card {
+            background: #fff;
+            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: calc(33.333% - 13.33px);
+            /* 3 per row with 20px gap */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.2s ease;
+        }
+
+        .report-card:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Image styling */
+        .report-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Title styling */
+        .report-card h4 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .report-card h4 a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Description text */
+        .report-card p {
+            font-size: 14px;
+            color: #444;
+            margin: 0;
+        }
+
+        /* Responsive: 2 cards per row on tablets */
+        @media (max-width: 1024px) {
+            .report-card {
+                width: calc(50% - 10px);
+            }
+        }
+
+        /* Responsive: 1 card per row on small screens */
+        @media (max-width: 600px) {
+            .report-card {
+                width: 100%;
+            }
+        }
+
+#researchReportsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    padding: 10px 0;
+}
+
+/* Report Card */
+.report-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+    overflow: hidden;
+    height: 100%;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Image */
+.report-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* Title */
+.report-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    line-height: 1.3;
+    height: 45px;
+    overflow: hidden;
+}
+
+.report-card h4 a {
+    color: #222;
+    text-decoration: none;
+}
+
+/* Description */
+.report-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+    margin: 0;
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .report-card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 600px) {
+    .report-card {
+        width: 100%;
+    }
+}
+
+
         .text-content {
             padding: 15px;
         }
@@ -905,16 +1052,16 @@
         <a href="gold.html">Gold News</a>
         <a href="silver.html">Silver News</a>
         <a href="cooper.html">Copper News</a>
-        <a href="#">Precious Metals</a>
-        <a href="#">Corporate News</a>
-        <a href="#">World News</a>
-        <a href="#">Leadership Thoughts</a>
+        <a href="precious-metal.html">Precious Metals</a>
+        <a href="coporate-news.html">Corporate News</a>
+        <a href="world-news.html">World News</a>
+        <a href="leadership-thoughts.html">Leadership Thoughts</a>
         <a href="morning-chatter.html">Morning Chatter</a>
-        <a href="#">Announcement</a>
-        <a href="#">Popular This Week</a>
-        <a href="#">Projects</a>
-        <a href="#">Research Reports</a>
-        <a href="#">Sponsored Post</a>
+        <a href="announcement.html">Announcement</a>
+        <a href="popular.html">Popular This Week</a>
+        <a href="project.html">Projects</a>
+        <a href="research.html">Research Reports</a>
+        <a href="sponsored.html">Sponsored Post</a>
     </div>
 
     <!-- Content Section -->
@@ -940,55 +1087,32 @@
 
 
             <div class="gold">
-                <h2>Gold News</h2>
-                <button type="button" class="gold-btn">show more</button>
+                <h2>Sponsored Posts</h2>
+                <button type="button" class="gold-btn" onclick="location.href='sponsored.html'">Show
+                    More</button>
             </div>
-            <div class="gold-news">
-                <div class="gold-card">
-                    <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-                    <p>US Gold Corp.</p>
-                </div>
-                <div class="gold-card">
-                    <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-                    <p>Andorra Solid & Silver</p>
-                </div>
-                <div class="gold-card">
-                    <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-                    <p>Astro Drills</p>
-                </div>
-            </div>
+
+            <div class="gold-news" id="sponsoredPostsContainer"></div>
+
+
+
         </div>
 
         <!-- Right -->
         <div class="right-sidebar">
 
-            <div class="section-box">
-                <div class="heading">
-                    <h3>Projects</h3>
-                    <button type="button" class="gold-btn">show more</button>
-                </div>
-                <img src="./image/pexels-tomfisk-2101137.png" alt="">
-                <p>Gold Eagle Corp Latest Exploration</p>
-            </div>
-            <div class="section-box">
 
-                <img src="./image/pexels-tomfisk-2101137.png" alt="">
-                <p>Gold Eagle Corp Latest Exploration</p>
-            </div>
-            <div class="section-box">
-
-                <img src="./image/pexels-tomfisk-2101137.png" alt="">
-                <p>Gold Eagle Corp Latest Exploration</p>
-            </div>
 
             <div class="section-box">
                 <div class="report">
                     <h3>Reports</h3>
+                    <button type="button" class="gold-btn" onclick="location.href='all-research-reports.html'">Show
+                        More</button>
 
-                    <button type="button" class="gold-btn">show more</button>
+                    <div id="researchReportsContainer"></div>
+
                 </div>
-                <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-                <p>Global Mining Report 2025</p>
+
             </div>
         </div>
     </div>
@@ -1165,9 +1289,71 @@
             return p?.innerText || tempDiv.innerText.substring(0, 150);
         }
 
+        // fetch sponsored posts
+        async function fetchTopSponsoredPosts() {
+            try {
+                const res = await fetch('http://localhost:5000/api/sponsored');
+                const data = await res.json();
+
+                const topThree = data.slice(0, 3); // Only top 3
+                const container = document.getElementById('sponsoredPostsContainer');
+                container.innerHTML = '';
+
+                topThree.forEach(post => {
+                    const div = document.createElement('div');
+                    div.classList.add('report-card'); // Use same styling as research report cards
+
+                    div.innerHTML = `
+          ${post.image ? `<img src="${post.image}" alt="Sponsored Post Image" />` : ''}
+          <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
+          <p>${post.description.slice(0, 150)}...</p>
+        `;
+
+                    container.appendChild(div);
+                });
+            } catch (err) {
+                console.error('Error fetching sponsored posts:', err);
+            }
+        }
+
+        // fetch research reports 
+
+        async function fetchTopResearchReports() {
+            try {
+                const res = await fetch('http://localhost:5000/api/research-reports');
+                const data = await res.json();
+
+                const topThree = data.slice(0, 3); // Get only top 3
+                const container = document.getElementById('researchReportsContainer');
+                container.innerHTML = '';
+
+                topThree.forEach(report => {
+                    const div = document.createElement('div');
+                    div.classList.add('report-card');
+
+                    div.innerHTML = `
+          ${report.image ? `<img src="${report.image}" alt="Report Image" />` : ''}
+          <h4><a href="research-report-detail.html?id=${report._id}">${report.title}</a></h4>
+          <p>${report.description?.slice(0, 150) || ''}...</p>
+        `;
+
+                    container.appendChild(div);
+                });
+            } catch (err) {
+                console.error('Error fetching research reports:', err);
+            }
+        }
+
+
+
+
+
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
+            fetchTopSponsoredPosts();
+            fetchTopResearchReports();
+
         });
     </script>
 

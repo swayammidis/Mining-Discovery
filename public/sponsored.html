@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>precious Metal</title>
+    <title>Sponsored Post</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         * {
@@ -452,6 +452,10 @@
             background-color: white;
         }
 
+        span {
+            color: #8d6d2a;
+        }
+
         .btn-more,
         .gold-btn {
             border: 1px solid #AC8A4A;
@@ -473,95 +477,155 @@
             flex-wrap: wrap;
         }
 
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            z-index: 99;
-        }
-
-        #subscribe-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #111;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            display: none;
-            z-index: 100;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        #subscribe-popup h3 {
-            margin-bottom: 1rem;
-            color: #ffcc00;
-        }
-
-        #email-input {
-            width: 90%;
-            padding: 0.7rem;
-            margin-bottom: 1rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        #subscribe-popup button {
-            padding: 0.6rem 1.2rem;
-            margin: 0.3rem;
-            font-size: 0.9rem;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        #submit-subscribe {
-            background-color: #ffcc00;
-            color: #000;
-        }
-
-        #submit-subscribe:hover {
-            background-color: black;
-        }
-
-        #subscribe-popup button:last-child {
-            background-color: #444;
-            color: #fff;
-        }
-
-        #subscribe-popup button:last-child:hover {
-            background-color: #666;
-        }
-
-        #status-msg {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .news-card {
+        #sponsoredPostsContainer {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            background: #D9D9D9;
-            border-radius: 10px;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .sponsored-card {
+            background-color: #fff;
             border: 1px solid #ddd;
+            border-radius: 12px;
+            width: 300px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
         }
 
-        .news-card img {
-            width: 200px;
-            height: 150px;
+        .sponsored-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsored-card img {
+            width: 100%;
+            height: 180px;
             object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
         }
 
+        .sponsored-card h4 {
+            font-size: 1.1rem;
+            margin: 0 0 10px;
+            color: #222;
+        }
+
+        .sponsored-card h4 a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        .sponsored-card h4 a:hover {
+            color: #007BFF;
+        }
+
+        .sponsored-card p {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.4;
+            max-height: 3.6em;
+            /* approx 2 lines */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-more {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-more:hover {
+            background-color: #0056b3;
+        }
+
+         .section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .gold-btn {
+      background-color: #d4af37;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+
+    .gold-news {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .news-card {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: calc(33.33% - 14px);
+    }
+
+    .news-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .text-content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .news-title {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .news-title h3 {
+      font-size: 18px;
+      margin: 0 0 10px;
+    }
+
+    .text-content p {
+      color: #555;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .news-card {
+        width: 100%;
+      }
+    }
+        
         .text-content {
             padding: 15px;
         }
@@ -594,7 +658,7 @@
             flex: 1;
             min-width: 150px;
             border-radius: 10px;
-            background: #AC8A4A;
+            background: #AC8A4A4F;
             border: 1px solid #ddd;
             text-align: center;
         }
@@ -622,7 +686,52 @@
                 width: 100%;
             }
 
+            .news-card {
+                flex-direction: column;
+            }
 
+            .news-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .gold-news {
+                flex-direction: column;
+            }
+
+            .gold-card {
+                width: 100%;
+            }
+        }
+
+        /* === Responsive: Phone === */
+        @media (max-width: 576px) {
+            .container {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .news-card {
+                gap: 10px;
+            }
+
+            .text-content {
+                padding: 10px;
+            }
+
+            .gold-card img {
+                height: auto;
+            }
+
+            .btn-more,
+            .gold-btn {
+                font-size: 14px;
+                padding: 4px 10px;
+            }
+
+            .gold-news {
+                gap: 15px;
+            }
         }
 
         .footer-container {
@@ -698,7 +807,81 @@
             cursor: pointer;
         }
 
-        */ .footer-left p {
+        */ #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 99;
+        }
+
+        #subscribe-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #111;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            display: none;
+            z-index: 100;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        #subscribe-popup h3 {
+            margin-bottom: 1rem;
+            color: #ffcc00;
+        }
+
+        #email-input {
+            width: 90%;
+            padding: 0.7rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        #subscribe-popup button {
+            padding: 0.6rem 1.2rem;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        #submit-subscribe {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        #submit-subscribe:hover {
+            background-color: black;
+        }
+
+        #subscribe-popup button:last-child {
+            background-color: #444;
+            color: #fff;
+        }
+
+        #subscribe-popup button:last-child:hover {
+            background-color: #666;
+        }
+
+        #status-msg {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-left p {
             font-size: 15px;
             margin-top: 15px;
             line-height: 1.6;
@@ -820,10 +1003,6 @@
 
         }
 
-        span {
-            color: #8d6d2a;
-        }
-
         @media (max-width: 480px) {
             .left-sidebar {
                 display: none;
@@ -872,7 +1051,7 @@
                 <a href="about.html">About Us</a>
                 <a href="#">News Section</a>
                 <a href="#">Morning Chatter</a>
-                <a href="#">Magazine</a>
+                <a href="magazine.html">Magazine</a>
                 <a href="#">Services</a>
                 <a href="#">Contact Us</a>
             </div>
@@ -894,6 +1073,7 @@
             <button onclick="closePopup()">Close</button>
             <p id="status-msg"></p>
         </div>
+
 
 
         <div class="search-bar-container" id="searchContainer">
@@ -942,22 +1122,23 @@
     </div>
 
     <!-- Dropdown Links -->
-  <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html">Latest News</a>
-    <a href="gold.html">Gold News</a>
-    <a href="silver.html">Silver News</a>
-    <a href="cooper.html">Copper News</a>
-    <a href="precious-metal.html">Precious Metals</a>
-    <a href="coporate-news.html">Corporate News</a>
-    <a href="world-news.html">World News</a>
-    <a href="leadership-thoughts.html">Leadership Thoughts</a>
-    <a href="morning-chatter.html">Morning Chatter</a>
-    <a href="announcement.html">Announcement</a>
-    <a href="popular.html">Popular This Week</a>
-    <a href="project.html">Projects</a>
-    <a href="research.html">Research Reports</a>
-    <a href="sponsored.html">Sponsored Post</a>
-  </div>
+    <div class="dropdown-links" id="dropdownMenu">
+        <a href="latest-news.html">Latest News</a>
+        <a href="gold.html">Gold News</a>
+        <a href="silver.html">Silver News</a>
+        <a href="cooper.html">Copper News</a>
+        <a href="precious-metal.html">Precious Metals</a>
+        <a href="coporate-news.html">Corporate News</a>
+        <a href="world-news.html">World News</a>
+        <a href="leadership-thoughts.html">Leadership Thoughts</a>
+        <a href="morning-chatter.html">Morning Chatter</a>
+        <a href="announcement.html">Announcement</a>
+        <a href="popular.html">Popular This Week</a>
+        <a href="project.html">Projects</a>
+        <a href="research.html">Research Reports</a>
+        <a href="sponsored.html">Sponsored Post</a>
+    </div>
+
 
     <!-- Content Section -->
     <div class="container">
@@ -970,27 +1151,30 @@
 
         <!-- Main -->
         <div class="main-content">
-            <h2>Precious Metal</h2>
-            <div class="precious-metal-news" id="precious-metal-container">
-                <!-- News cards will be inserted here dynamically -->
-            </div>
+            <h2>Sponsored Posts</h2>
+
+            <div id="sponsoredPostsContainer"></div>
+
             <div class="btn">
-                <button type="button" class="btn-more">show more</button>
+                <button type="button" class="btn-more" onclick="loadMoreSponsored()">Show More</button>
             </div>
+
 
 
 
 
             <div class="gold">
-                <h2>Corporate News</h2>
-                <button type="button" class="btns" onclick="window.location.href='all-corporate-news.html'">show
-                    more</button>
-            </div>
+                 <h2>Latest News</h2>
+    <button type="button" class="gold-btn">Show More</button>
+    </div>
 
-            <div class="gold-news" id="corporateNewsContainer">
-                <!-- Corporate news cards will be dynamically inserted here -->
-            </div>
+    <div class="gold-news" id="latestNewsContainer">
+      <!-- Latest news cards will appear here -->
+    </div>
         </div>
+
+
+
 
         <!-- Right -->
         <div class="right-sidebar">
@@ -1007,9 +1191,15 @@
             </div>
 
             <div class="section-box">
-                <h3>Reports</h3>
-                <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-                <p>Global Mining Report 2025</p>
+                <div class="report">
+                    <h3>Reports</h3>
+                    <button type="button" class="gold-btn">Show More</button>
+
+                    <div class="gold-news" id="researchReportsContainer">
+                        <!-- Top 2 reports will be injected here -->
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -1073,7 +1263,6 @@
     </div>
 
     <script>
-        // for news section dropdown
         function toggleDropdown() {
             const dropdown = document.getElementById("dropdownMenu");
             const header = document.getElementById("newsToggle");
@@ -1081,8 +1270,7 @@
             header.classList.toggle("rotate");
         }
 
-        // for subscribe button 
-
+        // ====== Subscribe Popup ======
         const popup = document.getElementById('subscribe-popup');
         const overlay = document.getElementById('overlay');
         const openBtn = document.getElementById('open-subscribe');
@@ -1173,14 +1361,15 @@
             }
         }
 
-        // fetch project news
+        // ====== Fetch Project News ======
         async function fetchProjectNews() {
             try {
                 const res = await fetch('/api/project-news');
                 const data = await res.json();
                 const container = document.getElementById('projectNewsSection');
+                if (!container) return;
 
-                const latest = data.slice(0, 3); // Display only 3
+                const latest = data.slice(0, 3);
 
                 latest.forEach(news => {
                     const card = document.createElement('div');
@@ -1202,81 +1391,133 @@
             }
         }
 
-        // fetch coporate news 
-        async function fetchCorporateNews() {
+        // for fetching sponsored news 
+        let sponsoredPage = 0;
+        const postsPerPage = 3;
+
+        async function loadMoreSponsored() {
             try {
-                const res = await fetch('/api/corporate-news/latest?limit=3');
-                const news = await res.json();
+                const res = await fetch('http://localhost:5000/api/sponsored');
+                const data = await res.json();
 
-                const container = document.getElementById('corporateNewsContainer');
-                container.innerHTML = '';
+                const container = document.getElementById('sponsoredPostsContainer');
+                const start = sponsoredPage * postsPerPage;
+                const end = start + postsPerPage;
+                const sliced = data.slice(start, end);
 
-                if (!Array.isArray(news) || news.length === 0) {
-                    container.innerHTML = '<p>No corporate news available.</p>';
-                    return;
-                }
-
-                news.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'gold-card';
-
-                    card.innerHTML = `
-          <img src="${item.image || './image/default-placeholder.png'}" alt="${item.title}">
-          <p>
-            <a href="corporate-news-detail.html?id=${item._id}" style="text-decoration: none; color: inherit;">
-              ${item.title}
-            </a>
-          </p>
-        `;
-
-                    container.appendChild(card);
+                sliced.forEach(post => {
+                    const div = document.createElement('div');
+                    div.classList.add('sponsored-card');
+                    div.innerHTML = `
+            ${post.image ? `<img src="${post.image}" alt="Sponsored Image" />` : ''}
+            <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
+            <p>${post.description.slice(0, 150)}...</p>
+          `;
+                    container.appendChild(div);
                 });
+
+                sponsoredPage++;
+                if (end >= data.length) {
+                    document.querySelector('.btn-more').style.display = 'none';
+                }
             } catch (err) {
-                console.error('Error fetching corporate news:', err);
-                document.getElementById('corporateNewsContainer').innerHTML = '<p>Error loading corporate news.</p>';
+                console.error('Error loading sponsored posts:', err);
             }
         }
 
-        fetchCorporateNews();
+// ✅ Load Latest News
+    async function loadLatestNews() {
+      try {
+        const res = await fetch('/api/news/latest');
+        const data = await res.json();
+        const container = document.getElementById('latestNewsContainer');
+        if (!container) return;
 
+        container.innerHTML = '';
 
+        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No latest news available.</p>';
+          return;
+        }
+
+        data.slice(0, 3).forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'news-card';
+
+          // ✅ Image
+          const image = document.createElement('img');
+          image.src = news.image || './image/placeholder.png';
+          image.alt = news.title;
+          image.className = 'news-image';
+
+          // ✅ Text content container
+          const textContent = document.createElement('div');
+          textContent.className = 'text-content';
+
+          // ✅ News title (clickable)
+          const link = document.createElement('a');
+          link.href = `view-news.html?id=${news._id}`;
+          link.innerHTML = `<h3>${news.title}</h3>`;
+          link.className = 'news-title';
+
+          // ✅ Clean description: strip HTML tags from `news.description`
+          const para = document.createElement('p');
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = news.description || '';
+          const plainText = tempDiv.textContent || tempDiv.innerText || '';
+          para.textContent = plainText.slice(0, 160) + '...';
+
+          // 🧱 Assemble
+          textContent.appendChild(link);
+          textContent.appendChild(para);
+          card.appendChild(image);
+          card.appendChild(textContent);
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error('Error loading latest news:', error);
+      }
+    }
+
+ 
+
+        // ====== Initial Load ======
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
-            fetchCorporateNews();
-
+            loadMoreSponsored();
+            loadLatestNews();
 
         });
 
 
-        // Fetch latest 3 precious metal news
-        fetch('/api/precious-metal')
-            .then(res => res.json())
-            .then(data => {
-                const container = document.getElementById('precious-metal-container');
-                container.innerHTML = '';
+     //   for fetching research reports 
+         document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/research-reports");
+        const data = await res.json();
 
-                data.slice(0, 3).forEach(news => {
-                    const card = document.createElement('div');
-                    card.className = 'gold-card'; // Reuse existing gold-card styling or customize
+        const container = document.getElementById("researchReportsContainer");
+        const topReports = data.slice(0, 2); // Fetch top 2
 
-                    card.innerHTML = `
-          <img src="${news.image}" alt="Precious Metal Image">
-          <p>
-            <a href="precious-metal-detail.html?id=${news._id}" class="metal-link">
-              ${news.title}
-            </a>
-          </p>
-        `;
+        topReports.forEach(report => {
+          const card = document.createElement("div");
+          card.classList.add("research-card");
 
-                    container.appendChild(card);
-                });
-            })
-            .catch(err => {
-                console.error('Error fetching precious metal news:', err);
-            });
+          card.innerHTML = `
+            ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+            <h4 class="research-title">
+              <a href="research-detail.html?id=${report._id}">${report.title}</a>
+            </h4>
+            <p class="research-desc">${report.description?.slice(0, 150) || ''}...</p>
+          `;
 
-
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching research reports:", error);
+      }
+    });
 
     </script>
 
