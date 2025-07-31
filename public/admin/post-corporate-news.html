@@ -1,33 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Post Corporate News</title>
   <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f4;
+      margin: 0;
       padding: 20px;
     }
+
     .container {
       max-width: 800px;
+      width: 100%;
       background: #fff;
       padding: 25px;
       border-radius: 10px;
       margin: auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     h2 {
       text-align: center;
       color: #444;
+      font-size: 1.8rem;
     }
+
     label {
       display: block;
       margin-top: 20px;
       font-weight: bold;
       color: #222;
+      font-size: 1rem;
     }
+
     input[type="text"],
     input[type="url"],
     input[type="file"],
@@ -38,7 +51,9 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       resize: vertical;
+      font-size: 1rem;
     }
+
     button {
       margin-top: 25px;
       background-color: #28527a;
@@ -48,9 +63,50 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 1rem;
+      width: 100%;
     }
+
     button:hover {
       background-color: #1d3c5a;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 20px 15px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      label,
+      input,
+      textarea,
+      button {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      label {
+        font-size: 0.9rem;
+      }
+
+      input,
+      textarea,
+      button {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -80,7 +136,6 @@
   <script>
     let editorInstance;
 
-    // Initialize CKEditor
     ClassicEditor
       .create(document.querySelector('#description'))
       .then(editor => {
@@ -90,7 +145,6 @@
         console.error('CKEditor initialization error:', error);
       });
 
-    // Convert image file to Base64
     function toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -100,7 +154,6 @@
       });
     }
 
-    // Handle form submission
     document.getElementById('corporateNewsForm').addEventListener('submit', async function (e) {
       e.preventDefault();
 

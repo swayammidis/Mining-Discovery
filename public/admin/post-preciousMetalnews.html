@@ -3,13 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Post Precious Metal News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f4;
+      margin: 0;
       padding: 20px;
     }
+
     .container {
       max-width: 800px;
       background: #fff;
@@ -18,27 +25,33 @@
       margin: auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     h2 {
       text-align: center;
       color: #444;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
+
     label {
       display: block;
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
       color: #222;
     }
+
     input[type="text"],
     input[type="url"],
     input[type="file"],
     textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 5px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      resize: vertical;
+      font-size: 16px;
     }
+
     button {
       margin-top: 25px;
       background-color: #AC8A4A;
@@ -48,9 +61,49 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 16px;
+      width: 100%;
     }
+
     button:hover {
       background-color: #937136;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      input,
+      textarea,
+      button {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 15px;
+        border-radius: 6px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      input,
+      textarea,
+      button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -77,71 +130,71 @@
     </form>
   </div>
 
- <script>
-  let editorInstance;
+  <script>
+    let editorInstance;
 
-  ClassicEditor
-    .create(document.querySelector('#description'))
-    .then(editor => {
-      editorInstance = editor;
-    })
-    .catch(error => {
-      console.error('CKEditor initialization error:', error);
-    });
-
-  function toBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
-      reader.readAsDataURL(file);
-    });
-  }
-
-  document.getElementById('preciousMetalForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
-    const imageUrl = document.getElementById('imageUrl').value;
-    const imageFile = document.getElementById('imageFile').files[0];
-    const content = editorInstance.getData(); // ✅ changed here
-
-    let image = imageUrl;
-    if (imageFile) {
-      image = await toBase64(imageFile);
-    }
-
-    if (!title || !content || !image || !author) {
-      alert('Please fill in all required fields.');
-      return;
-    }
-
-    const payload = { title, author, image, content }; // ✅ changed here
-
-    try {
-      const response = await fetch('/api/precious-metal', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
+    ClassicEditor
+      .create(document.querySelector('#description'))
+      .then(editor => {
+        editorInstance = editor;
+      })
+      .catch(error => {
+        console.error('CKEditor initialization error:', error);
       });
 
-      if (response.ok) {
-        alert('Precious Metal news posted successfully!');
-        this.reset();
-        editorInstance.setData('');
-      } else {
-        const errorData = await response.json();
-        alert('Error: ' + errorData.error);
-      }
-    } catch (err) {
-      console.error('Post error:', err);
-      alert('Something went wrong.');
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
     }
-  });
-</script>
+
+    document.getElementById('preciousMetalForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const author = document.getElementById('author').value;
+      const imageUrl = document.getElementById('imageUrl').value;
+      const imageFile = document.getElementById('imageFile').files[0];
+      const content = editorInstance.getData();
+
+      let image = imageUrl;
+      if (imageFile) {
+        image = await toBase64(imageFile);
+      }
+
+      if (!title || !content || !image || !author) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const payload = { title, author, image, content };
+
+      try {
+        const response = await fetch('/api/precious-metal', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          alert('Precious Metal news posted successfully!');
+          this.reset();
+          editorInstance.setData('');
+        } else {
+          const errorData = await response.json();
+          alert('Error: ' + errorData.error);
+        }
+      } catch (err) {
+        console.error('Post error:', err);
+        alert('Something went wrong.');
+      }
+    });
+  </script>
 
 </body>
 </html>

@@ -3,37 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <title>Post Leadership Thought</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f4;
-      padding: 30px;
+      padding: 20px;
+      margin: 0;
     }
 
     form {
       background: white;
       padding: 25px;
       border-radius: 10px;
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
 
-    input, textarea, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
+    h2 {
+      text-align: center;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
+      font-size: 24px;
     }
 
     label {
       font-weight: bold;
       display: block;
       margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .flex-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .flex-group > div {
+      flex: 1;
+      min-width: 250px;
     }
 
     button {
@@ -48,13 +71,34 @@
       background: #0056b3;
     }
 
-    .flex {
-      display: flex;
-      gap: 15px;
+    @media (max-width: 768px) {
+      form {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      input, textarea, button {
+        font-size: 15px;
+        padding: 10px;
+      }
     }
 
-    .flex > div {
-      flex: 1;
+    @media (max-width: 480px) {
+      .flex-group {
+        flex-direction: column;
+      }
+
+      input, textarea, button {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
@@ -66,12 +110,11 @@
     <label for="title">News Title</label>
     <input type="text" id="title" name="title" required>
 
-    <div class="flex">
+    <div class="flex-group">
       <div>
         <label for="author">Author</label>
         <input type="text" id="author" name="author" required>
       </div>
-
       <div>
         <label for="date">Date</label>
         <input type="date" id="date" name="date" required>
@@ -81,7 +124,7 @@
     <label for="imageUrl">Image URL (optional)</label>
     <input type="text" id="imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg">
 
-    <label for="imageFile">Or Choose an Image</label>
+    <label for="imageFile">Or Upload Image</label>
     <input type="file" id="imageFile" name="image" accept="image/*">
 
     <label for="description">Content</label>

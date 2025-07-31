@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Post Announcement</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      padding: 30px;
+      padding: 20px;
       background-color: #f4f4f4;
+      margin: 0;
     }
 
     .container {
@@ -20,36 +26,84 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
 
-    input, textarea, button, label {
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    form label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    form input[type="text"],
+    form input[type="date"],
+    form input[type="file"],
+    form textarea {
       width: 100%;
-      font-size: 16px;
+      padding: 12px;
       margin-bottom: 20px;
-    }
-
-    input, textarea {
-      padding: 12px;
-      border-radius: 6px;
       border: 1px solid #ccc;
-    }
-
-    button {
-      padding: 12px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
       border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #0056b3;
+      font-size: 16px;
     }
 
     .small-note {
       font-size: 13px;
       color: #666;
       margin-top: -15px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 14px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 12px;
+      }
+
+      form input, form textarea {
+        font-size: 15px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h2 {
+        font-size: 22px;
+      }
+
+      form label {
+        font-size: 15px;
+      }
+
+      form input, form textarea {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -103,7 +157,7 @@
 
       if (!res.ok) throw new Error('Image upload failed');
       const data = await res.json();
-      return data.url; // backend must return { url: 'http://...' }
+      return data.url;
     }
 
     document.getElementById('announcementForm').addEventListener('submit', async (e) => {
@@ -127,13 +181,7 @@
         }
       }
 
-      const body = {
-        title,
-        author,
-        image: finalImage,
-        date,
-        description
-      };
+      const body = { title, author, image: finalImage, date, description };
 
       try {
         const res = await fetch('/api/announcement', {
