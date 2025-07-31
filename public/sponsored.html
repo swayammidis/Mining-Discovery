@@ -554,78 +554,78 @@
             background-color: #0056b3;
         }
 
-         .section {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+        .section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
 
-    h2 {
-      font-size: 28px;
-      color: #222;
-      margin-bottom: 10px;
-    }
+        h2 {
+            font-size: 28px;
+            color: #222;
+            margin-bottom: 10px;
+        }
 
-    .gold-btn {
-      background-color: #d4af37;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      margin-bottom: 30px;
-    }
+        .gold-btn {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
 
-    .gold-news {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+        .gold-news {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-    .news-card {
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      width: calc(33.33% - 14px);
-    }
+        .news-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: calc(33.33% - 14px);
+        }
 
-    .news-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
+        .news-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
 
-    .text-content {
-      padding: 15px;
-      flex: 1;
-    }
+        .text-content {
+            padding: 15px;
+            flex: 1;
+        }
 
-    .news-title {
-      color: #333;
-      text-decoration: none;
-    }
+        .news-title {
+            color: #333;
+            text-decoration: none;
+        }
 
-    .news-title h3 {
-      font-size: 18px;
-      margin: 0 0 10px;
-    }
+        .news-title h3 {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
 
-    .text-content p {
-      color: #555;
-      font-size: 14px;
-      margin: 0;
-    }
+        .text-content p {
+            color: #555;
+            font-size: 14px;
+            margin: 0;
+        }
 
-    @media (max-width: 768px) {
-      .news-card {
-        width: 100%;
-      }
-    }
-        
+        @media (max-width: 768px) {
+            .news-card {
+                width: 100%;
+            }
+        }
+
         .text-content {
             padding: 15px;
         }
@@ -1164,13 +1164,13 @@
 
 
             <div class="gold">
-                 <h2>Latest News</h2>
-    <button type="button" class="gold-btn">Show More</button>
-    </div>
+                <h2>Latest News</h2>
+                <button type="button" class="gold-btn">Show More</button>
+            </div>
 
-    <div class="gold-news" id="latestNewsContainer">
-      <!-- Latest news cards will appear here -->
-    </div>
+            <div class="gold-news" id="latestNewsContainer">
+                <!-- Latest news cards will appear here -->
+            </div>
         </div>
 
 
@@ -1394,117 +1394,125 @@
         // for fetching sponsored news 
         let sponsoredPage = 0;
         const postsPerPage = 3;
+        let sponsoredData = [];
 
         async function loadMoreSponsored() {
-            try {
-                const res = await fetch('http://localhost:5000/api/sponsored');
-                const data = await res.json();
+            const container = document.getElementById('sponsoredPostsContainer');
 
-                const container = document.getElementById('sponsoredPostsContainer');
+            try {
+                // Only fetch once
+                if (sponsoredData.length === 0) {
+                    const res = await fetch('/api/tagged-posts/tag/sponsored posts'); // ✅ updated endpoint
+                    sponsoredData = await res.json();
+                }
+
                 const start = sponsoredPage * postsPerPage;
                 const end = start + postsPerPage;
-                const sliced = data.slice(start, end);
+                const sliced = sponsoredData.slice(start, end);
 
                 sliced.forEach(post => {
                     const div = document.createElement('div');
                     div.classList.add('sponsored-card');
                     div.innerHTML = `
-            ${post.image ? `<img src="${post.image}" alt="Sponsored Image" />` : ''}
-            <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
-            <p>${post.description.slice(0, 150)}...</p>
-          `;
+          ${post.image ? `<img src="${post.image}" alt="Sponsored Image" />` : ''}
+          <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
+          <p>${post.description.slice(0, 150)}...</p>
+        `;
                     container.appendChild(div);
                 });
 
                 sponsoredPage++;
-                if (end >= data.length) {
+                if (end >= sponsoredData.length) {
                     document.querySelector('.btn-more').style.display = 'none';
                 }
             } catch (err) {
                 console.error('Error loading sponsored posts:', err);
+                container.innerHTML = '<p>Error loading sponsored posts.</p>';
             }
         }
 
-// ✅ Load Latest News
-    async function loadLatestNews() {
-      try {
-        const res = await fetch('/api/news/latest');
-        const data = await res.json();
-        const container = document.getElementById('latestNewsContainer');
-        if (!container) return;
+        
 
-        container.innerHTML = '';
 
-        if (!res.ok || !Array.isArray(data) || data.length === 0) {
-          container.innerHTML = '<p>No latest news available.</p>';
-          return;
+        // ✅ Load Latest News
+        async function loadLatestNews() {
+            try {
+                const res = await fetch('/api/news/latest');
+                const data = await res.json();
+                const container = document.getElementById('latestNewsContainer');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No latest news available.</p>';
+                    return;
+                }
+
+                data.slice(0, 3).forEach(news => {
+                    const card = document.createElement('div');
+                    card.className = 'news-card';
+
+                    // ✅ Image
+                    const image = document.createElement('img');
+                    image.src = news.image || './image/placeholder.png';
+                    image.alt = news.title;
+                    image.className = 'news-image';
+
+                    // ✅ Text content container
+                    const textContent = document.createElement('div');
+                    textContent.className = 'text-content';
+
+                    // ✅ News title (clickable)
+                    const link = document.createElement('a');
+                    link.href = `view-news.html?id=${news._id}`;
+                    link.innerHTML = `<h3>${news.title}</h3>`;
+                    link.className = 'news-title';
+
+                    // ✅ Clean description: strip HTML tags from `news.description`
+                    const para = document.createElement('p');
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = news.description || '';
+                    const plainText = tempDiv.textContent || tempDiv.innerText || '';
+                    para.textContent = plainText.slice(0, 160) + '...';
+
+                    // 🧱 Assemble
+                    textContent.appendChild(link);
+                    textContent.appendChild(para);
+                    card.appendChild(image);
+                    card.appendChild(textContent);
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error loading latest news:', error);
+            }
         }
 
-        data.slice(0, 3).forEach(news => {
-          const card = document.createElement('div');
-          card.className = 'news-card';
 
-          // ✅ Image
-          const image = document.createElement('img');
-          image.src = news.image || './image/placeholder.png';
-          image.alt = news.title;
-          image.className = 'news-image';
 
-          // ✅ Text content container
-          const textContent = document.createElement('div');
-          textContent.className = 'text-content';
-
-          // ✅ News title (clickable)
-          const link = document.createElement('a');
-          link.href = `view-news.html?id=${news._id}`;
-          link.innerHTML = `<h3>${news.title}</h3>`;
-          link.className = 'news-title';
-
-          // ✅ Clean description: strip HTML tags from `news.description`
-          const para = document.createElement('p');
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = news.description || '';
-          const plainText = tempDiv.textContent || tempDiv.innerText || '';
-          para.textContent = plainText.slice(0, 160) + '...';
-
-          // 🧱 Assemble
-          textContent.appendChild(link);
-          textContent.appendChild(para);
-          card.appendChild(image);
-          card.appendChild(textContent);
-          container.appendChild(card);
-        });
-      } catch (error) {
-        console.error('Error loading latest news:', error);
-      }
-    }
-
- 
-
-        // ====== Initial Load ======
+       // Initial Load
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
             loadMoreSponsored();
             loadLatestNews();
-
         });
 
 
-     //   for fetching research reports 
-         document.addEventListener("DOMContentLoaded", async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/research-reports");
-        const data = await res.json();
+        //   for fetching research reports 
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/research-reports");
+                const data = await res.json();
 
-        const container = document.getElementById("researchReportsContainer");
-        const topReports = data.slice(0, 2); // Fetch top 2
+                const container = document.getElementById("researchReportsContainer");
+                const topReports = data.slice(0, 2); // Fetch top 2
 
-        topReports.forEach(report => {
-          const card = document.createElement("div");
-          card.classList.add("research-card");
+                topReports.forEach(report => {
+                    const card = document.createElement("div");
+                    card.classList.add("research-card");
 
-          card.innerHTML = `
+                    card.innerHTML = `
             ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
             <h4 class="research-title">
               <a href="research-detail.html?id=${report._id}">${report.title}</a>
@@ -1512,12 +1520,12 @@
             <p class="research-desc">${report.description?.slice(0, 150) || ''}...</p>
           `;
 
-          container.appendChild(card);
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching research reports:", error);
+            }
         });
-      } catch (error) {
-        console.error("Error fetching research reports:", error);
-      }
-    });
 
     </script>
 

@@ -1266,7 +1266,7 @@
 
         async function fetchCorporateNews() {
             try {
-                const res = await fetch('/api/corporate-news');
+                const res = await fetch('/api/tagged-posts/tag/corporate news'); // ✅ Updated endpoint
                 const data = await res.json();
                 allNews = data.reverse(); // show latest first
                 renderNews();
@@ -1288,14 +1288,14 @@
                 const shortDesc = item.description.replace(/<[^>]+>/g, '').slice(0, 100) + '...';
 
                 card.innerHTML = `
-          ${imageHTML}
-          <div class="news-content">
-            <a href="corporate-news-detail.html?id=${item._id}">
-              <h3>${item.title}</h3>
-            </a>
-            <p>${shortDesc}</p>
-          </div>
-        `;
+      ${imageHTML}
+      <div class="news-content">
+        <a href="corporate-news-detail.html?id=${item._id}">
+          <h3>${item.title}</h3>
+        </a>
+        <p>${shortDesc}</p>
+      </div>
+    `;
                 container.appendChild(card);
             });
 
@@ -1309,6 +1309,9 @@
             renderNews();
         });
 
+
+
+        // for fetching world news
         let worldNewsData = [];
         let worldNewsDisplayed = 0;
         const worldNewsPerPage = 3;
@@ -1361,7 +1364,6 @@
             fetchCorporateNews();
             fetchProjectNews();
             loadWorldNews();
-
         });
 
     </script>

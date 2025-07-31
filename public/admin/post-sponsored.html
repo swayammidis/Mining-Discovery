@@ -41,6 +41,18 @@
       border-radius: 4px;
     }
 
+    #tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    #tags-container label {
+      margin-right: 15px;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+
     button {
       margin-top: 30px;
       padding: 12px 25px;
@@ -80,6 +92,24 @@
       <label for="description">Description:</label>
       <textarea id="description" name="description" rows="6" required></textarea>
 
+      <label>Tags:</label>
+      <div id="tags-container">
+        <label><input type="checkbox" name="tags" value="latest news" /> Latest News</label>
+        <label><input type="checkbox" name="tags" value="gold" /> Gold</label>
+        <label><input type="checkbox" name="tags" value="silver" /> Silver</label>
+        <label><input type="checkbox" name="tags" value="copper" /> Copper</label>
+        <label><input type="checkbox" name="tags" value="precious metals" /> Precious Metals</label>
+        <label><input type="checkbox" name="tags" value="sponsored posts" /> Sponsored Posts</label>
+        <label><input type="checkbox" name="tags" value="corporate news" /> Corporate News</label>
+        <label><input type="checkbox" name="tags" value="research reports" /> Research Reports</label>
+        <label><input type="checkbox" name="tags" value="world news" /> World News</label>
+        <label><input type="checkbox" name="tags" value="leadership thoughts" /> Leadership Thoughts</label>
+        <label><input type="checkbox" name="tags" value="morning chatter" /> Morning Chatter</label>
+        <label><input type="checkbox" name="tags" value="announcements" /> Announcements</label>
+        <label><input type="checkbox" name="tags" value="popular this week" /> Popular This Week</label>
+        <label><input type="checkbox" name="tags" value="projects" /> Projects</label>
+      </div>
+
       <button type="submit">Post</button>
     </form>
 
@@ -97,6 +127,9 @@
       const description = CKEDITOR.instances.description.getData().trim();
       const messageEl = document.getElementById('message');
 
+      const checkboxes = document.querySelectorAll('input[name="tags"]:checked');
+      const tags = Array.from(checkboxes).map(cb => cb.value);
+
       if (!title || !description) {
         messageEl.innerHTML = '<p class="error">Title and description are required.</p>';
         return;
@@ -104,7 +137,6 @@
 
       let imageUrl = '';
 
-      // Upload image if provided
       if (imageFile) {
         const formData = new FormData();
         formData.append('image', imageFile);
@@ -125,12 +157,11 @@
         }
       }
 
-      // Post sponsored data
       try {
         const res = await fetch('http://localhost:5000/api/sponsored', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, description, image: imageUrl }),
+          body: JSON.stringify({ title, description, image: imageUrl, tags }),
         });
 
         const data = await res.json();

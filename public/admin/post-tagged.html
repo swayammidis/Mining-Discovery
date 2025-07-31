@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post Tagged News</title>
+  <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 40px;
+    }
+
+    form {
+      background: #fff;
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="file"] {
+      margin-bottom: 15px;
+    }
+
+    fieldset {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 15px;
+    }
+
+    legend {
+      font-weight: bold;
+    }
+
+    label {
+      margin-right: 15px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: #007bff;
+      color: #fff;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form id="taggedPostForm">
+    <h2>Post News with Tags</h2>
+    <input type="text" name="title" placeholder="Title" required />
+    
+    <textarea name="description" id="editor" placeholder="Description"></textarea>
+    
+    <input type="file" id="imageInput" accept="image/*" />
+
+    <fieldset>
+      <legend>Select Tags</legend>
+      <label><input type="checkbox" name="tags" value="latest news"> Latest News</label>
+      <label><input type="checkbox" name="tags" value="gold"> Gold</label>
+      <label><input type="checkbox" name="tags" value="silver"> Silver</label>
+      <label><input type="checkbox" name="tags" value="sponsored posts"> Sponsored Posts</label>
+      <label><input type="checkbox" name="tags" value="cooper"> Cooper</label>
+      <label><input type="checkbox" name="tags" value="precious metal"> Precious Metal</label>
+      <label><input type="checkbox" name="tags" value="corporate news"> Corporate News</label>
+      <label><input type="checkbox" name="tags" value="research reports"> Research Reports</label>
+      <label><input type="checkbox" name="tags" value="world news"> World News</label>
+      <label><input type="checkbox" name="tags" value="leadership thoughts"> Leadership Thoughts</label>
+      <label><input type="checkbox" name="tags" value="morning chatter"> Morning Chatter</label>
+      <label><input type="checkbox" name="tags" value="announcement"> Announcement</label>
+      <label><input type="checkbox" name="tags" value="popular this week"> Popular This Week</label>
+      <label><input type="checkbox" name="tags" value="projects"> Projects</label>
+    </fieldset>
+
+    <button type="submit">Post</button>
+  </form>
+
+  <script>
+    let ckEditorData = '';
+
+    ClassicEditor
+      .create(document.querySelector('#editor'), {
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'insertTable', 'undo', 'redo', 'imageUpload'],
+      })
+      .then(editor => {
+        editor.model.document.on('change:data', () => {
+          ckEditorData = editor.getData();
+        });
+      })
+      .catch(error => {
+        console.error('CKEditor error:', error);
+      });
+
+    document.getElementById('taggedPostForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const title = form.title.value;
+      const description = ckEditorData;
+
+      const tags = [...form.querySelectorAll('input[name="tags"]:checked')].map(cb => cb.value);
+      const file = document.getElementById('imageInput').files[0];
+      let image = '';
+
+      const sendPost = async () => {
+        const res = await fetch('/api/tagged-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, description, tags, image })
+        });
+        const data = await res.json();
+        alert(data.message || 'Posted successfully!');
+        form.reset();
+        ckEditorData = '';
+        document.querySelector('.ck-editor__editable').innerHTML = '';
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = async () => {
+          image = reader.result;
+          await sendPost();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        await sendPost();
+      }
+    });
+  </script>
+</body>
+</html>

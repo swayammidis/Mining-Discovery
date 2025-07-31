@@ -942,22 +942,22 @@
     </div>
 
     <!-- Dropdown Links -->
-  <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html">Latest News</a>
-    <a href="gold.html">Gold News</a>
-    <a href="silver.html">Silver News</a>
-    <a href="cooper.html">Copper News</a>
-    <a href="precious-metal.html">Precious Metals</a>
-    <a href="coporate-news.html">Corporate News</a>
-    <a href="world-news.html">World News</a>
-    <a href="leadership-thoughts.html">Leadership Thoughts</a>
-    <a href="morning-chatter.html">Morning Chatter</a>
-    <a href="announcement.html">Announcement</a>
-    <a href="popular.html">Popular This Week</a>
-    <a href="project.html">Projects</a>
-    <a href="research.html">Research Reports</a>
-    <a href="sponsored.html">Sponsored Post</a>
-  </div>
+    <div class="dropdown-links" id="dropdownMenu">
+        <a href="latest-news.html">Latest News</a>
+        <a href="gold.html">Gold News</a>
+        <a href="silver.html">Silver News</a>
+        <a href="cooper.html">Copper News</a>
+        <a href="precious-metal.html">Precious Metals</a>
+        <a href="coporate-news.html">Corporate News</a>
+        <a href="world-news.html">World News</a>
+        <a href="leadership-thoughts.html">Leadership Thoughts</a>
+        <a href="morning-chatter.html">Morning Chatter</a>
+        <a href="announcement.html">Announcement</a>
+        <a href="popular.html">Popular This Week</a>
+        <a href="project.html">Projects</a>
+        <a href="research.html">Research Reports</a>
+        <a href="sponsored.html">Sponsored Post</a>
+    </div>
 
     <!-- Content Section -->
     <div class="container">
@@ -968,15 +968,16 @@
             </div>
         </div>
 
-        <!-- Main -->
-        <div class="main-content">
-            <h2>Precious Metal</h2>
-            <div class="precious-metal-news" id="precious-metal-container">
-                <!-- News cards will be inserted here dynamically -->
-            </div>
-            <div class="btn">
-                <button type="button" class="btn-more">show more</button>
-            </div>
+      <!-- Main -->
+<div class="main-content">
+    <h2>Precious Metal</h2>
+    <div class="precious-metal-news" id="precious-metal-container">
+        <!-- News cards will be inserted here dynamically -->
+    </div>
+
+    <div class="btn">
+        <button type="button" class="btn-more">show more</button>
+    </div>
 
 
 
@@ -1073,7 +1074,7 @@
     </div>
 
     <script>
-        // for news section dropdown
+        // Toggle dropdown
         function toggleDropdown() {
             const dropdown = document.getElementById("dropdownMenu");
             const header = document.getElementById("newsToggle");
@@ -1081,8 +1082,7 @@
             header.classList.toggle("rotate");
         }
 
-        // for subscribe button 
-
+        // Subscribe popup
         const popup = document.getElementById('subscribe-popup');
         const overlay = document.getElementById('overlay');
         const openBtn = document.getElementById('open-subscribe');
@@ -1132,7 +1132,7 @@
             }
         });
 
-        // ====== Load Banners ======
+        // Load banners
         async function loadBanners() {
             try {
                 const res = await fetch('/api/banners/latest');
@@ -1173,14 +1173,13 @@
             }
         }
 
-        // fetch project news
+        // Project News
         async function fetchProjectNews() {
             try {
                 const res = await fetch('/api/project-news');
                 const data = await res.json();
                 const container = document.getElementById('projectNewsSection');
-
-                const latest = data.slice(0, 3); // Display only 3
+                const latest = data.slice(0, 3);
 
                 latest.forEach(news => {
                     const card = document.createElement('div');
@@ -1188,13 +1187,12 @@
                     card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
                     card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
-          <div class="content">
-            <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 80)}...</p>
-          </div>
-        `;
-
+                    <img src="${news.image}" alt="Project Image">
+                    <div class="content">
+                        <h4>${news.title}</h4>
+                        <p>${news.description.slice(0, 80)}...</p>
+                    </div>
+                `;
                     container.appendChild(card);
                 });
             } catch (err) {
@@ -1202,12 +1200,11 @@
             }
         }
 
-        // fetch coporate news 
+        // Corporate News
         async function fetchCorporateNews() {
             try {
                 const res = await fetch('/api/corporate-news/latest?limit=3');
                 const news = await res.json();
-
                 const container = document.getElementById('corporateNewsContainer');
                 container.innerHTML = '';
 
@@ -1221,14 +1218,13 @@
                     card.className = 'gold-card';
 
                     card.innerHTML = `
-          <img src="${item.image || './image/default-placeholder.png'}" alt="${item.title}">
-          <p>
-            <a href="corporate-news-detail.html?id=${item._id}" style="text-decoration: none; color: inherit;">
-              ${item.title}
-            </a>
-          </p>
-        `;
-
+                    <img src="${item.image || './image/default-placeholder.png'}" alt="${item.title}">
+                    <p>
+                        <a href="corporate-news-detail.html?id=${item._id}" style="text-decoration: none; color: inherit;">
+                            ${item.title}
+                        </a>
+                    </p>
+                `;
                     container.appendChild(card);
                 });
             } catch (err) {
@@ -1237,48 +1233,50 @@
             }
         }
 
+         // 🔸 Precious Metal Tagged Posts (case-insensitive tag match)
+    async function fetchTaggedNews(tagName, containerId, detailPage) {
+        try {
+            const encodedTag = encodeURIComponent(tagName);
+            const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+            const data = await res.json();
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            if (!Array.isArray(data) || data.length === 0) {
+                container.innerHTML = `<p>No ${tagName} news found.</p>`;
+                return;
+            }
+
+            data.slice(0, 3).forEach(news => {
+                const card = document.createElement('div');
+                card.className = 'gold-card';
+
+                card.innerHTML = `
+                    <img src="${news.image || './image/default-placeholder.png'}" alt="${tagName} Image">
+                    <p>
+                        <a href="${detailPage}?id=${news._id}" class="metal-link">
+                            ${news.title}
+                        </a>
+                    </p>
+                `;
+                container.appendChild(card);
+            });
+        } catch (err) {
+            console.error(`Error fetching ${tagName} tagged news:`, err);
+        }
+    }
+
+    // ✅ Init
+    document.addEventListener('DOMContentLoaded', () => {
+        loadBanners();
+        fetchProjectNews();
         fetchCorporateNews();
 
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadBanners();
-            fetchProjectNews();
-            fetchCorporateNews();
-
-
-        });
-
-
-        // Fetch latest 3 precious metal news
-        fetch('/api/precious-metal')
-            .then(res => res.json())
-            .then(data => {
-                const container = document.getElementById('precious-metal-container');
-                container.innerHTML = '';
-
-                data.slice(0, 3).forEach(news => {
-                    const card = document.createElement('div');
-                    card.className = 'gold-card'; // Reuse existing gold-card styling or customize
-
-                    card.innerHTML = `
-          <img src="${news.image}" alt="Precious Metal Image">
-          <p>
-            <a href="precious-metal-detail.html?id=${news._id}" class="metal-link">
-              ${news.title}
-            </a>
-          </p>
-        `;
-
-                    container.appendChild(card);
-                });
-            })
-            .catch(err => {
-                console.error('Error fetching precious metal news:', err);
-            });
-
-
-
+        // 🔁 Corrected tag from 'precious metals' → 'precious metal'
+        fetchTaggedNews('precious metal', 'precious-metal-container', 'precious-metal-detail.html');
+    });
     </script>
+
 
 </body>
 

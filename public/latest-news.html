@@ -822,7 +822,7 @@
     </h1>
   </div>
 
-   <!-- Dropdown Links -->
+  <!-- Dropdown Links -->
   <div class="dropdown-links" id="dropdownMenu">
     <a href="latest-news.html">Latest News</a>
     <a href="gold.html">Gold News</a>
@@ -884,18 +884,18 @@
     <!-- Right -->
     <div class="right-sidebar">
 
-     <div class="section-box">
-  <div class="heading">
-    <h3>Projects</h3>
-    <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show More</button>
-  </div>
+      <div class="section-box">
+        <div class="heading">
+          <h3>Projects</h3>
+          <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show More</button>
+        </div>
 
-  <div class="project-card-container" id="projectCardContainer">
-    <!-- Project news cards will be injected here -->
-  </div>
-</div>
+        <div class="project-card-container" id="projectCardContainer">
+          <!-- Project news cards will be injected here -->
+        </div>
+      </div>
 
-     
+
 
       <div class="section-box">
         <div class="report">
@@ -1071,10 +1071,10 @@
       }
     }
 
-    // ✅ Load Latest News
+    // ✅ Load Latest News (from new tagged-posts API)
     async function loadLatestNews() {
       try {
-        const res = await fetch('/api/news/latest');
+        const res = await fetch('/api/tagged-posts/tag/latest news');
         const data = await res.json();
         const container = document.getElementById('latestNewsContainer');
         if (!container) return;
@@ -1106,7 +1106,7 @@
           link.innerHTML = `<h3>${news.title}</h3>`;
           link.className = 'news-title';
 
-          // ✅ Clean description: strip HTML tags from `news.description`
+          // ✅ Clean description: strip HTML tags
           const para = document.createElement('p');
           const tempDiv = document.createElement('div');
           tempDiv.innerHTML = news.description || '';
@@ -1157,33 +1157,33 @@
 
     // load project news 
 
-  async function loadProjectCards() {
-    try {
-      const res = await fetch('/api/project-news');
-      const data = await res.json();
-      const container = document.getElementById('projectCardContainer');
+    async function loadProjectCards() {
+      try {
+        const res = await fetch('/api/project-news');
+        const data = await res.json();
+        const container = document.getElementById('projectCardContainer');
 
-      const limitedProjects = data.slice(0, 2); // Show top 2 projects
+        const limitedProjects = data.slice(0, 2); // Show top 2 projects
 
-      limitedProjects.forEach(project => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.onclick = () => window.location.href = `project-news-details.html?id=${project._id}`;
+        limitedProjects.forEach(project => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.onclick = () => window.location.href = `project-news-details.html?id=${project._id}`;
 
-        card.innerHTML = `
+          card.innerHTML = `
           <img src="${project.image}" alt="Project Image">
           <p>${project.title}</p>
         `;
 
-        container.appendChild(card);
-      });
+          container.appendChild(card);
+        });
 
-    } catch (error) {
-      console.error("Error loading project news:", error);
+      } catch (error) {
+        console.error("Error loading project news:", error);
+      }
     }
-  }
 
- 
+
 
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();

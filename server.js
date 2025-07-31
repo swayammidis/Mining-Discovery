@@ -54,6 +54,7 @@ const announcementRoutes = require('./routes/announcement');
 const uploadRoute = require('./routes/upload');
 const researchReportRoutes = require('./routes/researchReport');
 const sponsoredRoutes = require('./routes/sponsored');
+const taggedPostRoutes = require('./routes/taggedPost');
 
 // Mount API routes
 app.use('/api/subscribe', subscribeRoute);
@@ -77,6 +78,7 @@ app.use('/api/announcement', announcementRoutes);
 app.use('/api/upload', uploadRoute);
 app.use('/api/research-reports', researchReportRoutes);
 app.use('/api/sponsored', sponsoredRoutes);
+app.use('/api/tagged-posts', taggedPostRoutes);
 
 // API Health Check
 app.get('/api/health', (req, res) => {
