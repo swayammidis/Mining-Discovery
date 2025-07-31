@@ -248,7 +248,7 @@
     </div>
 
     <div class="main-content">
-      <h2 id="section-title">Welcome, Admin</h2>
+      <h2 id="section-title">Welcome, <span id="username">Admin</span></h2>
 
       <div class="charts">
         <div class="chart-box">
@@ -261,7 +261,6 @@
         </div>
       </div>
 
-     
     </div>
   </div>
 
@@ -290,11 +289,11 @@
       new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: [label],
+          labels: [label, 'Remaining'],
           datasets: [{
             label: label,
             data: [value, 100 - value],
-            backgroundColor: ['#4CAF50', '#333'],
+            backgroundColor: ['#FFD700', '#333'],
             borderWidth: 0
           }]
         },
@@ -306,6 +305,9 @@
         }
       });
     }
+
+    const loggedInUser = localStorage.getItem('username') || 'Admin';
+    document.getElementById('username').innerText = loggedInUser;
 
     window.addEventListener('load', fetchChartData);
   </script>
