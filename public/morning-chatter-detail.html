@@ -75,35 +75,39 @@
     <!-- Full post will be rendered here -->
   </div>
 
-  <script>
-    async function fetchDetail() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+ <script>
+  async function fetchDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
 
-      if (!id) {
-        document.getElementById('detailContainer').innerText = 'No post ID provided.';
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/morning-chatter/${id}`);
-        const post = await res.json();
-
-        const container = document.getElementById('detailContainer');
-        container.innerHTML = `
-          ${post.image ? `<img src="${post.image}" alt="Morning Chatter Image">` : ''}
-          <h2>${post.title}</h2>
-          <div class="meta">By ${post.author || 'Admin'} on ${new Date(post.date).toLocaleDateString()}</div>
-          <div class="content">${post.description}</div>
-        `;
-      } catch (err) {
-        document.getElementById('detailContainer').innerText = 'Failed to load post.';
-        console.error('Error fetching post:', err);
-      }
+    if (!id) {
+      document.getElementById('detailContainer').innerText = 'No post ID provided.';
+      return;
     }
 
-    fetchDetail();
-  </script>
+    try {
+      const res = await fetch(`/api/tagged-posts/${id}`);  // ✅ unified route
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const post = await res.json();
+
+      const container = document.getElementById('detailContainer');
+      container.innerHTML = `
+        ${post.image ? `<img src="${post.image}" alt="Morning Chatter Image">` : ''}
+        <h2>${post.title}</h2>
+        <div class="meta">Published on ${new Date(post.createdAt).toLocaleDateString()}</div>
+        <div class="content">${post.description}</div>
+      `;
+    } catch (err) {
+      document.getElementById('detailContainer').innerText = 'Failed to load post.';
+      console.error('Error fetching post:', err);
+    }
+  }
+
+  fetchDetail();
+</script>
+
 
 </body>
 </html>

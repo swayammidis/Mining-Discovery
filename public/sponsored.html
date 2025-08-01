@@ -1361,13 +1361,18 @@
             }
         }
 
-        // ====== Fetch Project News ======
+        // ====== Fetch Project News via Tagged Posts ======
         async function fetchProjectNews() {
             try {
-                const res = await fetch('/api/project-news');
+                const res = await fetch('/api/tagged-posts/tag/projects');
                 const data = await res.json();
                 const container = document.getElementById('projectNewsSection');
                 if (!container) return;
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No project news available.</p>';
+                    return;
+                }
 
                 const latest = data.slice(0, 3);
 
@@ -1377,10 +1382,10 @@
                     card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
                     card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
+          ${news.image ? `<img src="${news.image}" alt="Project Image">` : ''}
           <div class="content">
             <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 80)}...</p>
+            <p>${stripHTML(news.description).slice(0, 80)}...</p>
           </div>
         `;
 
@@ -1389,6 +1394,13 @@
             } catch (err) {
                 console.error('Failed to load project news:', err);
             }
+        }
+
+        // Helper to strip HTML from description
+        function stripHTML(html) {
+            const div = document.createElement("div");
+            div.innerHTML = html || '';
+            return div.textContent || div.innerText || '';
         }
 
         // for fetching sponsored news 
@@ -1431,13 +1443,15 @@
             }
         }
 
-        
 
 
-        // ✅ Load Latest News
+
+        // ✅ Load News with 'latest-news' Tag
         async function loadLatestNews() {
             try {
-                const res = await fetch('/api/news/latest');
+                const tag = 'latest news'; // tag with space
+                const encodedTag = encodeURIComponent(tag); // makes it 'latest%20news'
+                const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
                 const data = await res.json();
                 const container = document.getElementById('latestNewsContainer');
                 if (!container) return;
@@ -1453,30 +1467,25 @@
                     const card = document.createElement('div');
                     card.className = 'news-card';
 
-                    // ✅ Image
                     const image = document.createElement('img');
                     image.src = news.image || './image/placeholder.png';
                     image.alt = news.title;
                     image.className = 'news-image';
 
-                    // ✅ Text content container
                     const textContent = document.createElement('div');
                     textContent.className = 'text-content';
 
-                    // ✅ News title (clickable)
                     const link = document.createElement('a');
                     link.href = `view-news.html?id=${news._id}`;
                     link.innerHTML = `<h3>${news.title}</h3>`;
                     link.className = 'news-title';
 
-                    // ✅ Clean description: strip HTML tags from `news.description`
                     const para = document.createElement('p');
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = news.description || '';
                     const plainText = tempDiv.textContent || tempDiv.innerText || '';
                     para.textContent = plainText.slice(0, 160) + '...';
 
-                    // 🧱 Assemble
                     textContent.appendChild(link);
                     textContent.appendChild(para);
                     card.appendChild(image);
@@ -1489,8 +1498,7 @@
         }
 
 
-
-       // Initial Load
+        // Initial Load
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
@@ -1499,34 +1507,50 @@
         });
 
 
-        //   for fetching research reports 
         document.addEventListener("DOMContentLoaded", async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/research-reports");
+                const tag = 'research reports';
+                const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+                const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
                 const data = await res.json();
 
                 const container = document.getElementById("researchReportsContainer");
-                const topReports = data.slice(0, 2); // Fetch top 2
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No research reports found.</p>';
+                    return;
+                }
+
+                const topReports = data.slice(0, 2); // Show top 2
 
                 topReports.forEach(report => {
                     const card = document.createElement("div");
                     card.classList.add("research-card");
 
                     card.innerHTML = `
-            ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
-            <h4 class="research-title">
-              <a href="research-detail.html?id=${report._id}">${report.title}</a>
-            </h4>
-            <p class="research-desc">${report.description?.slice(0, 150) || ''}...</p>
-          `;
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
 
                     container.appendChild(card);
                 });
             } catch (error) {
                 console.error("Error fetching research reports:", error);
             }
-        });
 
+            // Helper function to remove HTML tags from description
+            function stripHTML(html) {
+                const div = document.createElement("div");
+                div.innerHTML = html || '';
+                return div.textContent || div.innerText || '';
+            }
+        });
     </script>
 
 </body>

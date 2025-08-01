@@ -14,29 +14,30 @@
 <body>
   <div class="container" id="announcementDetail"></div>
 
-  <script>
-    async function loadAnnouncementDetail() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
-      if (!id) return;
+ <script>
+  async function loadAnnouncementDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return;
 
-      try {
-        const res = await fetch(`/api/announcement/${id}`);
-        const data = await res.json();
+    try {
+      const res = await fetch(`/api/tagged-posts/${id}`); // ✅ Use unified tagged route
+      const data = await res.json();
 
-        const container = document.getElementById('announcementDetail');
-        container.innerHTML = `
-          <h1>${data.title}</h1>
-          <div class="date">${new Date(data.date).toLocaleDateString()} | By ${data.author || 'Admin'}</div>
-          ${data.image ? `<img src="${data.image}" alt="Announcement Image">` : ''}
-          <div>${data.description}</div>
-        `;
-      } catch (err) {
-        console.error('Error loading announcement detail:', err);
-      }
+      const container = document.getElementById('announcementDetail');
+      container.innerHTML = `
+        <h1>${data.title}</h1>
+        <div class="date">${new Date(data.date || data.createdAt).toLocaleDateString()} | By ${data.author || 'Admin'}</div>
+        ${data.image ? `<img src="${data.image}" alt="Announcement Image">` : ''}
+        <div>${data.description}</div>
+      `;
+    } catch (err) {
+      console.error('Error loading announcement detail:', err);
     }
+  }
 
-    loadAnnouncementDetail();
-  </script>
+  loadAnnouncementDetail();
+</script>
+
 </body>
 </html>

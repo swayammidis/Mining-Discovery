@@ -477,50 +477,51 @@
             flex-wrap: wrap;
         }
 
-         .announcement-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
+        .announcement-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-  .announcement-card {
-    background: #fff;
-    padding: 16px;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    transition: 0.3s;
-  }
+        .announcement-card {
+            background: #fff;
+            padding: 16px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
 
-  .announcement-card:hover {
-    transform: translateY(-4px);
-  }
+        .announcement-card:hover {
+            transform: translateY(-4px);
+        }
 
-  .announcement-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 6px;
-  }
+        .announcement-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
 
-  .announcement-title {
-    margin: 15px 0 8px;
-    font-size: 18px;
-  }
+        .announcement-title {
+            margin: 15px 0 8px;
+            font-size: 18px;
+        }
 
-  .announcement-title a {
-    text-decoration: none;
-    color: #333;
-  }
+        .announcement-title a {
+            text-decoration: none;
+            color: #333;
+        }
 
-  .announcement-title a:hover {
-    color: #007BFF;
-  }
+        .announcement-title a:hover {
+            color: #007BFF;
+        }
 
-  .announcement-date {
-    font-size: 14px;
-    color: #777;
-  }
+        .announcement-date {
+            font-size: 14px;
+            color: #777;
+        }
+
         .text-content {
             padding: 15px;
         }
@@ -1016,23 +1017,23 @@
         </h1>
     </div>
 
-   <!-- Dropdown Links -->
-  <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html">Latest News</a>
-    <a href="gold.html">Gold News</a>
-    <a href="silver.html">Silver News</a>
-    <a href="cooper.html">Copper News</a>
-    <a href="precious-metal.html">Precious Metals</a>
-    <a href="coporate-news.html">Corporate News</a>
-    <a href="world-news.html">World News</a>
-    <a href="leadership-thoughts.html">Leadership Thoughts</a>
-    <a href="morning-chatter.html">Morning Chatter</a>
-    <a href="announcement.html">Announcement</a>
-    <a href="popular.html">Popular This Week</a>
-    <a href="project.html">Projects</a>
-    <a href="research.html">Research Reports</a>
-    <a href="sponsored.html">Sponsored Post</a>
-  </div>
+    <!-- Dropdown Links -->
+    <div class="dropdown-links" id="dropdownMenu">
+        <a href="latest-news.html">Latest News</a>
+        <a href="gold.html">Gold News</a>
+        <a href="silver.html">Silver News</a>
+        <a href="cooper.html">Copper News</a>
+        <a href="precious-metal.html">Precious Metals</a>
+        <a href="coporate-news.html">Corporate News</a>
+        <a href="world-news.html">World News</a>
+        <a href="leadership-thoughts.html">Leadership Thoughts</a>
+        <a href="morning-chatter.html">Morning Chatter</a>
+        <a href="announcement.html">Announcement</a>
+        <a href="popular.html">Popular This Week</a>
+        <a href="project.html">Projects</a>
+        <a href="research.html">Research Reports</a>
+        <a href="sponsored.html">Sponsored Post</a>
+    </div>
 
     <!-- Content Section -->
     <div class="container">
@@ -1292,17 +1293,17 @@
         }
 
 
-        // for fetching announcements
-
+        // for fetching announcements 
         async function fetchAnnouncements() {
             try {
-                const res = await fetch('/api/announcement/latest'); // Adjust if your route differs
+                const tag = 'announcement'; // tag to fetch from
+                const res = await fetch(`/api/tagged-posts/tag/${encodeURIComponent(tag)}`);
                 const announcements = await res.json();
 
                 const container = document.getElementById('announcement-list');
                 container.innerHTML = '';
 
-                if (announcements.length === 0) {
+                if (!Array.isArray(announcements) || announcements.length === 0) {
                     container.innerHTML = '<p>No announcements available.</p>';
                     return;
                 }
@@ -1316,7 +1317,7 @@
           <h3 class="announcement-title">
             <a href="announcement-detail.html?id=${item._id}">${item.title}</a>
           </h3>
-          <p class="announcement-date">${new Date(item.date).toLocaleDateString()}</p>
+          <p class="announcement-date">${new Date(item.date || item.createdAt).toLocaleDateString()}</p>
         `;
 
                     container.appendChild(card);
@@ -1326,15 +1327,13 @@
             }
         }
 
-        // ====== Initial Load ======
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
             fetchAnnouncements();
-
         });
-
     </script>
+
 
 </body>
 

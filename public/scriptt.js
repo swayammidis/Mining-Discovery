@@ -1,139 +1,98 @@
- function toggleMenu() {
-      const header = document.querySelector('.main-header');
-      header.classList.toggle('mobile-active');
-    }
 
-      function toggleDropdown() {
-      const dropdown = document.getElementById("dropdownMenu");
-      const header = document.getElementById("newsToggle");
-      dropdown.classList.toggle("show");
-      header.classList.toggle("rotate");
-    }
-       const carousel = document.getElementById("carousel");
-    const prev = document.getElementById("prev");
-    const next = document.getElementById("next");
+const searchInput = document.getElementById("searchInput");
+const texts = ["Search...", "Search Articles", "Search Insights", "Search Services"];
+let index = 0;
 
-    prev.addEventListener("click", () => {
-      carousel.scrollBy({ left: -260, behavior: 'smooth' });
-    });
+function changePlaceholder() {
+  searchInput.setAttribute("placeholder", texts[index]);
 
-    next.addEventListener("click", () => {
-      carousel.scrollBy({ left: 260, behavior: 'smooth' });
-    });
+  // Reset animation
+  searchInput.classList.remove("animate-placeholder");
+  void searchInput.offsetWidth; // Trigger reflow
+  searchInput.classList.add("animate-placeholder");
 
-    const slider = document.getElementById("videoSlider");
-const leftBtn = document.querySelector(".arrow.left");
-const rightBtn = document.querySelector(".arrow.right");
+  index = (index + 1) % texts.length;
+}
 
-leftBtn.addEventListener("click", () => {
-  slider.scrollBy({ left: -300, behavior: "smooth" });
-});
-
-rightBtn.addEventListener("click", () => {
-  slider.scrollBy({ left: 300, behavior: "smooth" });
-});
-
-const messages = [
-      "Search gold prices",
-      "Search silver value",
-      "Search copper rates",
-      "Search platinum updates",
-      "Search latest news"
-    ];
-
-    let index = 0;
-    const animatedText = document.getElementById("animatedText");
-
-    setInterval(() => {
-      index = (index + 1) % messages.length;
-      animatedText.innerText = messages[index];
-      animatedText.style.animation = "none"; // reset animation
-      void animatedText.offsetWidth;         // reflow to restart
-      animatedText.style.animation = "slideText 1s ease-in-out infinite";
-    }, 5000);
-
-
-
-
-
-     function loadIframe(el) {
-    el.outerHTML = `
-      <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/pzxdSK6t2Eo?autoplay=1"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen>
-      </iframe>`;
+// Add class to trigger animation again
+const style = document.createElement('style');
+style.innerHTML = `
+  #searchInput.animate-placeholder::placeholder {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInBottom 0.5s ease-out forwards;
   }
-  function loadIframe2(el){
-    el.outerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/D2S9tbVMDRQ?si=oYaYU3_svLfnWTij" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+`;
+document.head.appendChild(style);
+
+// Start loop
+changePlaceholder();
+setInterval(changePlaceholder, 2500);
+
+
+
+// for subscribe button 
+
+const popup = document.getElementById('subscribe-popup');
+const overlay = document.getElementById('overlay');
+const openBtn = document.getElementById('open-subscribe');
+const submitBtn = document.getElementById('submit-subscribe');
+const statusMsg = document.getElementById('status-msg');
+const emailInput = document.getElementById('email-input');
+
+openBtn.addEventListener('click', () => {
+  popup.style.display = 'block';
+  overlay.style.display = 'block';
+});
+
+overlay.addEventListener('click', closePopup);
+
+function closePopup() {
+  popup.style.display = 'none';
+  overlay.style.display = 'none';
+  emailInput.value = '';
+  statusMsg.textContent = '';
+}
+
+submitBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  if (!email) {
+    statusMsg.textContent = 'Please enter an email.';
+    statusMsg.style.color = 'red';
+    return;
   }
 
-  // youtube-popup
-      window.addEventListener("load", () => {
-  const popup = document.getElementById("popup");
-  const closeBtn = document.getElementById("closeBtn");
-  const youtubeIframe = document.getElementById("youtube-video");
-
-  const youtubeLink = "https://www.youtube.com/embed/pzxdSK6t2Eo?autoplay=1";
-
-  // Show popup after 4 seconds
-  setTimeout(() => {
-    youtubeIframe.src = youtubeLink;
-    popup.style.display = "block";
-  }, 4000);
-
-  // Close popup
-  closeBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-    youtubeIframe.src = ""; // Stop video
-  });
-});
-
-
-  const moreCards = [
-    {
-      image: "./image/pexels-castorlystock-5139206 1.png",
-      title: "New Goldmine Discovery in Australia",
-      description: "Exploration companies have uncovered new gold veins in the Kalgoorlie region, expected to boost local economies.",
-      date: "July 25, 2025",
-      author: "AURA MINES"
-    },
-    {
-      image: "./image/pexels-castorlystock-5139206 1.png",
-      title: "Silver Demand Soars",
-      description: "Investors rush toward silver as green energy demand spikes globally. Analysts predict a 10% increase in demand.",
-      date: "July 26, 2025",
-      author: "SILVERSTREAM INC"
-    }
-  ];
-
-  const showMoreBtn = document.querySelector(".btn-more");
-  const container = document.getElementById("news-container");
-
-  showMoreBtn.addEventListener("click", function () {
-    moreCards.forEach(card => {
-      const cardDiv = document.createElement("div");
-      cardDiv.classList.add("news-card");
-      cardDiv.innerHTML = `
-        <img src="${card.image}" alt="">
-        <div class="text-content">
-          <h3>${card.title}</h3>
-          <p>${card.description} <span>read more.....</span></p>
-          <span>${card.date}</span>
-          <p>By: ${card.author}</p>
-        </div>
-      `;
-      container.appendChild(cardDiv);
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
     });
 
-    showMoreBtn.style.display = "none"; // hide button after showing
-  });
+    const data = await res.json();
+    statusMsg.textContent = data.message;
+    statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+
+    if (res.ok) {
+      setTimeout(closePopup, 2000);
+    }
+  } catch (err) {
+    statusMsg.textContent = 'Something went wrong.';
+    statusMsg.style.color = 'red';
+  }
+});
+
+// for news section dropdown menu
+
+function toggleDropdown() {
+  const dropdown = document.getElementById("dropdownMenu");
+  const header = document.getElementById("newsToggle");
+  dropdown.classList.toggle("show");
+  header.classList.toggle("rotate");
+}
 
 
-
-// ✅ Load Sidebar Banners
+// ✅ Load Banners
 async function loadBanners() {
   try {
     const res = await fetch('/api/banners/latest');
@@ -143,7 +102,7 @@ async function loadBanners() {
 
     container.innerHTML = '';
 
-    if (!Array.isArray(data) || data.length === 0) {
+    if (!res.ok || !Array.isArray(data) || data.length === 0) {
       container.innerHTML = '<p>No banners available.</p>';
       return;
     }
@@ -174,51 +133,50 @@ async function loadBanners() {
   }
 }
 
-async function loadTopBannerAd() {
+// ✅ Load Latest News
+async function loadLatestNews() {
   try {
-    const res = await fetch('/api/ads/top'); // or '/api/ads' if using same endpoint
-    const ad = await res.json();
-    const topBanner = document.getElementById('topBannerContainer');
-    if (!topBanner) return;
+    const res = await fetch('/api/news/latest');
+    const data = await res.json();
+    const container = document.getElementById('latestNewsContainer');
+    if (!container) return;
 
-    topBanner.innerHTML = '';
+    container.innerHTML = '';
 
-    let img = document.createElement('img');
-
-    if (ad.image.startsWith('data:image')) {
-      img.src = ad.image;
-    } else if (ad.image.startsWith('http')) {
-      img.src = ad.image;
-    } else {
-      img.src = `/uploads/${ad.image}`;
+    if (!res.ok || !Array.isArray(data) || data.length === 0) {
+      container.innerHTML = '<p>No latest news available.</p>';
+      return;
     }
 
-    img.style.width = '100%';
-    img.style.maxHeight = '400px';
-    img.style.objectFit = 'cover';
-    img.style.borderRadius = '10px';
+    data.forEach(news => {
+      const card = document.createElement('div');
+      card.className = 'news-card';
 
-    if (ad.link) {
-      const a = document.createElement('a');
-      a.href = ad.link;
-      a.target = '_blank';
-      a.appendChild(img);
-      topBanner.appendChild(a);
-    } else {
-      topBanner.appendChild(img);
-    }
+      const link = document.createElement('a');
+      link.href = `view-news.html?id=${news._id}`;
+      link.className = 'news-title';
+      link.textContent = news.title;
 
-  } catch (err) {
-    console.error('Error loading top banner ad:', err);
-    const topBanner = document.getElementById('topBannerContainer');
-    topBanner.innerHTML = '<p>Error loading banner ad.</p>';
+      const date = new Date(news.date).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      });
+
+      const meta = document.createElement('p');
+      meta.className = 'news-meta';
+      meta.innerHTML = `${date} &nbsp; <b>By:</b> ${news.by}`;
+
+      card.appendChild(link);
+      card.appendChild(meta);
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Error loading latest news:', error);
   }
 }
 
-
-
-
-// ✅ Load Main Company News
+// ✅ Load Center Company News
 async function fetchCompanyNews() {
   try {
     const res = await fetch('/api/company');
@@ -258,99 +216,100 @@ async function fetchCompanyNews() {
   }
 }
 
-// ✅ Load Right Sidebar Latest News
-async function loadLatestNews() {
+// ✅ Load Advertisements
+async function loadAdvertisements() {
   try {
-    const res = await fetch('/api/news/latest');
-    const data = await res.json();
-    const container = document.getElementById('latestNewsContainer');
-    if (!container) return;
+    const res = await fetch('/api/ads');
+    const ads = await res.json();
+    const adSection = document.getElementById('advertisementSection');
+    if (!adSection) return;
 
-    container.innerHTML = '';
-
-    if (!Array.isArray(data) || data.length === 0) {
-      container.innerHTML = '<p>No latest news available.</p>';
+    if (!ads || ads.length === 0) {
+      adSection.innerHTML = '<p>No advertisements available.</p>';
       return;
     }
 
-    data.forEach(news => {
-      const card = document.createElement('div');
-      card.className = 'news-card';
+    adSection.innerHTML = '';
 
-      const link = document.createElement('a');
-      link.href = `view-news.html?id=${news._id}`;
-      link.className = 'news-title';
-      link.textContent = news.title;
+    ads.forEach(ad => {
+      const img = document.createElement('img');
 
-      const date = new Date(news.date).toLocaleDateString('en-GB', {
-        day: '2-digit', month: 'long', year: 'numeric'
-      });
+      // Detect if image is base64, external, or local
+      if (ad.image.startsWith('data:image')) {
+        img.src = ad.image;
+      } else if (ad.image.startsWith('http')) {
+        img.src = ad.image;
+      } else {
+        img.src = `/uploads/${ad.image}`;
+      }
 
-      const meta = document.createElement('p');
-      meta.className = 'news-meta';
-      meta.innerHTML = `${date} &nbsp; <b>By:</b> ${news.by}`;
+      img.alt = 'Advertisement';
+      img.style.margin = '10px auto';
+      img.style.display = 'block';
+      img.style.maxWidth = '100%';
+      img.style.borderRadius = '6px';
+      img.style.boxShadow = '0 2px 6px rgba(0,0,0,0.15)';
 
-      card.appendChild(link);
-      card.appendChild(meta);
-      container.appendChild(card);
+      if (ad.link) {
+        const a = document.createElement('a');
+        a.href = ad.link;
+        a.target = '_blank';
+        a.appendChild(img);
+        adSection.appendChild(a);
+      } else {
+        adSection.appendChild(img);
+      }
     });
-  } catch (error) {
-    console.error('Error loading latest news:', error);
+  } catch (err) {
+    console.error('Error loading ads:', err);
   }
 }
 
- 
-     async function loadSponsoredPosts() {
-      try {
-        const res = await fetch('/api/sponsored');
-        const data = await res.json();
-
-        if (!Array.isArray(data) || data.length === 0) {
-          console.warn('No sponsored posts found.');
-          return;
-        }
-
-        const top = data[0];
-        const others = data.slice(1, 5);
-
-        // Top Card
-        const topPostContainer = document.getElementById('topSponsoredPost');
-        topPostContainer.innerHTML = `
-          <div class="sec1">
-            <img src="${top.image || './image/placeholder.png'}" alt="Sponsored Image" />
-          </div>
-          <div class="sec2">
-            <span class="tag">SPONSORED POST</span>
-            <p class="post-text">${top.description.slice(0, 300)}...</p>
-            <button class="btn-more" onclick="location.href='sponsored-detail.html?id=${top._id}'">More</button>
-          </div>
-        `;
-
-        // Remaining 4 Cards
-        const cardsContainer = document.getElementById('sponsoredCards');
-        others.forEach(post => {
-          const card = document.createElement('div');
-          card.className = 'card1';
-          card.innerHTML = `
-            <img src="${post.image || './image/placeholder.png'}" alt="Sponsored Image" />
-            <span class="tag-post">SPONSORED POST</span>
-            <h4>${post.title}</h4>
-            <button class="btn-more" onclick="location.href='sponsored-detail.html?id=${post._id}'">More</button>
-          `;
-          cardsContainer.appendChild(card);
-        });
-
-      } catch (err) {
-        console.error('Error fetching sponsored posts:', err);
-      }
-    }
-
-   
 // ✅ Run All on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   loadBanners();
   loadLatestNews();
   fetchCompanyNews();
   loadAdvertisements();
-  loadSponsoredPosts();
+});
+
+
+// ✅ Fetch and display top 2 magazines (flipbooks)
+async function loadTopMagazines() {
+  try {
+    const res = await fetch('/api/flipbooks/top2');
+    const magazines = await res.json();
+    const magazineSection = document.getElementById('topMagazines');
+
+    if (!magazineSection) return;
+
+    magazineSection.innerHTML = '';
+
+    if (!Array.isArray(magazines) || magazines.length === 0) {
+      magazineSection.innerHTML = '<p>No magazines available.</p>';
+      return;
+    }
+
+    magazines.forEach(mag => {
+      const card = document.createElement('div');
+      card.className = 'magazine-card';
+      card.innerHTML = `
+        <div class="magazine-image-wrapper">
+          <img src="${mag.imageUrl}" alt="${mag.title}" class="magazine-thumbnail"/>
+        </div>
+        <div class="magazine-info">
+          <h4>${mag.title}</h4>
+          <a href="${mag.pdfUrl}" target="_blank" class="view-pdf-btn">View PDF</a>
+        </div>
+      `;
+      magazineSection.appendChild(card);
+    });
+  } catch (err) {
+    console.error('Failed to load top magazines:', err);
+  }
+}
+
+// ✅ Call it on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadTopMagazines();
 });

@@ -1,174 +1,832 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mining Discovery</title>
-  <link rel="stylesheet" href="style.css">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+ <link rel="stylesheet" href="style.css"/>
+ 
 </head>
-
 <body>
-  <div class="first-header">
+
+  <div class="first-header"> 
     <p>SOME IMPORTANT HIGHLIGHTED NEWS</p>
   </div>
+ 
+
   <header class="main-header">
-
     <div class="header-top">
-      <div class="logo-social">
-        <img src="image/MD_Logo.jpg" alt="Mining Discovery Logo" class="logo" />
-
+     <div class="logo-social">
+        <img src="./image/LOGO FOR Print.png" alt="Mining Discovery Logo" class="logo" />
       </div>
+      <button class="hamburger" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
 
-      <div class="nav-links">
+      <div class="nav-links" id="navMenu">
         <a href="about.html">About Us</a>
-        <a href="#">News Section</a>
-        <a href="#">Morning Chatter</a>
+        <a href="newss.html">News Section</a>
+        <a href="morning.html">Morning Chatter</a>
         <a href="magazine.html">Magazine</a>
-        <a href="#">Services</a>
-        <a href="#">Contact Us</a>
-        <a href="login.html">Login</a>
-
-
+        <a href="service.html">Services</a>
+        <a href="contant.html">Contact Us</a>
       </div>
 
-      <div class="header-buttons">
-
-
-        <button class="subscribe-btn" id="open-subscribe">Subscribe</button>
+      <div class="header-buttons" id="headerButtons">
+    <a href="./sub-btn.html"><button class="login-btn">Login</button></a>
+        <button class="subscribe-btn">Subscribe</button>
       </div>
     </div>
 
-    <!-- Overlay -->
-    <div id="overlay"></div>
-
-    <!-- Popup -->
-    <div id="subscribe-popup">
-      <h3>Subscribe to Our Newsletter</h3>
-      <input type="email" id="email-input" placeholder="Enter your email" required /><br />
-      <button id="submit-subscribe">Submit</button>
-      <button onclick="closePopup()">Close</button>
-      <p id="status-msg"></p>
-    </div>
-
-    <div class="search-bar-container">
+    <div class="search-bar-container" id="searchContainer">
       <div class="social-icons">
+        <img src="./image/Group.png">
+        <img src="./image/Group (4).png">
+       <img src="./image/Group (1).png">
+         <img src="./image/Group (2).png">
+           <img src="./image/Group (3).png">
+         
+        
+        
+      </div>
+<div class="search-bar-bg">
+  <div class="scrolling-track">
+    <div class="scrolling-content">
+      <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
+      <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
+      <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
+      <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
+    </div>
+    <!-- Duplicate content for seamless loop -->
+    <div class="scrolling-content">
+      <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
+      <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
+      <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
+      <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
+    </div>
+  </div>
+</div>
+
+
+     <div class="search-box">
+    <input type="text" id="searchInput" placeholder=" " />
+    <div class="animated-text-container">
+      <span id="animatedText">Search gold prices</span>
+    </div>
+    <button class="search-icon"><i class="fas fa-search"></i></button>
+  </div>
+    </div>
+  </header>
+   
+
+  
+
+
+      <!-- YouTube Corner Popup -->
+<div class="corner-popup" id="popup">
+  <div class="popup-content">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <iframe
+      id="youtube-video"
+      width="300"
+      height="170"
+      src=""
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+<div class="fullweb">
+<div class="leftslidebar">
+ <!-- Left Info Card -->
+    <div class="left-card">
+      <img src="./image/image (2).png" alt="Company Logo" />
+    </div>
+   
+     <div class="left-ad">
+        <img src="./image/banners.webp" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div>
+      
+   
+      <div class="left-ad">
+        <img src="./image/banner3.webp" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div> <div class="left-ad">
+        <img src="./image/mrngbanner2.webp" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div> <div class="left-ad">
+        <img src="./image/mrngbanner.webp" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div> <div class="left-ad">
+        <img src="./image/banner2.webp" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div> <div class="left-ad">
+        <img src="./image/Untitled design (1).png" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div>
+       
+      
+       <div class="left-ad">
+        <img src="./image/Untitled design (1).png" alt="US Gold Logo" class="logo-img" />
+      
+       
+      </div>
+ 
+</div>
+<div class="main-container">
+  
+<div class="container2">
+   
+
+    <!-- Main News Card -->
+    <div class="main-card">
+      <img src="./image/Your paragraph text (14).png" alt="Drilling Rig" />
+      <div class="main-card-content">
+        <h2>Phenom Closes Second Tranche of Private Placement Financing</h2>
+        <p>
+        March 3, 2025 – Vancouver, British Columbia – Phenom Resources Corp. (TSX-V: PHNM; OTCQX®: PHNMF; FSE: 1PY0) (“Phenom” or the “Company”) announces that it has now closed on a second tranche (“SecondTranche”) of its non-brokered private placement (the “Offering”) previously announced on January 31, as updated February 4, 2025. 
+In this Second Tranche, the Company has issued 500,000 Units (the “Units”) at a price of $0.25 Unit for gross proceeds of $125,000. In connection with the Second Tranche, the Company paid a total of $875 as finder’s fees.
+        </p>
+        <p class="date"><span>30th April 2025 </span>By: Midis</p>
+      </div>
+    </div>
+
+    <!-- Latest Sidebar -->
+    <div class="latest-section">
+      <h3>Latest</h3>
+
+      <div class="latest-item">
+        <p>Power Metallic Provides an Update on Summer 2025 Exploration Programs at Nisk Project</p>
+        <p class="date">30th April 2025 <span class="author">By: Power Metallic</span></p>
+      </div>
+
+      <div class="latest-item">
+        <p>U.S. Gold Corp. to Participate in Alliance Global Partners Annual Mining &amp; Critical Materials Virtual Conference Tuesday, July 15, 2025</p>
+        <p class="date">30th April 2025 <span class="author">By: US Gold Corp</span></p>
+      </div>
+
+      <div class="latest-item">
+        <p>Arizona Gold & Silver Drilling Identifies Second High-Grade Zone With 11 gpt Gold Intercepted at The Philadelphia Project, Arizona</p>
+        <p class="date">30th April 2025 <span class="author">By: Arizona Gold & Silver</span></p>
+      </div>
+
+      <div class="latest-item">
+        <p>Arizona Gold & Silver Drilling Identifies Second High-Grade Zone</p>
+        <p class="date">30th April 2025 <span class="author">By: Arizona Gold & Silver</span></p>
+      </div>
+       <div class="latest-item">
+        <p>Arizona Gold & Silver Drilling Identifies Second High-Grade Zone</p>
+        <p class="date">30th April 2025 <span class="author">By: Arizona Gold & Silver</span></p>
+      </div>
+       <div class="latest-item">
+        <p>Arizona Gold & Silver Drilling Identifies Second High-Grade Zone</p>
+        <p class="date">30th April 2025 <span class="author">By: Arizona Gold & Silver</span></p>
+      </div>
+       <div class="latest-item">
+        <p>Arizona Gold & Silver Drilling Identifies Second High-Grade Zone</p>
+        <p class="date">30th April 2025 <span class="author">By: Arizona Gold & Silver</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="container3">
+   
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="banner">
+        <img src="./image/Untitled design.png" alt="Banner" />
+      </div>
+
+      <h2>Most Read</h2>
+      <div class="cards">
+        <div class="card">
+
+          <div class="head-sec">
+ <p>Arizona Gold & Silver Drilling</p>
+          </div>
+          <p class="center">Arizona Gold & Silver Drilling
+Continues to Intersect Thick
+Intervals of 1 Gram Per Tonne Gold
+Mineralization in Core Drilling on
+Philadelphia Project, Arizona</p>
+          <small>30th April 2025<br/>By: Arizona Gold & Silver</small>
+        </div>
+        <div class="card">
+          <div class="head-sec">
+ <p>Power Metallic 2025
+</p>
+          </div>
+          <p class="center">Power Metallic Provides an Update on Summer 2025 Exploration Programs at Nisk Project</p>
+          <small>30th April 2025<br/>By: Rajat</small>
+        </div>
+        <div class="card">
+          <div class="head-sec">
+ <p>Power Metallic Expands</p>
+          </div>
+          <p class="center">Power Metallic Expands the Lion Zone - Exceptionally High Copper & Gold Grade Kicks on Deep Eastern Margin of Zone</p>
+          <small>30th April 2025<br/>By: Mining Discovery</small>
+        </div>
+        <div class="card">
+          <div class="head-sec">
+ <p>Phenom Increases  Private Placement</p>
+          </div>
+          <p class="center">Phenom Increases Private
+Placement Financing Up To
+$1,850,000</p>
+          <small>30th April 2025<br/>By: Midis</small>
+        </div>
+      </div>
+
+      <!-- Popular This Week Section -->
+      <section class="popular">
+        <h2 class="black">Popular this week</h2>
+        <div class="carousel-wrapper">
+          <button class="nav" id="prev">&#8249;</button>
+          <div class="carousel" id="carousel">
+            <div class="team-card">
+              <img src="./image/card1.jpg" alt="card" />
+           <p>Gold Hunter Completes Consolidation of StrategicLand<br> Package and Advances Its Interest in Magna Terra’s<br> Great Northern and Viking Projects</p>
+              <small>30th April 2025<br/>By: Gold Hunter Resources</small>
+            </div>
+            <div class="team-card">
+              <img src="./image/1acc554425c617900596f5e2ef75925751a61869-1200x600.jpg.png" alt="card" />
+              <p>Power Metallic Awarded Jabal Baudan Exploration <br>License in Saudi Arabia's Jabal Sayid Belt</p>
+             <small>30th April 2025<br/>By: Gold Hunter Resources</small>
+            </div>
+            <div class="team-card">
+              <img src="./image/card1.jpg" alt="card" />
+              <p>Power Metallic Wins Exploration Rights</p>
+              <small>30th April 2025<br/>By: Gold Hunter Resources</small>
+            </div>
+              <div class="team-card">
+              <img src="./image/card1.jpg" alt="card" />
+              <p>Power Metallic Wins Exploration Rights</p>
+             <small>30th April 2025<br/>By: Gold Hunter Resources</small>
+            </div>
+          </div>
+          <button class="nav" id="next">&#8250;</button>
+        </div>
+      </section>
+    </div>
+  </div>
+   <div class="container4">
+    <section class="sponsored-section">
+     
+
+      <div class="content-area">
+        <h2>Sponsored Post</h2>
+
+        <div class="top-post">
+          <div class="sec1">
+            <img src="./image/1acc554425c617900596f5e2ef75925751a61869-1200x600.jpg.png" />
+          </div>
+          <div class="sec2">
+            <span class="tag">SPONSORED POST</span>
+            <p class="post-text">
+              Phenom Closes $1,619,500 First Tranche of Private Placement Financing Arizona Gold & Silver Drilling Intersects 55.8 Metres Grading 1.27 Grams Per Tonne Gold, Including High-Grade Intercepts at Philadelphia Project, Arizona Arizona Gold & Silver Drilling Intersects 55.8 Metres Grading 1.27 Grams Per Tonne Gold, Including High-Grade Intercepts at Philadelphia Project, Arizona Arizona Gold & Silver Drilling Intersects 55.8 Metres Grading 1.27 Grams Per Tonne Gold, Including High-Grade Intercepts at Philadelphia Project, Arizona.
+                 </p>
+            <button class="btn-more">More <i class="fas fa-angle-right"></i></button>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <!-- Card 1 -->
+          <div class="card1">
+            <img src="./image/0a11d81c2f8bf91d05c58c9bd53b0d3380afc2eb-2048x1536.jpg.png" />
+            <span class="tag-post">SPONSORED POST</span>
+            <h4>Power Metallic Provides an Update on Summer 2025 Exploration Programs at Nisk Project</h4>
+            <button class="btn-more">More</button>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card1">
+            <img src="./image/0a11d81c2f8bf91d05c58c9bd53b0d3380afc2eb-2048x1536.jpg.png" />
+            <span class="tag-post">SPONSORED POST</span>
+            <h4>Arizona Gold & Silver Drilling Intersects 5.58 Metres Grading 1.27 Grams Per Tonne Gold...</h4>
+            <button class="btn-more">More</button>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card1">
+            <img src="./image/0a11d81c2f8bf91d05c58c9bd53b0d3380afc2eb-2048x1536.jpg.png" />
+            <span class="tag-post">SPONSORED POST</span>
+            <h4>Phenom Increases Private Placement Financing Up To $1,850,000</h4>
+            <button class="btn-more">More</button>
+          </div>
+
+            <!-- Card 3 -->
+          <div class="card1">
+            <img src="./image/0a11d81c2f8bf91d05c58c9bd53b0d3380afc2eb-2048x1536.jpg.png" />
+            <span class="tag-post">SPONSORED POST</span>
+            <h4>Phenom Increases Private Placement Financing Up To $1,850,000</h4>
+            <button class="btn-more">More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+   <div class="container6">
+
+   
+
+    <!-- Content Container -->
+    <div class="container5">
+
+      <!-- Left Section -->
+      <div class="left-section">
+        <h2 class="left-heading">Latest Multimedia</h2>
+
+        <div class="left-box">
+         <div class="video-card">
+    <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe(this)">
+    <img src="https://img.youtube.com/vi/pzxdSK6t2Eo/maxresdefault.jpg" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Resource Talks visits Arras Minerals in Kazakhstan</h4>
+ 
+</div>
+        </div>
+         <div class="video-card">
+          <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe2(this)">
+    <img src="./image/fourcard.avif" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update Saudi Arabia Project Insights</h4>
+  
+</div>
+        </div>
+        </div>
+
+        
+      </div>
+
+      <!-- Right Section -->
+      <div class="right-section">
+        <h2 class="right-heading">Copper News</h2>
+
+        <div class="right-box">
+          <h4>U.S. Gold Corp. set to join Russell 3000® and Russell 2000® Indexes in FTSE Russell's Annual 2025 Reconstitution-1</h4>
+          <span>30th April 2025  |  By: Mining Discovery</span>
+        </div>
+
+        <div class="right-box">
+          <h4>Arizona Gold & Silver Drilling Continues to Intersect Thick Intervals of 1 Gram Per Tonne Gold</h4>
+          <span>30th April 2025  |  By: Mining Discovery</span>
+        </div>
+
+        <div class="right-box">
+          <h4>ARRAS MINERALS TO MOBILIZE SECOND DRILL RIG TO ELEMES PROJECT</h4>
+          <span>30th April 2025  |  By: Mining Discovery</span>
+        </div>
+
+        <div class="right-box">
+          <h4>Power Metallic to Increase From 3 to 6 Drill Rigs at the Nisk Project</h4>
+          <span>30th April 2025  |  By: Mining Discovery</span>
+        </div>
+
+        <div class="more-btn">More →</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container8">
+    <!-- Banner -->
+    <div class="banner">
+      <img src="./image/image (1).png" alt="Top Banner" />
+    </div>
+
+   
+     <div class="task">
+         <h2>Precious Metals</h2>
+    <div class="precious-metals">
+    <img src="./image/0a11d81c2f8bf91d05c58c9bd53b0d3380afc2eb-2048x1536.jpg.png">
+      <div class="world-news">
+      <p>ARRAS MINERALS TO MOBILIZE SECOND DRILL RIG TO ELEMES PROJECT, PROVIDES EXPLORATION UPDATE, AND ANNOUNCES TERMINATION OF BESKAUGA OPTION AGREEMENT</p>
+      <small>30th April 2025</small>
+      <div class="author">By: Mining Discovery</div>
+      <button class="more-btn">
+        More
+        <svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+ 
+     </div>
+   
+
+<!-- World News -->
+   
+   
+ 
+    </div>
+     <div class="task">
+         <h2>World News</h2>
+    <div class="precious-metals">
+    
+      <div class="world-news">
+      <p>ARRAS MINERALS TO MOBILIZE SECOND DRILL RIG TO ELEMES PROJECT, PROVIDES EXPLORATION UPDATE, AND ANNOUNCES TERMINATION OF BESKAUGA OPTION AGREEMENT</p>
+      <small>30th April 2025</small>
+      <div class="author">By: Mining Discovery</div>
+      <button class="more-btn">
+        More
+        <svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+ 
+     </div>
+   
+
+<!-- World News -->
+   
+   
+ 
+    </div>
+    
+
+    
+    <!-- Corporate + Magazine -->
+    <div class="split-section">
+      <div class="corporate-news">
+        <h2>Corporate News</h2>
+        <div class="card-news">
+          <p>Phenom Announces up to $1,350,000 Private Placement Financing</p>
+          <small>30th April 2025</small><br>
+          <div class="author">By: Michael Clark</div>
+        </div>
+        <div class="card-news">
+          <p>U.S. Gold Corp Announces Participation in THE Mining Investment Event, Quebec City, Canada, June 3-5, 2025</p>
+          <small>30th April 2025</small><br>
+          <div class="author">By: Michael Clark</div>
+        </div>
+         <div class="card-news">
+          <p>U.S. Gold Corp Announces Participation in THE Mining Investment Event, Quebec City, Canada, June 3-5, 2025</p>
+          <small>30th April 2025</small><br>
+          <div class="author">
+            By: Michael Clark
+          
+          </div>
+         
+        </div>
+        <div class="more-btn">More →</div>
+      </div>
+
+      <div class="magazine">
+        <h2 style="display: none;">Magazine</h2>
+        <div class="box1">
+            <img src="./image/USDC.png" alt="Magazine 1">
+            <div class="content">
+ <h4>USDC</h4>
+      <P>june 13,2015</P>
+      <p>by:Unknown</p>
+        </div>
+            </div>
+   
+        <div class="box2">
+            <img src="./image/USDC.png" alt="Magazine 1">
+            <div class="content">
+ <h4>USDC</h4>
+      <P>june 13,2015</P>
+      <p>by:Unknown</p>
+   
+        </div>
+      
+        </div>
+        
+          </div>
+    </div>
+      
+  <!-- Video Section -->
+ <section class="video-section">
+    <h2 class="section-title">videos</h2>
+    <div class="slider-container">
+      <button class="arrow left"><i class="fas fa-chevron-left"></i></button>
+
+      <div class="video-slider" id="videoSlider">
+        <!-- Repeat video cards -->
+        <div class="video-card">
+    <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe(this)">
+    <img src="https://img.youtube.com/vi/pzxdSK6t2Eo/maxresdefault.jpg" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update</h4>
+  <p>Saudi Arabia Project Insights</p>
+</div>
+        </div>
+        <div class="video-card">
+          <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe2(this)">
+    <img src="./image/fourcard.avif" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update</h4>
+  <p>Saudi Arabia Project Insights</p>
+</div>
+        </div>
+        <div class="video-card">
+          <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe(this)">
+    <img src="./image/thirdcard.avif" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update</h4>
+  <p>Saudi Arabia Project Insights</p>
+</div>
+        </div>
+         <div class="video-card">
+             <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe(this)">
+    <img src="./image/firstcard.avif" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update</h4>
+  <p>Saudi Arabia Project Insights</p>
+</div>
+        </div>
+         <div class="video-card">
+             <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe(this)">
+    <img src="./image/thirdcard.avif" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update</h4>
+  <p>Saudi Arabia Project Insights</p>
+</div>
+        </div>
+         <div class="video-card">
+             <div class="video-info">
+  <!-- Thumbnail preview -->
+  <div class="video-thumbnail" onclick="loadIframe(this)">
+    <img src="./image/fourcard.avif" alt="Video Thumbnail">
+    <div class="play-button">▶</div>
+  </div>
+
+  <!-- Video title and description -->
+  <h4>Power Metals - Project Update</h4>
+  <p>Saudi Arabia Project Insights</p>
+</div>
+        </div>
+        <!-- Add more cards here -->
+      </div>
+
+      <button class="arrow right"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </section>
+<!-- game -->
+
+<div class="section">
+    <div class="section-title">🎮 Brainstorming Area</div>
+    <div class="card-grid">
+      <div class="media-card">
+       <a href="./game/index.html"> <img src="./image/pac.PNG" alt="Dice Game"></a>
+        <div class="card-content">
+          <div class="card-title">Dice Mastermind</div>
+          <div class="card-subtitle">Try your luck!</div>
+        </div>
+      </div>
+      <div class="media-card">
+         <a href="./game.html"> <img src="./image/gameimage.PNG" alt="Dice Game"></a>
+          <div class="card-content">
+          <div class="card-title">Snakes & Ladders</div>
+          <div class="card-subtitle">Classic Fun</div>
+        </div>
+      </div>
+
+      <!-- You can copy and paste this card block to add more -->
+      <div class="media-card">
+                <a href="./game2/index.html"> <img src="./image/bird.PNG" alt="Dice Game"></a>
+           <div class="card-content">
+          <div class="card-title">Chess Tactics</div>
+          <div class="card-subtitle">Sharpen your mind!</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="section-wrapper">
+    <!-- Column 1 -->
+    <div class="column">
+      <h3>Press Office</h3>
+      <ul>
+        <li>Power Metallic</li>
+        <li>Aurion Resources</li>
+        <li>Gold Hunter Resources Inc</li>
+        <li>codeskape</li>
+        <li>U.S Gold Corp</li>
+        <li>Arizona Gold & Silver</li>
+      </ul>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="column">
+      <h3>Announcements</h3>
+      <ul>
+        <li>U.S. Gold Corp. to Participate in Alliance Global Partners Annual Mining &amp; Critical Materials Virtual Conference Tuesday, July 15, 2025</li>
+        <li class="highlight-box">U.S. Gold Corp. to Participate in Top Shelf Partners 2025 Commodities Global Expo and Natural Resource Stock Expo May 11–16, 2025</li>
+        <li>Arizona Gold & Silver CEO Letter to Shareholders</li>
+        <li>Phenom Extends Dobbin Gold System to 21+ Kilometres Long</li>
+        <li>xyz</li>
+      </ul>
+    </div>
+
+    <!-- Column 3 -->
+    <div class="column">
+      <h3>What's On</h3>
+      <ul>
+      
+      </ul>
+    </div>
+  </div>
+
+  </div>
+  
+  
+
+  
+
+
+  </div>
+</div>
+</div>
+   <footer>
+   <div class="heads" >
+    <h1>Brands we are working with</h1>
+   </div>
+<!-- Top Logo Slider -->
+
+     <div class="logo-slider">
+      
+    <div class="slider-track" id="sliderTrack">
+      <!-- Loop starts -->
+      <div class="slide">
+              <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftone.png&w=384&q=75" alt="Astra" width="130" height="100" />
+ 
+      </div>
+      <div class="slide">
+    <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Ffttwo.png&w=384&q=75" alt="Aurion" width="130" height="100"  />
+     
+      </div>
+      <div class="slide">
+       <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftfour.png&w=384&q=75" alt="Arras" width="130" height="100" />
+     
+      </div>
+      <div class="slide">
+       <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftfour.png&w=384&q=75" alt="Arras" width="130" height="100" />
+     
+      </div>
+      <div class="slide">
+             <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftfive.png&w=384&q=75" alt="Arizona" width="130" height="100"  />
+     
+      </div>
+      <div class="slide">
+      <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftsix-n.png&w=384&q=75" alt="USDC" width="130" height="100"  />
+     
+      </div>
+      <div class="slide">
+      <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Ffteight.png&w=384&q=75" alt="Silver" width="130" height="100"  />
+ 
+      </div>
+      <!-- Repeat again for smooth loop -->
+      <div class="slide">
+  <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftten.png&w=384&q=75" alt="TP Power" width="130" height="100"  />
+    
+      </div>
+      <div class="slide">
+             <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Ffteleven-n.png&w=384&q=75" alt="US Gold" vwidth="130" height="100"  />
+   
+      </div>
+     <div class="slide">
+              <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftone.png&w=384&q=75" alt="Astra" width="130" height="100" />
+ 
+      </div>
+      <div class="slide">
+    <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Ffttwo.png&w=384&q=75" alt="Aurion" width="130" height="100"  />
+     
+      </div>
+      <div class="slide">
+       <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftfour.png&w=384&q=75" alt="Arras" width="130" height="100" />
+     
+      </div>
+      <div class="slide">
+       <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftfour.png&w=384&q=75" alt="Arras" width="130" height="100" />
+     
+      </div>
+      <div class="slide">
+             <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftfive.png&w=384&q=75" alt="Arizona" width="130" height="100"  />
+     
+      </div>
+      <div class="slide">
+      <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftsix-n.png&w=384&q=75" alt="USDC" width="130" height="100"  />
+     
+      </div>
+      <div class="slide">
+      <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Ffteight.png&w=384&q=75" alt="Silver" width="130" height="100"  />
+ 
+      </div>
+      <!-- Repeat again for smooth loop -->
+      <div class="slide">
+  <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Fftten.png&w=384&q=75" alt="TP Power" width="130" height="100"  />
+    
+      </div>
+      <div class="slide">
+             <img src="https://demo.miningdiscovery.com/_next/image?url=%2Fassets%2Fimages%2Ffteleven-n.png&w=384&q=75" alt="US Gold" vwidth="130" height="100"  />
+   </div>
+      
+    </div>
+    
+  </div>
+  <!-- Footer Section -->
+  <div class="footer-container">
+    <div class="footer-content">
+
+     
+   
+      <!-- Left -->
+      <div class="footer-left">
+         <img src="./discoverylogo.jpg" alt="Mining Discovery Logo"  height="60px"/>
+        <p>
+          Mining Discovery provides daily mining news, a weekly mining newsletter,<br> a monthly mining magazine and an interactive mining website for mining<br> companies, mining associations and mining executives globally.
+        </p>
+         <div class="search-bar-container-last" id="searchContainer">
+      <div class="social-iconss">
         <i class="fab fa-linkedin"></i>
         <i class="fab fa-x-twitter"></i>
         <i class="fab fa-facebook-f"></i>
         <i class="fab fa-instagram"></i>
         <i class="fab fa-youtube"></i>
       </div>
-      <div class="search-bar-bg"></div>
 
-      <input type="text" id="searchInput" placeholder="Search..." />
-      <button class="search-icon"><i class="fas fa-search"></i></button>
-    </div>
-  </header>
-
-   <!-- Header + Dropdown -->
-  <div class="topbar">
-    <h1 onclick="toggleDropdown()" id="newsToggle">
-      News Section
-      <i class="fas fa-chevron-down"></i>
-    </h1>
-  </div>
-
-  <!-- Dropdown Links -->
-  <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html">Latest News</a>
-    <a href="gold.html">Gold News</a>
-    <a href="silver.html">Silver News</a>
-    <a href="cooper.html">Copper News</a>
-    <a href="precious-metal.html">Precious Metals</a>
-    <a href="coporate-news.html">Corporate News</a>
-    <a href="world-news.html">World News</a>
-    <a href="leadership-thoughts.html">Leadership Thoughts</a>
-    <a href="morning-chatter.html">Morning Chatter</a>
-    <a href="announcement.html">Announcement</a>
-    <a href="popular.html">Popular This Week</a>
-    <a href="project.html">Projects</a>
-    <a href="research.html">Research Reports</a>
-    <a href="sponsored.html">Sponsored Post</a>
-  </div>
-
-  <div class="contsiner">
-    <div class="left">
-      <aside class="banner-section">
-        <div id="bannerContainer">
-          <p>Loading banners...</p>
-        </div>
-      </aside>
-    </div>
-
-
-    <!-- Center -->
-    <div class="center">
-      <div id="main-news">
+      <div class="search-boxs">
+        <input type="text" id="searchInput" placeholder="Search..." />
+        <button class="search-icon"><i class="fas fa-search"></i></button>
       </div>
-      <div class="advertisement-section" id="advertisementSection">
-        Advertisements will be loaded here
-      </div>
+       <div class="divider"></div>
     </div>
-
-
-    <!-- Right Sidebar -->
-    <div class="right">
-      <aside class="news-section">
-        <h2>Latest News</h2>
-        <div class="news-container" id="latestNewsContainer">
-          <!-- Only load latest news here -->
-        </div>
-        <div class="btn">
-          <button class="more-button" onclick="window.location.href='all-news.html'">
-            More <span>→</span>
-          </button>
-        </div>
-      </aside>
-    </div>
-
-  </div>
-
-  </div>
-  </button>
-
- <!-- <div class="split-section">
-  <div class="corporate-news">
-    <h3>Corporate News</h3>
-
-    <div class="card">
-      Phenom Announces up to $1,350,000 Private Placement Financing<br />
-      <small>30th April 2025</small><br />
-      <span class="author">by: Michael Clark</span>
-    </div>
-
-    <div class="card">
-      U.S. Gold Corp Announces Participation in THE Mining Investment Event, Quebec City, Canada, June 3–5, 2025<br />
-      <small>30th April 2025</small><br />
-      <span class="author">by: Michael Clark</span>
-    </div>
-
-  </div>
-
-  <div class="magazine-section">
-    <h3>Magazine</h3>
-    <div class="magazine-list" id="topMagazines">
-
-    </div>
-  </div>
-</div> -->
-
-
-
       </div>
 
+      <!-- Center -->
+      <div class="footer-center">
+        <ul>
+          <li>HOME</li>
+          <li>ABOUT US</li>
+          <li>MARKETING VIDEOS</li>
+          <li>SUBSCRIPTION</li>
+          <li>APPS</li>
+          <li>COMMENT GUIDELINE</li>
+          <li>LEGAL NOTICE</li>
+        </ul>
+      </div>
+
+    
+      
+     
+
+    </div>
+
+    <div class="footer-bottom">
+      © 2025 Mining Discovery – Daily Mining Updates – Design by Mining Discovery.
     </div>
   </div>
 
 
+  </footer>
+  
+  
+  
 
-  <script src="script.js"></script>
+ <script src="./script.js"></script>
+
 </body>
-
 </html>

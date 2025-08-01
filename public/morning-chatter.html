@@ -487,7 +487,7 @@
       background: white;
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .card img {
@@ -561,21 +561,24 @@
       padding: 10px;
       font-weight: bold;
     }
+
     .announcement-card {
-  background: #fff;
-  margin: 1rem 0;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.announcement-title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-.announcement-content img {
-  max-width: 100%;
-  height: auto;
-}
+      background: #fff;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .announcement-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .announcement-content img {
+      max-width: 100%;
+      height: auto;
+    }
 
 
     /* === Responsive: Tablet === */
@@ -937,7 +940,7 @@
     </h1>
   </div>
 
-   <!-- Dropdown Links -->
+  <!-- Dropdown Links -->
   <div class="dropdown-links" id="dropdownMenu">
     <a href="latest-news.html">Latest News</a>
     <a href="gold.html">Gold News</a>
@@ -967,17 +970,16 @@
     <!-- Main -->
     <div class="main-content">
       <h2>Morning Chatter</h2>
-
-  <div class="card-container" id="morningChatterContainer">
-    <!-- Cards will be injected here -->
-  </div>
+      <div class="card-container" id="morningChatterContainer">
+        <!-- Cards will be injected here -->
+      </div>
 
 
       <div class="gold">
         <h2>Announcements</h2>
-       <div class="gold-news" id="announcement-container">
-  <!-- Announcement cards will be injected here -->
-</div>
+        <div class="gold-news" id="announcement-container">
+          <!-- Announcement cards will be injected here -->
+        </div>
 
       </div>
     </div>
@@ -1148,65 +1150,78 @@
     }
 
     // for fetching morning chatter 
-    async function fetchMorningChatters() {
-      const res = await fetch('/api/morning-chatter');
-      const data = await res.json();
+  async function fetchMorningChatters() {
+    try {
+      const tag = 'morning-chatter'.replace(/-/g, ' '); // Convert hyphen to space for tag
+      const res = await fetch(`/api/tagged-posts/tag/${encodeURIComponent(tag)}`);
 
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
       const container = document.getElementById('morningChatterContainer');
       container.innerHTML = '';
+
+      if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = '<p>No Morning Chatter posts found.</p>';
+        return;
+      }
 
       data.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
-
         card.innerHTML = `
           ${item.image ? `<img src="${item.image}" alt="Image">` : ''}
           <h3 onclick="goToDetail('${item._id}')">${item.title}</h3>
-          <div class="meta">By ${item.author} on ${new Date(item.date).toLocaleDateString()}</div>
+          <div class="meta">Published on ${new Date(item.createdAt).toLocaleDateString()}</div>
         `;
-
         container.appendChild(card);
       });
+    } catch (err) {
+      console.error('Failed to load Morning Chatter:', err);
     }
+  }
 
-    function goToDetail(id) {
-      window.location.href = `morning-chatter-detail.html?id=${id}`;
-    }
+  function goToDetail(id) {
+    window.location.href = `morning-chatter-detail.html?id=${id}`;
+  }
 
-// for fetching announcements 
+ 
+
+    // for fetching announcements 
     async function fetchAnnouncements() {
-    try {
-      const res = await fetch('/api/announcement');
-      const data = await res.json();
+      try {
+        const res = await fetch('/api/announcement');
+        const data = await res.json();
 
-      const container = document.getElementById('announcement-container');
-      container.innerHTML = ''; // Clear if any
+        const container = document.getElementById('announcement-container');
+        container.innerHTML = ''; // Clear if any
 
-      data.reverse().forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'announcement-card';
+        data.reverse().forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'announcement-card';
 
-        card.innerHTML = `
+          card.innerHTML = `
           <h3 class="announcement-title">${item.title}</h3>
           <div class="announcement-content">${item.content}</div>
         `;
 
-        container.appendChild(card);
-      });
-    } catch (err) {
-      console.error('Failed to load announcements:', err);
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Failed to load announcements:', err);
+      }
     }
-  }
 
-  fetchAnnouncements();
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadBanners();
-      fetchProjectNews();
-      fetchMorningChatters();
-        fetchAnnouncements();
-
+      loadBanners?.();
+      fetchProjectNews?.();
+       fetchMorningChatters();
+      fetchAnnouncements?.();
     });
+
   </script>
 
 </body>

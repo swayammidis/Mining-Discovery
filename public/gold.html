@@ -545,6 +545,59 @@
       color: #555;
     }
 
+    .research-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-top: 10px;
+}
+
+.research-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+}
+
+.research-img {
+  width: 100%;
+  height: auto;
+  max-height: 210px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.research-title {
+  font-size: 17px;
+  font-weight: 600;
+  padding: 0 10px;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.research-title a {
+  color: #1a0dab;
+  text-decoration: underline;
+}
+
+.research-title a:hover {
+  color: #c00;
+  text-decoration: none;
+}
+
+.research-desc {
+  font-size: 14px;
+  color: #444;
+  padding: 0 10px;
+  line-height: 1.6;
+}
+
+/* Optional: Divider (already handled by border-bottom in .research-card) */
+
     /* === Gold Cards Section === */
     .gold-news {
       display: flex;
@@ -907,8 +960,11 @@
 
       <div class="section-box">
         <h3>Reports</h3>
-        <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-        <p>Global Mining Report 2025</p>
+        <button type="button" class="gold-btn" onclick="window.location.href='research.html'">Show More</button>
+      </div>
+
+      <div id="researchReportsContainer" class="research-card-container">
+        <!-- Research reports will be injected here via JS -->
       </div>
     </div>
   </div>
@@ -1078,7 +1134,6 @@
     }
 
     // ====== Gold News Section ======
-    // ====== Gold News Section (from tagged-posts API) ======
     let allNews = [];
     let loadedCount = 0;
     const perPage = 3;
@@ -1088,8 +1143,8 @@
         const res = await fetch('/api/tagged-posts/tag/gold');
         const data = await res.json();
         allNews = data;
-        loadedCount = 0; // reset count on fresh fetch
-        loadMore(); // show initial batch
+        loadedCount = 0;
+        loadMore();
       } catch (err) {
         console.error("Failed to fetch gold news:", err);
       }
@@ -1108,26 +1163,25 @@
         const firstParagraph = extractFirstParagraph(news.description);
 
         card.innerHTML = `
-      <img src="${news.image}" alt="">
-      <div class="text-content">
-        <h3>
-          <a href="gold-news-details.html?id=${news._id}" style="text-decoration: none; color: inherit;">
-            ${news.title}
-          </a>
-        </h3>
-        <p>${firstParagraph} <span>read more.....</span></p>
-      </div>
-    `;
+        <img src="${news.image}" alt="">
+        <div class="text-content">
+          <h3>
+            <a href="project-news-details.html?id=${news._id}" style="text-decoration: none; color: inherit;">
+              ${news.title}
+            </a>
+          </h3>
+          <p>${firstParagraph} <span>read more.....</span></p>
+        </div>
+      `;
 
         container.appendChild(card);
       });
 
       loadedCount += perPage;
 
-      // Hide "Show More" if all news is loaded
-      if (loadedCount >= allNews.length) {
-        const btn = document.querySelector('.btn-more');
-        if (btn) btn.style.display = 'none';
+      const btn = document.querySelector('.btn-more');
+      if (btn && loadedCount >= allNews.length) {
+        btn.style.display = 'none';
       }
     }
 
@@ -1138,25 +1192,28 @@
       return p?.innerText || tempDiv.innerText.substring(0, 150);
     }
 
-
-    // fetch project news
+    // ====== Project News Preview ======
     async function fetchProjectNews() {
       try {
         const res = await fetch('/api/project-news');
         const data = await res.json();
         const container = document.getElementById('projectNewsSection');
+        if (!container) return;
 
-        const latest = data.slice(0, 3); // Display only 3
+        const latest = data.slice(0, 3);
 
         latest.forEach(news => {
           const card = document.createElement('div');
           card.className = 'project-card';
-          card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
           card.innerHTML = `
           <img src="${news.image}" alt="Project Image">
           <div class="content">
-            <h4>${news.title}</h4>
+            <h4>
+              <a href="project-news-details.html?id=${news._id}" style="text-decoration: none; color: inherit;">
+                ${news.title}
+              </a>
+            </h4>
             <p>${news.description.slice(0, 80)}...</p>
           </div>
         `;
@@ -1168,13 +1225,84 @@
       }
     }
 
+    // ====== Project News Detail ======
+    async function fetchProjectNewsById() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
 
+      const container = document.getElementById('projectNewsDetails');
+      if (!id || !container) {
+        if (container) container.innerHTML = '<p>Invalid news ID.</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/project-news/${id}`);
+        if (!res.ok) throw new Error('News not found');
+
+        const news = await res.json();
+        container.innerHTML = `
+        <h1>${news.title}</h1>
+        <div class="news-meta">${new Date(news.createdAt).toLocaleDateString()}</div>
+        ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
+        <div class="news-description">${news.description}</div>
+      `;
+      } catch (err) {
+        container.innerHTML = `<p>Failed to load news: ${err.message}</p>`;
+      }
+    }
+
+    // ====== Utility: Strip HTML ======
+    function stripHTML(html) {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      return div.textContent || div.innerText || "";
+    }
+
+    // ====== Research Reports ======
+    async function fetchResearchReports() {
+      try {
+        const res = await fetch('/api/tagged-posts/tag/research%20reports'); // ✅ encoded space
+        const data = await res.json();
+
+        const container = document.getElementById('researchReportsContainer');
+        if (!container || !Array.isArray(data)) return;
+
+        const latest = data.slice(0, 2);
+
+        latest.forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'research-card';
+
+          card.innerHTML = `
+        <img src="${news.image}" class="research-img" alt="Report Image" />
+        <div class="research-title">
+          <a href="research-report-detail.html?id=${news._id}">${news.title}</a>
+        </div>
+        <div class="research-desc">${stripHTML(news.description).slice(0, 220)}...</div>
+      `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('❌ Failed to load research reports:', err);
+      }
+    }
+
+    // ====== On Page Load ======
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();
       fetchGoldNews();
-      fetchProjectNews();
+      fetchResearchReports();
+
+      if (window.location.pathname.includes('project-news-details.html')) {
+        fetchProjectNewsById();
+      } else {
+        fetchProjectNews();
+      }
     });
   </script>
+
 
 
 </body>

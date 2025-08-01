@@ -2,181 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>News Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View News</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0f0f0f;
-      color: #ffffff;
-      padding: 40px 20px;
-    }
-
-    .container {
+    .news-container {
       max-width: 900px;
-      margin: auto;
-      background: #1a1a1a;
-      padding: 35px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    h1 {
-      font-size: 2.2rem;
+    .news-title {
+      font-size: 28px;
       margin-bottom: 10px;
-      color: #ffc107;
-      line-height: 1.3;
+      color: #222;
     }
 
-    .meta {
-      font-size: 0.95rem;
-      color: #aaa;
-      margin-bottom: 25px;
+    .news-meta {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 20px;
     }
 
-    .news-content {
-      font-size: 1rem;
-      line-height: 1.7;
-      color: #ddd;
-    }
-
-    .news-content img {
+    .main-image {
       max-width: 100%;
       height: auto;
-      margin: 20px 0;
-      display: block;
+      margin-bottom: 20px;
       border-radius: 6px;
     }
 
-    .news-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      overflow-x: auto;
+    .news-description {
+      font-size: 18px;
+      color: #333;
+      line-height: 1.6;
     }
 
-    .news-content th,
-    .news-content td {
-      border: 1px solid #888;
-      padding: 10px;
-      text-align: left;
-    }
-
-    a.back {
+    .back-link {
       display: inline-block;
-      margin-top: 35px;
-      color: #ffc107;
+      margin-top: 20px;
+      color: #0066cc;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 0.95rem;
     }
 
-    a.back:hover {
+    .back-link:hover {
       text-decoration: underline;
-    }
-
-    /* Tablet */
-    @media (max-width: 768px) {
-      body {
-        padding: 30px 15px;
-      }
-
-      .container {
-        padding: 25px;
-      }
-
-      h1 {
-        font-size: 1.7rem;
-      }
-
-      .news-content {
-        font-size: 0.95rem;
-      }
-
-      .news-content th,
-      .news-content td {
-        font-size: 0.9rem;
-      }
-    }
-
-    /* Mobile */
-    @media (max-width: 480px) {
-      .container {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      .meta {
-        font-size: 0.8rem;
-      }
-
-      .news-content {
-        font-size: 0.9rem;
-      }
-
-      .news-content th,
-      .news-content td {
-        font-size: 0.85rem;
-        padding: 8px;
-      }
-
-      a.back {
-        font-size: 0.85rem;
-      }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <h1 id="news-title">Loading...</h1>
-    <p class="meta" id="news-meta"></p>
-    <article id="news-description" class="news-content"></article>
-    <a class="back" href="/index.html">← Back to Home</a>
-  </main>
+
+  <div class="news-container" id="newsDetail">
+    <!-- Full news will be dynamically inserted here -->
+  </div>
 
   <script>
-    async function loadNewsDetails() {
+    async function fetchFullNewsById() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
 
       if (!id) {
-        document.getElementById('news-title').textContent = "Invalid News ID!";
+        document.getElementById('newsDetail').innerHTML = '<p>Invalid news ID.</p>';
         return;
       }
 
       try {
-        const res = await fetch(`/api/news/${id}`);
+        const res = await fetch(`/api/tagged-posts/${id}`);
+        if (!res.ok) throw new Error('News not found');
         const news = await res.json();
 
-        if (res.ok) {
-          document.getElementById('news-title').textContent = news.title;
-
-          const formattedDate = new Date(news.date).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric',
-          });
-
-          document.getElementById('news-meta').innerHTML = `${formattedDate} &nbsp; <strong>By: ${news.by}</strong>`;
-          document.getElementById('news-description').innerHTML = news.description || '<p>No content available.</p>';
-        } else {
-          document.getElementById('news-title').textContent = "News not found.";
-        }
-      } catch (err) {
-        console.error(err);
-        document.getElementById('news-title').textContent = "Error loading news.";
+        const container = document.getElementById('newsDetail');
+        container.innerHTML = `
+          <h1 class="news-title">${news.title}</h1>
+          <div class="news-meta">Posted on ${new Date(news.createdAt).toLocaleDateString()}</div>
+          ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
+          <div class="news-description">${news.description}</div>
+          <a href="latest-news.html" class="back-link">← Back to Latest News</a>
+        `;
+      } catch (error) {
+        document.getElementById('newsDetail').innerHTML = `<p>Error loading news: ${error.message}</p>`;
       }
     }
 
-    document.addEventListener('DOMContentLoaded', loadNewsDetails);
+    fetchFullNewsById();
   </script>
+
 </body>
 </html>

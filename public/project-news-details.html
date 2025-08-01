@@ -48,34 +48,36 @@
   </div>
 
   <script>
-    async function fetchProjectNewsById() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+  async function fetchProjectNewsById() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
 
-      if (!id) {
-        document.getElementById('projectNewsDetails').innerHTML = '<p>Invalid news ID.</p>';
-        return;
-      }
+  if (!id) {
+    document.getElementById('projectNewsDetails').innerHTML = '<p>Invalid news ID.</p>';
+    return;
+  }
 
-      try {
-        const res = await fetch(`/api/project-news/${id}`);
-        if (!res.ok) throw new Error('News not found');
+  try {
+    const res = await fetch(`/api/tagged-posts/${id}`);
+    if (!res.ok) throw new Error('News not found');
 
-        const news = await res.json();
+    const news = await res.json();
 
-        const container = document.getElementById('projectNewsDetails');
-        container.innerHTML = `
-          <h1>${news.title}</h1>
-          <div class="news-meta">By ${news.by} | ${new Date(news.date).toLocaleDateString()}</div>
-          ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
-          <div class="news-description">${news.description}</div>
-        `;
-      } catch (err) {
-        document.getElementById('projectNewsDetails').innerHTML = `<p>Failed to load news: ${err.message}</p>`;
-      }
-    }
+    const container = document.getElementById('projectNewsDetails');
+    container.innerHTML = `
+      <h1>${news.title}</h1>
+      <div class="news-meta">${new Date(news.createdAt).toLocaleDateString()}</div>
+      ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
+      <div class="news-description">${news.description}</div>
+    `;
+  } catch (err) {
+    document.getElementById('projectNewsDetails').innerHTML = `<p>Failed to load news: ${err.message}</p>`;
+  }
+}
 
-    fetchProjectNewsById();
-  </script>
+fetchProjectNewsById();
+
+</script>
+
 </body>
 </html>

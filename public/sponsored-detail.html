@@ -2,88 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Sponsored Post Detail</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sponsored Post Details</title>
+  <link rel="stylesheet" href="/styles.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-
-    .container {
+    .main-content {
+      padding: 20px;
       max-width: 900px;
       margin: auto;
-      background: white;
-      padding: 20px;
+      background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-
-    img {
-      max-width: 100%;
-      margin: 20px 0;
-      border-radius: 4px;
-    }
-
-    h1 {
-      margin-top: 0;
-    }
-
-    .meta {
-      color: #777;
-      font-size: 14px;
+    .main-content img {
+      width: 100%;
+      max-height: 450px;
+      object-fit: cover;
       margin-bottom: 20px;
+      border-radius: 8px;
     }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 30px;
-      color: #007BFF;
-      text-decoration: none;
+    .main-content h2 {
+      margin-bottom: 10px;
     }
-
-    .back-link:hover {
-      text-decoration: underline;
+    .main-content p {
+      font-size: 1rem;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="title">Loading...</h1>
-    <div class="meta" id="meta"></div>
-    <img id="image" src="" alt="" style="display:none;" />
-    <div id="description"></div>
-    <a class="back-link" href="sponsored.html">← Back to Sponsored Posts</a>
+
+  <!-- Header (optional) -->
+  <header>
+    <h1 style="text-align:center;">Sponsored Post Details</h1>
+  </header>
+
+  <!-- Main content area -->
+  <div class="main-content" id="sponsoredDetailContainer">
+    <p>Loading...</p>
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const postId = params.get('id');
+    async function loadSponsoredDetail() {
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get('id');
+      const container = document.getElementById('sponsoredDetailContainer');
 
-    async function fetchSponsoredDetail() {
+      if (!postId) {
+        container.innerHTML = '<p>Invalid post ID.</p>';
+        return;
+      }
+
       try {
-        const res = await fetch(`http://localhost:5000/api/sponsored/${postId}`);
-        const data = await res.json();
-
-        document.getElementById('title').innerText = data.title || 'Untitled';
-        document.getElementById('meta').innerText = `Date: ${new Date(data.createdAt).toLocaleDateString()}`;
-        
-        if (data.image) {
-          const imageEl = document.getElementById('image');
-          imageEl.src = data.image;
-          imageEl.style.display = 'block';
+        const res = await fetch(`/api/tagged-posts/${postId}`);
+        if (!res.ok) {
+          container.innerHTML = '<p>Sponsored post not found.</p>';
+          return;
         }
 
-        document.getElementById('description').innerHTML = data.description || 'No content.';
-      } catch (err) {
-        document.getElementById('title').innerText = 'Failed to load sponsored post.';
-        console.error('Error loading detail:', err);
+        const post = await res.json();
+
+        container.innerHTML = `
+          ${post.image ? `<img src="${post.image}" alt="${post.title}" />` : ''}
+          <h2>${post.title}</h2>
+          <p>${post.description}</p>
+        `;
+      } catch (error) {
+        console.error('Error loading sponsored detail:', error);
+        container.innerHTML = '<p>Error loading sponsored post.</p>';
       }
     }
 
-    fetchSponsoredDetail();
+    document.addEventListener('DOMContentLoaded', loadSponsoredDetail);
   </script>
+
 </body>
 </html>

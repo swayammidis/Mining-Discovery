@@ -70,9 +70,9 @@
   <form id="taggedPostForm">
     <h2>Post News with Tags</h2>
     <input type="text" name="title" placeholder="Title" required />
-    
+
     <textarea name="description" id="editor" placeholder="Description"></textarea>
-    
+
     <input type="file" id="imageInput" accept="image/*" />
 
     <fieldset>
@@ -101,38 +101,50 @@
 
     ClassicEditor
       .create(document.querySelector('#editor'), {
-        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'insertTable', 'undo', 'redo', 'imageUpload'],
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo']
       })
       .then(editor => {
+        ckEditorData = editor.getData();
         editor.model.document.on('change:data', () => {
           ckEditorData = editor.getData();
         });
       })
       .catch(error => {
-        console.error('CKEditor error:', error);
+        console.error('CKEditor initialization error:', error);
       });
 
     document.getElementById('taggedPostForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
-      const title = form.title.value;
-      const description = ckEditorData;
-
+      const title = form.title.value.trim();
+      const description = ckEditorData.trim();
       const tags = [...form.querySelectorAll('input[name="tags"]:checked')].map(cb => cb.value);
       const file = document.getElementById('imageInput').files[0];
       let image = '';
 
+      if (!title || !description || tags.length === 0) {
+        return alert('Please fill out title, description, and select at least one tag.');
+      }
+
       const sendPost = async () => {
-        const res = await fetch('/api/tagged-posts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, description, tags, image })
-        });
-        const data = await res.json();
-        alert(data.message || 'Posted successfully!');
-        form.reset();
-        ckEditorData = '';
-        document.querySelector('.ck-editor__editable').innerHTML = '';
+        try {
+          const res = await fetch('/api/tagged-posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, description, tags, image })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert(data.message || 'Posted successfully!');
+            form.reset();
+            document.querySelector('.ck-editor__editable').innerHTML = '';
+          } else {
+            alert(data.message || 'Failed to post.');
+          }
+        } catch (err) {
+          console.error('Error submitting post:', err);
+          alert('An error occurred while posting.');
+        }
       };
 
       if (file) {

@@ -1073,167 +1073,107 @@
     </footer>
     </div>
 
-    <script>
-        // Toggle dropdown
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdownMenu");
-            const header = document.getElementById("newsToggle");
-            dropdown.classList.toggle("show");
-            header.classList.toggle("rotate");
+   <script>
+    // Toggle dropdown
+    function toggleDropdown() {
+        const dropdown = document.getElementById("dropdownMenu");
+        const header = document.getElementById("newsToggle");
+        dropdown.classList.toggle("show");
+        header.classList.toggle("rotate");
+    }
+
+    // Subscribe popup
+    const popup = document.getElementById('subscribe-popup');
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('open-subscribe');
+    const submitBtn = document.getElementById('submit-subscribe');
+    const statusMsg = document.getElementById('status-msg');
+    const emailInput = document.getElementById('email-input');
+
+    openBtn.addEventListener('click', () => {
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+    });
+
+    overlay.addEventListener('click', closePopup);
+
+    function closePopup() {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+        emailInput.value = '';
+        statusMsg.textContent = '';
+    }
+
+    submitBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        if (!email) {
+            statusMsg.textContent = 'Please enter an email.';
+            statusMsg.style.color = 'red';
+            return;
         }
 
-        // Subscribe popup
-        const popup = document.getElementById('subscribe-popup');
-        const overlay = document.getElementById('overlay');
-        const openBtn = document.getElementById('open-subscribe');
-        const submitBtn = document.getElementById('submit-subscribe');
-        const statusMsg = document.getElementById('status-msg');
-        const emailInput = document.getElementById('email-input');
+        try {
+            const res = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
 
-        openBtn.addEventListener('click', () => {
-            popup.style.display = 'block';
-            overlay.style.display = 'block';
-        });
+            const data = await res.json();
+            statusMsg.textContent = data.message;
+            statusMsg.style.color = res.ok ? '#80ff80' : 'red';
 
-        overlay.addEventListener('click', closePopup);
-
-        function closePopup() {
-            popup.style.display = 'none';
-            overlay.style.display = 'none';
-            emailInput.value = '';
-            statusMsg.textContent = '';
+            if (res.ok) {
+                setTimeout(closePopup, 2000);
+            }
+        } catch (err) {
+            statusMsg.textContent = 'Something went wrong.';
+            statusMsg.style.color = 'red';
         }
+    });
 
-        submitBtn.addEventListener('click', async () => {
-            const email = emailInput.value.trim();
-            if (!email) {
-                statusMsg.textContent = 'Please enter an email.';
-                statusMsg.style.color = 'red';
+    // Load banners
+    async function loadBanners() {
+        try {
+            const res = await fetch('/api/banners/latest');
+            const data = await res.json();
+            const container = document.getElementById('bannerContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                container.innerHTML = '<p>No banners available.</p>';
                 return;
             }
 
-            try {
-                const res = await fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email }),
-                });
+            data.forEach(banner => {
+                const card = document.createElement('div');
+                card.className = 'banner-card';
 
-                const data = await res.json();
-                statusMsg.textContent = data.message;
-                statusMsg.style.color = res.ok ? '#80ff80' : 'red';
-
-                if (res.ok) {
-                    setTimeout(closePopup, 2000);
-                }
-            } catch (err) {
-                statusMsg.textContent = 'Something went wrong.';
-                statusMsg.style.color = 'red';
-            }
-        });
-
-        // Load banners
-        async function loadBanners() {
-            try {
-                const res = await fetch('/api/banners/latest');
-                const data = await res.json();
-                const container = document.getElementById('bannerContainer');
-                if (!container) return;
-
-                container.innerHTML = '';
-
-                if (!res.ok || !Array.isArray(data) || data.length === 0) {
-                    container.innerHTML = '<p>No banners available.</p>';
-                    return;
+                const imageUrl = banner.image;
+                if (imageUrl && imageUrl.startsWith('data:image')) {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = 'Banner';
+                    img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
+                    card.appendChild(img);
+                } else {
+                    card.innerHTML = '<p>Invalid image</p>';
                 }
 
-                data.forEach(banner => {
-                    const card = document.createElement('div');
-                    card.className = 'banner-card';
-
-                    const imageUrl = banner.image;
-                    if (imageUrl && imageUrl.startsWith('data:image')) {
-                        const img = document.createElement('img');
-                        img.src = imageUrl;
-                        img.alt = 'Banner';
-                        img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
-                        card.appendChild(img);
-                    } else {
-                        card.innerHTML = '<p>Invalid image</p>';
-                    }
-
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Failed to load banners:', err);
-                const container = document.getElementById('bannerContainer');
-                if (container) {
-                    container.innerHTML = '<p>Error loading banners.</p>';
-                }
+                container.appendChild(card);
+            });
+        } catch (err) {
+            console.error('Failed to load banners:', err);
+            const container = document.getElementById('bannerContainer');
+            if (container) {
+                container.innerHTML = '<p>Error loading banners.</p>';
             }
         }
+    }
 
-        // Project News
-        async function fetchProjectNews() {
-            try {
-                const res = await fetch('/api/project-news');
-                const data = await res.json();
-                const container = document.getElementById('projectNewsSection');
-                const latest = data.slice(0, 3);
-
-                latest.forEach(news => {
-                    const card = document.createElement('div');
-                    card.className = 'project-card';
-                    card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
-
-                    card.innerHTML = `
-                    <img src="${news.image}" alt="Project Image">
-                    <div class="content">
-                        <h4>${news.title}</h4>
-                        <p>${news.description.slice(0, 80)}...</p>
-                    </div>
-                `;
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Failed to load project news:', err);
-            }
-        }
-
-        // Corporate News
-        async function fetchCorporateNews() {
-            try {
-                const res = await fetch('/api/corporate-news/latest?limit=3');
-                const news = await res.json();
-                const container = document.getElementById('corporateNewsContainer');
-                container.innerHTML = '';
-
-                if (!Array.isArray(news) || news.length === 0) {
-                    container.innerHTML = '<p>No corporate news available.</p>';
-                    return;
-                }
-
-                news.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'gold-card';
-
-                    card.innerHTML = `
-                    <img src="${item.image || './image/default-placeholder.png'}" alt="${item.title}">
-                    <p>
-                        <a href="corporate-news-detail.html?id=${item._id}" style="text-decoration: none; color: inherit;">
-                            ${item.title}
-                        </a>
-                    </p>
-                `;
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Error fetching corporate news:', err);
-                document.getElementById('corporateNewsContainer').innerHTML = '<p>Error loading corporate news.</p>';
-            }
-        }
-
-         // 🔸 Precious Metal Tagged Posts (case-insensitive tag match)
+    // 🔸 Generic Tagged News Fetcher
     async function fetchTaggedNews(tagName, containerId, detailPage) {
         try {
             const encodedTag = encodeURIComponent(tagName);
@@ -1269,13 +1209,14 @@
     // ✅ Init
     document.addEventListener('DOMContentLoaded', () => {
         loadBanners();
-        fetchProjectNews();
-        fetchCorporateNews();
 
-        // 🔁 Corrected tag from 'precious metals' → 'precious metal'
+        // 🔁 Use tag-based fetch for various sections
+        fetchTaggedNews('projects', 'projectNewsSection', 'project-news-details.html');
+        fetchTaggedNews('corporate news', 'corporateNewsContainer', 'corporate-news-detail.html');
         fetchTaggedNews('precious metal', 'precious-metal-container', 'precious-metal-detail.html');
     });
-    </script>
+</script>
+
 
 
 </body>

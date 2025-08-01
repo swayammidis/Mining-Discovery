@@ -44,7 +44,6 @@
       color: #333;
     }
 
-    /* 🛠️ Ensure all images inside content scale properly */
     .content img {
       max-width: 100%;
       height: auto;
@@ -79,13 +78,22 @@
 
     async function loadLeadershipThought() {
       try {
-        const res = await fetch(`/api/leadership-thought/${id}`);
+        // ✅ Fix route: Remove `/id/`
+        const res = await fetch(`/api/tagged-posts/${id}`);
+        if (!res.ok) throw new Error(`Server responded with status ${res.status}`);
         const news = await res.json();
 
-        document.getElementById('newsImage').src = news.imageUrl || '/default.jpg';
+        if (!news || !news.title) {
+          throw new Error('Invalid news object');
+        }
+
+        document.getElementById('newsImage').src = news.image && news.image.startsWith('data:image') 
+          ? news.image 
+          : (news.image || '/default.jpg');
+
         document.getElementById('newsTitle').innerText = news.title;
-        document.getElementById('newsMeta').innerText = `By: ${news.author} | ${new Date(news.date).toLocaleDateString()}`;
-        document.getElementById('newsDescription').innerHTML = news.description;
+        document.getElementById('newsMeta').innerText = `Published: ${new Date(news.createdAt).toLocaleDateString('en-IN')}`;
+        document.getElementById('newsDescription').innerHTML = news.description || '';
       } catch (err) {
         console.error('Failed to load leadership thought:', err);
         document.getElementById('newsTitle').innerText = 'Failed to load news.';

@@ -65,26 +65,36 @@
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+  async function loadPreciousMetalPost() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+    if (!postId) return;
 
-    if (id) {
-      fetch(`/api/precious-metal/${id}`)
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById('news-title').textContent = data.title || "Untitled News";
-          document.getElementById('news-content').innerHTML = data.content || "No content available.";
-          const imageEl = document.getElementById('news-image');
-          imageEl.src = data.image || "/default-image.jpg"; // fallback image
-          imageEl.alt = data.title || "Precious Metal News";
-        })
-        .catch(err => {
-          console.error('Failed to load news:', err);
-          document.querySelector('.detail-container').innerHTML = '<p>Unable to load news content.</p>';
-        });
-    } else {
-      document.querySelector('.detail-container').innerHTML = '<p>Invalid news ID.</p>';
+    try {
+      const res = await fetch(`/api/tagged-posts/${postId}`);
+      const data = await res.json();
+
+      if (data.error || res.status !== 200) {
+        document.getElementById('news-title').innerHTML = 'Post Not Found';
+        document.getElementById('news-content').innerHTML = `<p>${data.message || 'Unable to load post.'}</p>`;
+        return;
+      }
+
+      // Fill in the elements
+      document.getElementById('news-title').innerHTML = data.title;
+      document.getElementById('news-image').src = data.image || './image/default-placeholder.png';
+      document.getElementById('news-content').innerHTML = data.description;
+
+    } catch (err) {
+      console.error('Failed to load post:', err);
+      document.getElementById('news-title').innerHTML = 'Error Loading Post';
+      document.getElementById('news-content').innerHTML = '<p>Something went wrong while loading the post.</p>';
     }
-  </script>
+  }
+
+  document.addEventListener('DOMContentLoaded', loadPreciousMetalPost);
+</script>
+
+
 </body>
 </html>

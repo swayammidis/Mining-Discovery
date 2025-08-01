@@ -1011,16 +1011,16 @@
             </div>
         </div>
 
-        <!-- Main -->
-        <div class="main-content">
-            <div class="gold">
-                <h2>World News</h2>
-                <button type="button" class="btns">show more</button>
-            </div>
+       <!-- Main -->
+<div class="main-content">
+    <div class="gold">
+        <h2>World News</h2>
+        <button type="button" class="btns">show more</button>
+    </div>
 
-            <div class="gold-news" id="worldNewsContainer">
-                <!-- World News cards will be injected here -->
-            </div>
+    <div class="gold-news" id="worldNewsContainer">
+        <!-- World News cards will be injected here -->
+    </div>
 
 
 
@@ -1286,37 +1286,55 @@
     }
   }
 
-  // ====== Load World News ======
-  async function loadWorldNews() {
-    try {
-      const res = await fetch('/api/world-news/latest');
-      const newsItems = await res.json();
-      const container = document.getElementById('worldNewsContainer');
-      if (!container) return;
+  // ====== Load World News from tagged-posts ======
+ async function loadWorldNews() {
+  try {
+    const res = await fetch('/api/tagged-posts/tag/world news');
+    const data = await res.json();
 
-      container.innerHTML = '';
+    // Defensive fallback: if response is not an array, check if it's wrapped inside an object
+    const newsItems = Array.isArray(data) ? data : data.posts || data.data || [];
 
-      newsItems.forEach(news => {
-        const card = document.createElement('div');
-        card.className = 'gold-card';
-        card.innerHTML = `
-          <img src="${news.image}" alt="${news.title}">
-          <p><a href="world-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">${news.title}</a></p>
-        `;
-        container.appendChild(card);
-      });
-    } catch (error) {
-      console.error('Error fetching world news:', error);
-      document.getElementById('worldNewsContainer').innerHTML = '<p>Failed to load news.</p>';
+    const container = document.getElementById('worldNewsContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (newsItems.length === 0) {
+      container.innerHTML = '<p>No world news found.</p>';
+      return;
     }
+
+    newsItems.forEach(news => {
+      const card = document.createElement('div');
+      card.className = 'gold-card';
+
+      const imgSrc = news.image?.startsWith('/uploads')
+        ? `http://localhost:5000${news.image}`
+        : news.image || './default.jpg'; // fallback image
+
+      card.innerHTML = `
+        <img src="${imgSrc}" alt="${news.title}">
+        <p>
+          <a href="world-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">
+            ${news.title}
+          </a>
+        </p>
+      `;
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Error fetching world news:', error);
+    document.getElementById('worldNewsContainer').innerHTML = '<p>Failed to load news.</p>';
   }
+}
 
   // ====== Initial Load ======
   document.addEventListener('DOMContentLoaded', () => {
     loadBanners();
     fetchProjectNews();
-    fetchCorporateNews(); // ✅ Now defined
-    loadWorldNews();
+    fetchCorporateNews();
+    loadWorldNews(); // ✅ Tagged world news
   });
 </script>
 

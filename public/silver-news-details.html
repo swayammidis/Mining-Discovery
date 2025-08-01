@@ -10,6 +10,7 @@
       padding: 30px;
       color: #222;
     }
+
     .news-container {
       max-width: 800px;
       margin: auto;
@@ -18,41 +19,54 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     .news-container img {
       max-width: 100%;
       height: auto;
       margin-bottom: 20px;
+      border-radius: 6px;
     }
+
     .news-container h1 {
       font-size: 28px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
+
     .news-content {
       line-height: 1.7;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <div class="news-container">
-    <img id="silverImage" src="" alt="News Image">
-    <h1 id="silverTitle">Loading...</h1>
-    <div class="news-content" id="silverDescription"></div>
+  <div class="news-container" id="silverNewsDetail">
+    <!-- News will be injected here -->
   </div>
 
   <script>
-    async function loadSilverDetails() {
-      const id = new URLSearchParams(window.location.search).get('id');
-      if (!id) return document.getElementById('silverTitle').textContent = 'Invalid ID';
+    async function fetchSilverNewsDetail() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
 
-      const res = await fetch(`/api/silver-news/${id}`);
-      const news = await res.json();
+      if (!id) return;
 
-      document.getElementById('silverTitle').textContent = news.title;
-      document.getElementById('silverImage').src = news.image;
-      document.getElementById('silverDescription').innerHTML = news.description;
+      try {
+        const res = await fetch(`/api/tagged-posts/${id}`);
+        const news = await res.json();
+
+        const container = document.getElementById('silverNewsDetail');
+        container.innerHTML = `
+          <h1>${news.title}</h1>
+          <img src="${news.image}" alt="${news.title}" />
+          <div class="news-content">${news.description}</div>
+        `;
+      } catch (err) {
+        console.error('Failed to load news:', err);
+        document.getElementById('silverNewsDetail').innerHTML = '<p>Failed to load news.</p>';
+      }
     }
 
-    loadSilverDetails();
+    document.addEventListener('DOMContentLoaded', fetchSilverNewsDetail);
   </script>
 </body>
 </html>

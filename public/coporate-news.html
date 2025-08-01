@@ -1127,246 +1127,245 @@
     </div>
 
     <script>
-        // for news section dropdown
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdownMenu");
-            const header = document.getElementById("newsToggle");
-            dropdown.classList.toggle("show");
-            header.classList.toggle("rotate");
+    // for news section dropdown
+    function toggleDropdown() {
+        const dropdown = document.getElementById("dropdownMenu");
+        const header = document.getElementById("newsToggle");
+        dropdown.classList.toggle("show");
+        header.classList.toggle("rotate");
+    }
+
+    // ======= Subscribe Popup =======
+    const popup = document.getElementById('subscribe-popup');
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('open-subscribe');
+    const submitBtn = document.getElementById('submit-subscribe');
+    const statusMsg = document.getElementById('status-msg');
+    const emailInput = document.getElementById('email-input');
+
+    openBtn.addEventListener('click', () => {
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+    });
+
+    overlay.addEventListener('click', closePopup);
+
+    function closePopup() {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+        emailInput.value = '';
+        statusMsg.textContent = '';
+    }
+
+    submitBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        if (!email) {
+            statusMsg.textContent = 'Please enter an email.';
+            statusMsg.style.color = 'red';
+            return;
         }
 
-        // for subscribe button 
+        try {
+            const res = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
 
-        const popup = document.getElementById('subscribe-popup');
-        const overlay = document.getElementById('overlay');
-        const openBtn = document.getElementById('open-subscribe');
-        const submitBtn = document.getElementById('submit-subscribe');
-        const statusMsg = document.getElementById('status-msg');
-        const emailInput = document.getElementById('email-input');
+            const data = await res.json();
+            statusMsg.textContent = data.message;
+            statusMsg.style.color = res.ok ? '#80ff80' : 'red';
 
-        openBtn.addEventListener('click', () => {
-            popup.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-
-        overlay.addEventListener('click', closePopup);
-
-        function closePopup() {
-            popup.style.display = 'none';
-            overlay.style.display = 'none';
-            emailInput.value = '';
-            statusMsg.textContent = '';
+            if (res.ok) {
+                setTimeout(closePopup, 2000);
+            }
+        } catch (err) {
+            statusMsg.textContent = 'Something went wrong.';
+            statusMsg.style.color = 'red';
         }
+    });
 
-        submitBtn.addEventListener('click', async () => {
-            const email = emailInput.value.trim();
-            if (!email) {
-                statusMsg.textContent = 'Please enter an email.';
-                statusMsg.style.color = 'red';
+    // ====== Load Banners ======
+    async function loadBanners() {
+        try {
+            const res = await fetch('/api/banners/latest');
+            const data = await res.json();
+            const container = document.getElementById('bannerContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                container.innerHTML = '<p>No banners available.</p>';
                 return;
             }
 
-            try {
-                const res = await fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email }),
-                });
-
-                const data = await res.json();
-                statusMsg.textContent = data.message;
-                statusMsg.style.color = res.ok ? '#80ff80' : 'red';
-
-                if (res.ok) {
-                    setTimeout(closePopup, 2000);
-                }
-            } catch (err) {
-                statusMsg.textContent = 'Something went wrong.';
-                statusMsg.style.color = 'red';
-            }
-        });
-
-        // ====== Load Banners ======
-        async function loadBanners() {
-            try {
-                const res = await fetch('/api/banners/latest');
-                const data = await res.json();
-                const container = document.getElementById('bannerContainer');
-                if (!container) return;
-
-                container.innerHTML = '';
-
-                if (!res.ok || !Array.isArray(data) || data.length === 0) {
-                    container.innerHTML = '<p>No banners available.</p>';
-                    return;
-                }
-
-                data.forEach(banner => {
-                    const card = document.createElement('div');
-                    card.className = 'banner-card';
-
-                    const imageUrl = banner.image;
-                    if (imageUrl && imageUrl.startsWith('data:image')) {
-                        const img = document.createElement('img');
-                        img.src = imageUrl;
-                        img.alt = 'Banner';
-                        img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
-                        card.appendChild(img);
-                    } else {
-                        card.innerHTML = '<p>Invalid image</p>';
-                    }
-
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Failed to load banners:', err);
-                const container = document.getElementById('bannerContainer');
-                if (container) {
-                    container.innerHTML = '<p>Error loading banners.</p>';
-                }
-            }
-        }
-
-        // fetch project news
-        async function fetchProjectNews() {
-            try {
-                const res = await fetch('/api/project-news');
-                const data = await res.json();
-                const container = document.getElementById('projectNewsSection');
-
-                const latest = data.slice(0, 3); // Display only 3
-
-                latest.forEach(news => {
-                    const card = document.createElement('div');
-                    card.className = 'project-card';
-                    card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
-
-                    card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
-          <div class="content">
-            <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 80)}...</p>
-          </div>
-        `;
-
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Failed to load project news:', err);
-            }
-        }
-
-        // for fetching coporate news 
-
-        const container = document.getElementById('corporateNewsContainer');
-        const showMoreBtn = document.getElementById('showMoreBtn');
-
-        let allNews = [];
-        let visibleCount = 6;
-
-        async function fetchCorporateNews() {
-            try {
-                const res = await fetch('/api/tagged-posts/tag/corporate news'); // ✅ Updated endpoint
-                const data = await res.json();
-                allNews = data.reverse(); // show latest first
-                renderNews();
-            } catch (err) {
-                console.error('Error fetching corporate news:', err);
-                container.innerHTML = '<p>Error loading news.</p>';
-            }
-        }
-
-        function renderNews() {
-            container.innerHTML = '';
-            const toShow = allNews.slice(0, visibleCount);
-
-            toShow.forEach(item => {
+            data.forEach(banner => {
                 const card = document.createElement('div');
-                card.className = 'news-card';
+                card.className = 'banner-card';
 
-                const imageHTML = item.image ? `<img src="${item.image}" alt="${item.title}">` : '';
-                const shortDesc = item.description.replace(/<[^>]+>/g, '').slice(0, 100) + '...';
+                const imageUrl = banner.image;
+                if (imageUrl && imageUrl.startsWith('data:image')) {
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = 'Banner';
+                    img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
+                    card.appendChild(img);
+                } else {
+                    card.innerHTML = '<p>Invalid image</p>';
+                }
 
-                card.innerHTML = `
-      ${imageHTML}
-      <div class="news-content">
-        <a href="corporate-news-detail.html?id=${item._id}">
-          <h3>${item.title}</h3>
-        </a>
-        <p>${shortDesc}</p>
-      </div>
-    `;
                 container.appendChild(card);
             });
-
-            if (visibleCount >= allNews.length) {
-                showMoreBtn.style.display = 'none';
+        } catch (err) {
+            console.error('Failed to load banners:', err);
+            const container = document.getElementById('bannerContainer');
+            if (container) {
+                container.innerHTML = '<p>Error loading banners.</p>';
             }
         }
+    }
 
-        showMoreBtn.addEventListener('click', () => {
-            visibleCount += 6;
+    // ====== Fetch Corporate News (by tag) ======
+    const container = document.getElementById('corporateNewsContainer');
+    const showMoreBtn = document.getElementById('showMoreBtn');
+
+    let allNews = [];
+    let visibleCount = 6;
+
+    async function fetchCorporateNews() {
+        try {
+            const res = await fetch('/api/tagged-posts/tag/corporate news');
+            const data = await res.json();
+            allNews = data.reverse(); // show latest first
             renderNews();
+        } catch (err) {
+            console.error('Error fetching corporate news:', err);
+            container.innerHTML = '<p>Error loading news.</p>';
+        }
+    }
+
+    function renderNews() {
+        container.innerHTML = '';
+        const toShow = allNews.slice(0, visibleCount);
+
+        toShow.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'news-card';
+
+            const imageHTML = item.image ? `<img src="${item.image}" alt="${item.title}">` : '';
+            const shortDesc = item.description.replace(/<[^>]+>/g, '').slice(0, 100) + '...';
+
+            card.innerHTML = `
+                ${imageHTML}
+                <div class="news-content">
+                    <a href="corporate-news-detail.html?id=${item._id}">
+                        <h3>${item.title}</h3>
+                    </a>
+                    <p>${shortDesc}</p>
+                </div>
+            `;
+            container.appendChild(card);
         });
 
-
-
-        // for fetching world news
-        let worldNewsData = [];
-        let worldNewsDisplayed = 0;
-        const worldNewsPerPage = 3;
-
-        async function loadWorldNews() {
-            try {
-                const res = await fetch('/api/world-news');
-                if (!res.ok) throw new Error('Failed to fetch world news');
-
-                worldNewsData = await res.json();
-                worldNewsDisplayed = 0;
-                renderWorldNews();
-            } catch (error) {
-                console.error('Error loading world news:', error);
-                document.getElementById('worldNewsSection').innerHTML = '<p>Failed to load news.</p>';
-            }
+        if (visibleCount >= allNews.length) {
+            showMoreBtn.style.display = 'none';
         }
+    }
 
-        function renderWorldNews() {
-            const container = document.getElementById('worldNewsSection');
-            const slice = worldNewsData.slice(worldNewsDisplayed, worldNewsDisplayed + worldNewsPerPage);
+    showMoreBtn.addEventListener('click', () => {
+        visibleCount += 6;
+        renderNews();
+    });
 
-            slice.forEach(news => {
+    // ====== Fetch Project News by tag ======
+    async function fetchProjectNews() {
+        try {
+            const res = await fetch('/api/tagged-posts/tag/projects');
+            const data = await res.json();
+            const container = document.getElementById('projectNewsSection');
+            if (!container) return;
+
+            const latest = data.slice(0, 3);
+
+            latest.forEach(news => {
                 const card = document.createElement('div');
-                card.className = 'gold-card';
+                card.className = 'project-card';
+                card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
+
                 card.innerHTML = `
-      <img src="${news.image}" alt="${news.title}">
-      <p>
-        <a href="world-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">
-          ${news.title}
-        </a>
-      </p>
-    `;
+                    <img src="${news.image}" alt="Project Image">
+                    <div class="content">
+                        <h4>${news.title}</h4>
+                        <p>${news.description.replace(/<[^>]+>/g, '').slice(0, 80)}...</p>
+                    </div>
+                `;
+
                 container.appendChild(card);
             });
-
-            worldNewsDisplayed += slice.length;
-
-            if (worldNewsDisplayed >= worldNewsData.length) {
-                document.querySelector('.gold-btn').style.display = 'none';
-            }
+        } catch (err) {
+            console.error('Failed to load project news:', err);
         }
+    }
 
-        function showMoreWorldNews() {
+    // ====== Fetch World News by tag ======
+    let worldNewsData = [];
+    let worldNewsDisplayed = 0;
+    const worldNewsPerPage = 3;
+
+    async function loadWorldNews() {
+        try {
+            const res = await fetch('/api/tagged-posts/tag/world news');
+            if (!res.ok) throw new Error('Failed to fetch world news');
+
+            worldNewsData = await res.json();
+            worldNewsDisplayed = 0;
             renderWorldNews();
+        } catch (error) {
+            console.error('Error loading world news:', error);
+            document.getElementById('worldNewsSection').innerHTML = '<p>Failed to load news.</p>';
         }
+    }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadBanners();
-            fetchCorporateNews();
-            fetchProjectNews();
-            loadWorldNews();
+    function renderWorldNews() {
+        const container = document.getElementById('worldNewsSection');
+        const slice = worldNewsData.slice(worldNewsDisplayed, worldNewsDisplayed + worldNewsPerPage);
+
+        slice.forEach(news => {
+            const card = document.createElement('div');
+            card.className = 'gold-card';
+            card.innerHTML = `
+                <img src="${news.image}" alt="${news.title}">
+                <p>
+                    <a href="world-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">
+                        ${news.title}
+                    </a>
+                </p>
+            `;
+            container.appendChild(card);
         });
 
-    </script>
+        worldNewsDisplayed += slice.length;
+
+        if (worldNewsDisplayed >= worldNewsData.length) {
+            const btn = document.querySelector('.gold-btn');
+            if (btn) btn.style.display = 'none';
+        }
+    }
+
+    function showMoreWorldNews() {
+        renderWorldNews();
+    }
+
+    // ====== Init on DOM Ready ======
+    document.addEventListener('DOMContentLoaded', () => {
+        loadBanners();
+        fetchCorporateNews();
+        fetchProjectNews();
+        loadWorldNews();
+    });
+</script>
+
 
 </body>
 

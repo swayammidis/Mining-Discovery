@@ -56,14 +56,12 @@
       word-wrap: break-word;
     }
 
-    /* Make all images in the description responsive */
     .news-description img {
       max-width: 100%;
       height: auto;
       border-radius: 5px;
     }
 
-    /* Responsive typography */
     @media (max-width: 768px) {
       .news-title {
         font-size: 22px;
@@ -94,48 +92,40 @@
   </style>
 </head>
 <body>
+
   <div class="news-detail">
     <div id="newsContent">
-      <!-- Dynamic content will be inserted here -->
+      <h1 class="news-title" id="news-title">Loading...</h1>
+      <img class="news-image" id="news-image" src="" alt="News Image" />
+      <div class="news-description" id="news-content"></div>
     </div>
   </div>
 
   <script>
-    async function fetchNewsDetail() {
+    async function loadCorporateNewsDetail() {
       const urlParams = new URLSearchParams(window.location.search);
-      const newsId = urlParams.get('id');
+      const postId = urlParams.get('id');
 
-      if (!newsId) {
-        document.getElementById('newsContent').innerHTML = '<p>News ID not found in URL.</p>';
+      if (!postId) {
+        document.getElementById('newsContent').innerHTML = '<p>Invalid news ID.</p>';
         return;
       }
 
       try {
-        const res = await fetch(`/api/corporate-news/${newsId}`);
-        if (!res.ok) throw new Error('Failed to fetch');
-
+        const res = await fetch(`/api/tagged-posts/${postId}`);
         const data = await res.json();
-        const { title, description, image, author, date } = data;
 
-        const formattedDate = new Date(date).toLocaleDateString('en-IN', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-
-        document.getElementById('newsContent').innerHTML = `
-          <h1 class="news-title">${title}</h1>
-          <p class="news-meta">By ${author} | ${formattedDate}</p>
-          ${image ? `<img class="news-image" src="${image}" alt="${title}">` : ''}
-          <div class="news-description">${description}</div>
-        `;
+        document.getElementById('news-title').innerHTML = data.title || 'No title';
+        document.getElementById('news-image').src = data.image || './image/default-placeholder.png';
+        document.getElementById('news-content').innerHTML = data.description || '<p>No content available.</p>';
       } catch (err) {
-        console.error('Error loading news:', err);
-        document.getElementById('newsContent').innerHTML = '<p>Failed to load news content.</p>';
+        console.error('Failed to load news detail:', err);
+        document.getElementById('newsContent').innerHTML = '<p>Error loading news post.</p>';
       }
     }
 
-    fetchNewsDetail();
+    document.addEventListener('DOMContentLoaded', loadCorporateNewsDetail);
   </script>
+
 </body>
 </html>

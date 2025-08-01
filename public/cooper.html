@@ -842,7 +842,7 @@
 
     <!-- Main -->
     <div class="main-content">
-      <h2>Cooper News</h2>
+      <h2>Copper News</h2>
       <div class="copper-news" id="copperNewsContainer">
         <!-- News cards will be injected here -->
       </div>
@@ -1068,47 +1068,48 @@
       }
     }
 
-    // ======= Load Copper News =======
-    let copperOffset = 0;
-    const copperLimit = 6;
+    // load copper news 
+  let copperOffset = 0;
+  const copperLimit = 6;
 
-    async function loadCopperNews() {
-      try {
-        const res = await fetch('/api/tagged-posts/tag/cooper'); // spelling: "cooper" not "copper"
-        const posts = await res.json();
+  async function loadCopperNews() {
+    try {
+      const res = await fetch('/api/tagged-posts/tag/copper');
+      const posts = await res.json();
 
-        const container = document.getElementById('copperNewsContainer');
-        const visiblePosts = posts.slice(copperOffset, copperOffset + copperLimit);
-
-        if (visiblePosts.length === 0) {
-          document.querySelector('.btn-more').style.display = 'none';
-          return;
-        }
-
-        visiblePosts.forEach(post => {
-          const card = document.createElement('div');
-          card.className = 'news-card';
-          card.innerHTML = `
-          <img src="${post.image}" alt="${post.title}" />
-          <h3>${post.title}</h3>
-          <p>${post.description.substring(0, 100)}...</p>
-          <a href="/tagged-news-detail.html?id=${post._id}">Read More</a>
-        `;
-          container.appendChild(card);
-        });
-
-        copperOffset += copperLimit;
-      } catch (err) {
-        console.error('Error loading Copper News:', err);
+      if (!Array.isArray(posts)) {
+        console.error('Invalid data returned:', posts);
+        return;
       }
-    }
 
-    function loadMoreCopper() {
-      loadCopperNews();
-    }
+      const container = document.getElementById('copperNewsContainer');
+      const visiblePosts = posts.slice(copperOffset, copperOffset + copperLimit);
 
-    // Initial load
-    window.addEventListener('DOMContentLoaded', loadCopperNews);
+      if (visiblePosts.length === 0) {
+        document.querySelector('.btn-more').style.display = 'none';
+        return;
+      }
+
+      visiblePosts.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.innerHTML = `
+          <img src="${post.image}" alt="${post.title}" />
+          <h3><a href="/tagged-news-detail.html?id=${post._id}" style="text-decoration:none; color:#222;">${post.title}</a></h3>
+          <p>${post.description.substring(0, 100)}...</p>
+          <a href="/tagged-news-detail.html?id=${post._id}" class="read-more">Read More</a>
+        `;
+        container.appendChild(card);
+      });
+
+      copperOffset += copperLimit;
+    } catch (err) {
+      console.error('Error loading Copper News:', err);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', loadCopperNews);
+
 
 
     // ======= Load Top 3 Project News =======
@@ -1139,7 +1140,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();      // Optional
-      loadCopperNews();  // ✅ Required
+      loadCopperNews(); // ✅ Required
       loadProjectNews();  // Optional
     });
   </script>

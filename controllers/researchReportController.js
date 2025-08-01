@@ -1,9 +1,10 @@
 const ResearchReport = require('../models/researchReport');
+const TaggedPost = require('../models/TaggedPost');
 
-// Create a new research report
+// 🔹 Create a new research report
 exports.createResearchReport = async (req, res) => {
   try {
-    const { title, author, image, description, date } = req.body;
+    const { title, author, image, description, date, tags } = req.body;
 
     if (!title?.trim() || !description?.trim()) {
       return res.status(400).json({ error: 'Title and description are required.' });
@@ -14,7 +15,8 @@ exports.createResearchReport = async (req, res) => {
       author: author?.trim() || 'Admin',
       image: image?.trim() || '',
       description: description.trim(),
-      date: date ? new Date(date) : new Date()
+      date: date ? new Date(date) : new Date(),
+      tags: tags || []
     });
 
     const savedReport = await newReport.save();
@@ -25,7 +27,7 @@ exports.createResearchReport = async (req, res) => {
   }
 };
 
-// Get all research reports
+// 🔹 Get all research reports
 exports.getAllResearchReports = async (req, res) => {
   try {
     const reports = await ResearchReport.find().sort({ createdAt: -1 });
@@ -36,7 +38,7 @@ exports.getAllResearchReports = async (req, res) => {
   }
 };
 
-// Get the latest 3 research reports
+// 🔹 Get latest 3 research reports
 exports.getLatestResearchReports = async (req, res) => {
   try {
     const latestReports = await ResearchReport.find().sort({ createdAt: -1 }).limit(3);
@@ -47,13 +49,27 @@ exports.getLatestResearchReports = async (req, res) => {
   }
 };
 
-// Get a single research report by ID
+// 🔹 Get a single research report by ID
 exports.getResearchReportById = async (req, res) => {
   try {
-    const report = await ResearchReport.findById(req.params.id);
+    const { id } = req.params;
+
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ error: 'Invalid report ID.' });
+    }
+
+    // First try from ResearchReport collection
+    let report = await ResearchReport.findById(id);
+
+    // If not found, try from TaggedPost collection
+    if (!report) {
+      report = await TaggedPost.findById(id);
+    }
+
     if (!report) {
       return res.status(404).json({ error: 'Research report not found.' });
     }
+
     res.status(200).json(report);
   } catch (err) {
     console.error('❌ Error fetching report by ID:', err.message);

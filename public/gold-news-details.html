@@ -1,116 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gold News Details</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 30px;
-      color: #222;
+    .news-detail-container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
     }
 
-    .news-container {
-      max-width: 900px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    .news-detail-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .news-detail-img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      margin-bottom: 20px;
       border-radius: 8px;
     }
 
-    .news-container img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 20px;
-      border-radius: 6px;
-    }
-
-    .news-container h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+    .news-detail-content {
+      font-size: 1.1rem;
+      line-height: 1.7;
       color: #333;
     }
 
-    .author-date {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 25px;
-    }
+    @media (max-width: 600px) {
+      .news-detail-title {
+        font-size: 1.5rem;
+      }
 
-    .news-content {
-      line-height: 1.8;
-      font-size: 16px;
-    }
-
-    /* Styles to make tables look good */
-    .news-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      overflow-x: auto;
-      display: block;
-    }
-
-    .news-content th, .news-content td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-
-    .news-content th {
-      background-color: #f0f0f0;
-    }
-
-    .news-content img {
-      max-width: 100%;
-      height: auto;
-      margin: 15px 0;
-      display: block;
-    }
-
-    .news-content p {
-      margin-bottom: 16px;
+      .news-detail-content {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="news-container">
-    <img id="newsImage" src="" alt="News Image" />
-    <h1 id="newsTitle">Loading...</h1>
-    <div class="author-date" id="newsAuthor"></div>
-    <div class="news-content" id="newsDescription"></div>
+  <div class="news-detail-container" id="newsDetailContainer">
+    <!-- News content will be injected here -->
   </div>
 
   <script>
-    async function loadNewsDetails() {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
-
-      if (!id) {
-        document.getElementById('newsTitle').textContent = "Invalid News ID";
-        return;
-      }
+    async function fetchGoldNewsDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      if (!id) return;
 
       try {
-        const res = await fetch(`/api/gold-news/${id}`);
-        if (!res.ok) throw new Error('News not found');
-        const news = await res.json();
+        const res = await fetch(`/api/tagged-posts/${id}`);
+        const data = await res.json();
 
-        document.getElementById('newsTitle').textContent = news.title;
-        document.getElementById('newsImage').src = news.image;
-        document.getElementById('newsAuthor').textContent = `By ${news.author || "Unknown"} • ${new Date(news.createdAt).toLocaleDateString()}`;
-        document.getElementById('newsDescription').innerHTML = news.description;
+        const container = document.getElementById('newsDetailContainer');
+
+        container.innerHTML = `
+          <h1 class="news-detail-title">${data.title}</h1>
+          <img src="${data.image}" alt="News Image" class="news-detail-img" />
+          <div class="news-detail-content">${data.description}</div>
+        `;
       } catch (err) {
-        document.getElementById('newsTitle').textContent = "Failed to load news";
-        document.getElementById('newsDescription').textContent = err.message;
+        console.error("Failed to load news detail:", err);
+        document.getElementById('newsDetailContainer').innerHTML =
+          "<p>Error loading news detail.</p>";
       }
     }
 
-    loadNewsDetails();
+    document.addEventListener('DOMContentLoaded', fetchGoldNewsDetail);
   </script>
-
 </body>
 </html>
