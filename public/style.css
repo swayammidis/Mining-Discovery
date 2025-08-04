@@ -2231,3 +2231,51 @@ border-radius: 10px;
     font-size: 13px;
   }
 }
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  position: relative;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
+.dropdown-content li {
+  list-style: none;
+}
+
+.dropdown-content a {
+  padding: 10px 15px;
+  display: block;
+  color: whitesmoke;
+}
+
+.dropdown-content a:hover {
+  background-color: goldenrod;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
