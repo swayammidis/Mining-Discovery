@@ -131,6 +131,82 @@
       background-color: #000;
     }
 
+    
+/* === Newsletter Modal === */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  z-index: 99;
+}
+
+#subscribe-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #111;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  display: none;
+  z-index: 100;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+#subscribe-popup h3 {
+  margin-bottom: 1rem;
+  color: #ffcc00;
+}
+
+#email-input {
+  width: 90%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#subscribe-popup button {
+  padding: 0.6rem 1.2rem;
+  margin: 0.3rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#submit-subscribe {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+#submit-subscribe:hover {
+  background-color: black;
+}
+
+#subscribe-popup button:last-child {
+  background-color: #444;
+  color: #fff;
+}
+
+#subscribe-popup button:last-child:hover {
+  background-color: #666;
+}
+
+#status-msg {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
    
  .search-bar-container {
   display: flex;
@@ -328,78 +404,62 @@
       }
     }
 
-/* === Header / Dropdown Toggle === */
-    .topbar {
-      background: #1f1f1f;
-      color: #fff;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-    }
+/* === Topbar Dropdown === */
+.topbar {
+  background: #1f1f1f;
+  color: #fff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
 
-    .topbar h1 {
-      font-size: 20px;
-      font-weight: normal;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
+.topbar h1 {
+  font-size: 20px;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
 
-    .topbar h1 i {
-      font-size: 12px;
-      transition: transform 0.3s ease;
-    }
+.topbar h1 i {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
 
-    .topbar h1.rotate i {
-      transform: rotate(180deg);
-    }
+.topbar h1.rotate i {
+  transform: rotate(180deg);
+}
 
-    .dropdown-links {
-      display: none;
-      background: #1f1f1f;
-      padding: 10px 30px;
-      flex-wrap: wrap;
-      gap: 15px;
-      font-size: 14px;
-      border-top: 1px solid #333;
-    }
+.dropdown-links {
+  display: none;
+  background: #1f1f1f;
+  padding: 10px 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 14px;
+  border-top: 1px solid #333;
+}
 
-    .dropdown-links a {
-      color: #ccc;
-      text-decoration: none;
-      margin-right: 15px;
-      transition: 0.3s;
-    }
+.dropdown-links a {
+  color: #ccc;
+  text-decoration: none;
+  margin-right: 15px;
+  transition: 0.3s;
+}
 
-    .dropdown-links a:hover,
-    .dropdown-links a.active {
-      color: gold;
-      border-bottom: 2px solid gold;
-      padding-bottom: 3px;
-    }
+.dropdown-links a:hover,
+.dropdown-links a.active {
+  color: gold;
+  border-bottom: 2px solid gold;
+  padding-bottom: 3px;
+}
 
-    .dropdown-links.show {
-      display: flex;
-    }
-
-   
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
+.dropdown-links.show {
+  display: flex;
+}
 
 
 
@@ -876,162 +936,163 @@
       margin-top: 10px;
     }
 
-    .content-area {
-      flex: 1;
-      
-    }
+   .content-area {
+    flex: 1;
+    padding: 20px;
+  }
 
-    .content-area h2 {
-      margin-bottom: 20px;
-      color: white;
-    }
+  .content-area h2 {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 20px;
+  }
 
+  /* 🔸 Featured Post Styling */
+  .top-post {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+  }
+
+  .top-post img {
+    width: 320px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .top-post .sec2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .tag-post,
+  .tag {
+    padding: 4px 10px;
+    font-size: 12px;
+    color: white;
+    border: 1px solid white;
+    display: inline-block;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .post-text {
+    font-size: 15px;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn-more {
+    align-self: flex-start;
+    background-color: transparent;
+    border: 1px solid #AC8A4A;
+    color: #AC8A4A;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* 🔸 Grid Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+  }
+
+  .card1 {
+    background-color: #1c1c1c;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card1 img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .card1 h4 {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card1 .tag-post {
+    margin-bottom: 10px;
+  }
+
+  .card1 .btn-more {
+    margin-top: auto;
+  }
+
+  /* 🔁 Responsive */
+  @media (max-width: 1024px) {
     .top-post {
-      display: flex;
-      gap: 20px;
-    
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 25px;
-   
+      flex-direction: column;
     }
 
     .top-post img {
-     
-      border-radius: 6px;
-    }
-
-    .tag {
-    
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 10px;
-      color:white;
-      border: 1px solid white;
-    }
-    .tag-post{
-       padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 10px;
-      color:white;
-    }
-
-    .post-text {
-      font-size: 15px;
-      margin-bottom: 10px;
-      color: white;
-    }
-
-    .btn-more {
-     
-      background-color: black;
-       border: 1px solid #AC8A4A;
-     color: #AC8A4A;
-      padding: 6px 12px;
-    
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 13px;
+      width: 100%;
+      height: auto;
     }
 
     .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card-grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
 
-    .card1 {
-      color: white;
-      padding: 15px;
-      border-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    .btn-more {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-grid {
+      grid-template-columns: 1fr;
     }
 
-    .card1 img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 5px;
-      margin-bottom: 10px;
+    .post-text {
+      font-size: 14px;
     }
 
     .card1 h4 {
-      font-size: 14px;
-      margin-bottom: 10px;
-      color: white;
-      flex-grow: 1;
+      font-size: 13px;
     }
-
-    .container6 {
-      background-color: white;
-      padding: 20px;
-    }
-
-    /* 🔁 Responsive Breakpoints */
-    @media (max-width: 1024px) {
-      .sponsored-section {
-        flex-direction: column;
-      }
-
-      .left-ad {
-        width: 100%;
-        height: auto;
-      }
-
-      .content-area {
-        max-width: 100%;
-      }
-
-      .top-post {
-        flex-direction: column;
-      }
-
-      .top-post img {
-        max-width: 100%;
-        height: auto;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .card-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      }
+  }
 
 
-      .btn-more {
-        font-size: 12px;
-        padding: 5px 10px;
-      }
-    }
 
-    @media (max-width: 480px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-      .left-ad{
-        display: none;
-      }
 
-      .left-ad h3 {
-        font-size: 16px;
-      }
-
-      .post-text {
-        font-size: 14px;
-      }
-
-      .card h4 {
-        font-size: 13px;
-      }
-    }
     .container6 {
         background-color: white;
       max-width: 1300px;
@@ -1218,67 +1279,45 @@
     }
 
     /* Precious Metals */
-    .precious-metals {
-     
-      background-color: #D9D9D9;
-      border-radius: 8px;
-      display: flex;
-      overflow: hidden;
-      margin-bottom: 40px;
-    }
+   .precious-metals {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
 
-    .precious-metals img {
-      width: 250px;
-      height: auto;
-      object-fit: cover;
-    }
+.precious-metals img {
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+}
 
-    .precious-content {
-    
-      padding: 18px 20px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+.world-news {
+  flex: 1;
+}
 
-    .sponsored-tag {
-      display: inline-block;
-      font-size: 11px;
-      color: #5a5a5a;
-      border: 1px solid #5a5a5a;
-      border-radius: 15px;
-      padding: 2px 8px;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
+.metal-link {
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+}
 
-    .precious-content p {
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1.4;
-      margin-bottom: 20px;
-    }
+.more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-weight: bold;
+}
 
-    .more-btn {
-      align-self: flex-end;
-      border: 1px solid #AC8A4A;
-      color:#AC8A4A;
-      font-weight: 700;
-      padding: 6px 16px;
-      font-size: 13px;
-      background-color: white;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .more-btn svg {
-      width: 14px;
-      height: 14px;
-      fill: #2b1900;
-    }
+.more-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
 
     /* World News */
     .world-news {

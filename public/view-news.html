@@ -6,6 +6,18 @@
   <title>View News</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+    }
+
     .news-container {
       max-width: 900px;
       margin: 40px auto;
@@ -13,13 +25,14 @@
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      font-family: 'Segoe UI', sans-serif;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     .news-title {
       font-size: 28px;
       margin-bottom: 10px;
-      color: #222;
+      color: #111;
     }
 
     .news-meta {
@@ -29,8 +42,9 @@
     }
 
     .main-image {
-      max-width: 100%;
-      height: auto;
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
       margin-bottom: 20px;
       border-radius: 6px;
     }
@@ -38,18 +52,49 @@
     .news-description {
       font-size: 18px;
       color: #333;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .back-link {
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 30px;
       color: #0066cc;
       text-decoration: none;
+      font-weight: 500;
     }
 
     .back-link:hover {
       text-decoration: underline;
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 768px) {
+      .news-container {
+        margin: 20px 15px;
+        padding: 15px;
+      }
+
+      .news-title {
+        font-size: 22px;
+      }
+
+      .news-description {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .news-title {
+        font-size: 20px;
+      }
+
+      .main-image {
+        max-height: 250px;
+      }
+
+      .news-description {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -75,13 +120,30 @@
         const news = await res.json();
 
         const container = document.getElementById('newsDetail');
-        container.innerHTML = `
-          <h1 class="news-title">${news.title}</h1>
-          <div class="news-meta">Posted on ${new Date(news.createdAt).toLocaleDateString()}</div>
-          ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
-          <div class="news-description">${news.description}</div>
-          <a href="latest-news.html" class="back-link">← Back to Latest News</a>
-        `;
+        const formattedDate = news.createdAt
+          ? new Date(news.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+          : 'Date not available';
+
+        // Check if description already contains image/title to avoid duplication
+        const hasImageInDescription = news.description?.includes('<img');
+        const hasTitleInDescription = news.description?.includes('<h1') || news.description?.includes('<h2');
+
+        let html = '';
+
+        if (!hasTitleInDescription) {
+          html += `<h1 class="news-title">${news.title}</h1>`;
+        }
+
+        html += `<div class="news-meta">Posted on ${formattedDate}</div>`;
+
+        if (!hasImageInDescription && news.image) {
+          html += `<img src="${news.image}" alt="News Image" class="main-image">`;
+        }
+
+        html += `<div class="news-description">${news.description}</div>`;
+        html += `<a href="latest-news.html" class="back-link">← Back to Latest News</a>`;
+
+        container.innerHTML = html;
       } catch (error) {
         document.getElementById('newsDetail').innerHTML = `<p>Error loading news: ${error.message}</p>`;
       }
