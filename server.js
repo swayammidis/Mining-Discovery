@@ -40,18 +40,8 @@ const adminRoute = require('./routes/admin');
 const bannerRoutes = require('./routes/banners');
 const companyRoutes = require('./routes/company');
 const advertisementRoutes = require('./routes/advertisement');
-const silverRoutes = require('./routes/silver');
 const copperRoutes = require('./routes/copper');
-const projectNewsRoutes = require('./routes/projectNews');
-const preciousMetalRoutes = require('./routes/preciousMetal');
-const corporateNewsRoutes = require('./routes/corporateNews');
-const worldNewsRoutes = require('./routes/worldNews');
-const leadershipThoughtRoutes = require('./routes/leadershipThought');
-const morningChatterRoutes = require('./routes/morningChatter');
-const announcementRoutes = require('./routes/announcement');
 const uploadRoute = require('./routes/upload');
-const researchReportRoutes = require('./routes/researchReport');
-const sponsoredRoutes = require('./routes/sponsored');
 const taggedPostRoutes = require('./routes/taggedPosts');
 
 // Mount API routes
@@ -63,16 +53,7 @@ app.use('/api/banners', bannerRoutes);
 app.use('/api/company', companyRoutes);
 app.use('/api/ads', advertisementRoutes);
 app.use('/api/copper-news', copperRoutes);
-app.use('/api', projectNewsRoutes);
-app.use('/api/precious-metal', preciousMetalRoutes);
-app.use('/api/corporate-news', corporateNewsRoutes);
-app.use('/api/world-news', worldNewsRoutes);
-app.use('/api/leadership-thought', leadershipThoughtRoutes);
-app.use('/api/morning-chatter', morningChatterRoutes);
-app.use('/api/announcement', announcementRoutes);
 app.use('/api/upload', uploadRoute);
-app.use('/api/research-reports', researchReportRoutes);
-app.use('/api/sponsored', sponsoredRoutes);
 app.use('/api/tagged-posts', taggedPostRoutes);
 
 // API Health Check
