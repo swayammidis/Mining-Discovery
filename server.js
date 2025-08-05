@@ -43,6 +43,7 @@ const advertisementRoutes = require('./routes/advertisement');
 const copperRoutes = require('./routes/copper');
 const uploadRoute = require('./routes/upload');
 const taggedPostRoutes = require('./routes/taggedPosts');
+const servicePostRoutes = require('./routes/servicePost');
 
 // Mount API routes
 app.use('/api/subscribe', subscribeRoute);
@@ -55,6 +56,7 @@ app.use('/api/ads', advertisementRoutes);
 app.use('/api/copper-news', copperRoutes);
 app.use('/api/upload', uploadRoute);
 app.use('/api/tagged-posts', taggedPostRoutes);
+app.use('/api/service-posts', servicePostRoutes);
 
 // API Health Check
 app.get('/api/health', (req, res) => {

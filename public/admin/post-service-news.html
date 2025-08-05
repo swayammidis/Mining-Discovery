@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Service News</title>
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      padding: 20px;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="text"], input[type="file"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+    }
+    button {
+      padding: 10px 20px;
+      background: #2e8b57;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #246b45;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Post Service News</h2>
+
+  <form id="servicePostForm">
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="author">Author:</label>
+    <input type="text" name="author" id="author">
+
+    <label for="image">Image URL (or upload below):</label>
+    <input type="text" name="image" id="image">
+
+    <label>Or Upload Image File:</label>
+    <input type="file" id="imageFile">
+
+    <label for="content">Content:</label>
+    <textarea name="content" id="editor"></textarea>
+
+    <h4>Select Tags:</h4>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="tags" value="Investor Campaigns"> Investor Campaigns</label>
+      <label><input type="checkbox" name="tags" value="Video & YouTube Media"> Video & YouTube Media</label>
+      <label><input type="checkbox" name="tags" value="News Syndication"> News Syndication</label>
+      <label><input type="checkbox" name="tags" value="Conference Media Coverage"> Conference Media Coverage</label>
+      <label><input type="checkbox" name="tags" value="Digital Branding"> Digital Branding</label>
+      <label><input type="checkbox" name="tags" value="Global Outreach"> Global Outreach</label>
+      <label><input type="checkbox" name="tags" value="Social Media Growth"> Social Media Growth</label>
+      <label><input type="checkbox" name="tags" value="Podcast & Interview Features"> Podcast & Interview Features</label>
+      <label><input type="checkbox" name="tags" value="Newsletter & Email Blasts"> Newsletter & Email Blasts</label>
+      <label><input type="checkbox" name="tags" value="Paid Ad Campaigns"> Paid Ad Campaigns</label>
+      <label><input type="checkbox" name="tags" value="Press Office"> Press Office</label>
+    </div>
+
+    <button type="submit">Post News</button>
+  </form>
+
+  <script>
+    let editorInstance;
+
+    ClassicEditor
+      .create(document.querySelector('#editor'))
+      .then(editor => {
+        editorInstance = editor;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    document.getElementById('servicePostForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const tags = [...form.querySelectorAll('input[name="tags"]:checked')].map(tag => tag.value);
+      const title = form.title.value;
+      const author = form.author.value;
+      const content = editorInstance.getData();
+
+      let image = form.image.value;
+
+      const imageFile = document.getElementById('imageFile').files[0];
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+
+        // Upload image to server (this route should be created in your backend)
+        const imgRes = await fetch('/api/upload-image', {
+          method: 'POST',
+          body: formData
+        });
+
+        const imgData = await imgRes.json();
+        image = imgData.url; // assuming backend returns { url: '/uploads/filename.jpg' }
+      }
+
+      const payload = { title, author, content, image, tags };
+
+      const response = await fetch('/api/service-posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      alert(result.message);
+      if (response.ok) {
+        form.reset();
+        editorInstance.setData('');
+      }
+    });
+  </script>
+</body>
+</html>
