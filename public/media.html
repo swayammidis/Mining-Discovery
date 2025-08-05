@@ -880,13 +880,13 @@
 
   <div class="container">
 
-  <!-- Left Panel -->
-<div class="left-panel">
-  <!-- Dynamic banners will load here -->
-  <div id="globalBannerContainer">
-    <p>Loading banners...</p>
-  </div>
-</div>
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <!-- Dynamic banners will load here -->
+      <div id="globalBannerContainer">
+        <p>Loading banners...</p>
+      </div>
+    </div>
 
 
     <!-- Middle Panel -->
@@ -940,13 +940,11 @@
 
     <!-- Right Panel -->
     <div class="right-panel">
-      <div class="section-title">Projects</div>
-      <img src="image/pexels-afterdark-31543888.png" alt="project-1">
-      <img src="image/ann1.png" alt="project-2">
+      <div class="section-title" id="projectNewsSection">Projects</div>
 
-      <div class="section-title">Reports</div>
-      <img src="image/ann4.png" alt="report-1">
-      <img src="image/ann2.png" alt="report-2">
+<h2>Reports</h2>
+      <div class="section-title" id="researchReportsContainer">Reports</div>
+
     </div>
 
   </div>
@@ -1003,52 +1001,130 @@
       © 2025 Mining Discovery – Daily Mining Updates – Design by Mining Discovery.
     </div>
   </div>
-<script>
-  async function loadGlobalBanners() {
-    try {
-      const res = await fetch('/api/banners/latest');
-      const data = await res.json();
-      console.log('Global banner API response:', data);
+  <script>
+    async function loadGlobalBanners() {
+      try {
+        const res = await fetch('/api/banners/latest');
+        const data = await res.json();
+        console.log('Global banner API response:', data);
 
-      const container = document.getElementById('globalBannerContainer');
-      if (!container) return;
+        const container = document.getElementById('globalBannerContainer');
+        if (!container) return;
 
-      container.innerHTML = '';
+        container.innerHTML = '';
 
-      if (!res.ok || !Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<p>No banners available.</p>';
-        return;
-      }
-
-      const bannersToShow = data.slice(0, 3); // Show 3 banners just like static example
-
-      bannersToShow.forEach((banner, index) => {
-        const imageUrl = banner.image;
-
-        const img = document.createElement('img');
-        img.alt = banner.alt || `Banner ${index + 1}`;
-        img.className = 'left-banner-img';
-
-        if (imageUrl && imageUrl.startsWith('data:image')) {
-          img.src = imageUrl;
-        } else {
-          img.alt = 'Invalid image';
-          img.src = '';
+        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No banners available.</p>';
+          return;
         }
 
-        container.appendChild(img);
-      });
-    } catch (err) {
-      console.error('Error loading global banners:', err);
-      const container = document.getElementById('globalBannerContainer');
-      if (container) container.innerHTML = '<p>Error loading banners.</p>';
-    }
-  }
+        const bannersToShow = data.slice(0, 3); // Show 3 banners just like static example
 
-  document.addEventListener('DOMContentLoaded', () => {
-    loadGlobalBanners();
-  });
-</script>
+        bannersToShow.forEach((banner, index) => {
+          const imageUrl = banner.image;
+
+          const img = document.createElement('img');
+          img.alt = banner.alt || `Banner ${index + 1}`;
+          img.className = 'left-banner-img';
+
+          if (imageUrl && imageUrl.startsWith('data:image')) {
+            img.src = imageUrl;
+          } else {
+            img.alt = 'Invalid image';
+            img.src = '';
+          }
+
+          container.appendChild(img);
+        });
+      } catch (err) {
+        console.error('Error loading global banners:', err);
+        const container = document.getElementById('globalBannerContainer');
+        if (container) container.innerHTML = '<p>Error loading banners.</p>';
+      }
+    }
+
+    // ====== Fetch Project News by tag ======
+    async function fetchProjectNews() {
+      try {
+        const res = await fetch('/api/tagged-posts/tag/projects');
+        const data = await res.json();
+        const container = document.getElementById('projectNewsSection');
+        if (!container) return;
+
+        const latest = data.slice(0, 3);
+
+        latest.forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
+
+          card.innerHTML = `
+                    <img src="${news.image}" alt="Project Image">
+                    <div class="content">
+                        <h4>${news.title}</h4>
+                        <p>${news.description.replace(/<[^>]+>/g, '').slice(0, 80)}...</p>
+                    </div>
+                `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Failed to load project news:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGlobalBanners();
+      fetchProjectNews();
+
+    });
+
+    // for fetching reports 
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const tag = 'research reports';
+        const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+        const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+        const data = await res.json();
+
+        const container = document.getElementById("researchReportsContainer");
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No research reports found.</p>';
+          return;
+        }
+
+        const topReports = data.slice(0, 2); // Show top 2
+
+        topReports.forEach(report => {
+          const card = document.createElement("div");
+          card.classList.add("research-card");
+
+          card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching research reports:", error);
+      }
+
+      // Helper function to remove HTML tags from description
+      function stripHTML(html) {
+        const div = document.createElement("div");
+        div.innerHTML = html || '';
+        return div.textContent || div.innerText || '';
+      }
+    });
+  </script>
 
 </body>
 
