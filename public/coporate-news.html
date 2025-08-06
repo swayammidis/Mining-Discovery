@@ -7,6 +7,36 @@
     <title>Coporate News</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            /* or your site background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #222;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -897,58 +927,62 @@
                 margin-top: 30px;
             }
         }
+
         .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-}
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+        }
 
-.nav-links a {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  position: relative;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            position: relative;
+        }
 
-.dropdown {
-  position: relative;
-}
+        .dropdown {
+            position: relative;
+        }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: black;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 999;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
 
-.dropdown-content li {
-  list-style: none;
-}
+        .dropdown-content li {
+            list-style: none;
+        }
 
-.dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  color: whitesmoke;
-}
+        .dropdown-content a {
+            padding: 10px 15px;
+            display: block;
+            color: whitesmoke;
+        }
 
-.dropdown-content a:hover {
-  background-color: goldenrod;
-}
+        .dropdown-content a:hover {
+            background-color: goldenrod;
+        }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
 <body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
     <header class="main-header">
         <div class="header-top">
             <div class="logo-social">
@@ -960,24 +994,24 @@
                 <i class="fas fa-bars"></i>
             </button>
 
-           <div class="nav-links" id="navMenu">
-  <a href="about.html">About Us</a>
-  <a href="newss.html">News Section</a>
-  <a href="morning.html">Morning Chatter</a>
-  <a href="magazine.html">Magazine</a>
+            <div class="nav-links" id="navMenu">
+                <a href="about.html">About Us</a>
+                <a href="newss.html">News Section</a>
+                <a href="morning.html">Morning Chatter</a>
+                <a href="magazine.html">Magazine</a>
 
-  <!-- Dropdown Container -->
-  <div class="dropdown">
-    <a href="service.html" class="dropbtn">Services</a>
-    <ul class="dropdown-content">
-      <li><a href="Global.html">Global</a></li>
-      <li><a href="branding.html">Branding</a></li>
-      <li><a href="media.html">Media</a></li>
-    </ul>
-  </div>
+                <!-- Dropdown Container -->
+                <div class="dropdown">
+                    <a href="service.html" class="dropbtn">Services</a>
+                    <ul class="dropdown-content">
+                        <li><a href="Global.html">Global</a></li>
+                        <li><a href="branding.html">Branding</a></li>
+                        <li><a href="media.html">Media</a></li>
+                    </ul>
+                </div>
 
-  <a href="contant.html">Contact Us</a>
-</div>
+                <a href="contant.html">Contact Us</a>
+            </div>
 
 
             <div class="header-buttons" id="headerButtons">
@@ -1124,8 +1158,8 @@
                         <!-- Top 2 reports will be injected here -->
                     </div>
 
-                    </div>
-                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Footer Section -->
@@ -1188,136 +1222,146 @@
     </div>
 
     <script>
-    // for news section dropdown
-    function toggleDropdown() {
-        const dropdown = document.getElementById("dropdownMenu");
-        const header = document.getElementById("newsToggle");
-        dropdown.classList.toggle("show");
-        header.classList.toggle("rotate");
-    }
-
-    // ======= Subscribe Popup =======
-    const popup = document.getElementById('subscribe-popup');
-    const overlay = document.getElementById('overlay');
-    const openBtn = document.getElementById('open-subscribe');
-    const submitBtn = document.getElementById('submit-subscribe');
-    const statusMsg = document.getElementById('status-msg');
-    const emailInput = document.getElementById('email-input');
-
-    openBtn.addEventListener('click', () => {
-        popup.style.display = 'block';
-        overlay.style.display = 'block';
-    });
-
-    overlay.addEventListener('click', closePopup);
-
-    function closePopup() {
-        popup.style.display = 'none';
-        overlay.style.display = 'none';
-        emailInput.value = '';
-        statusMsg.textContent = '';
-    }
-
-    submitBtn.addEventListener('click', async () => {
-        const email = emailInput.value.trim();
-        if (!email) {
-            statusMsg.textContent = 'Please enter an email.';
-            statusMsg.style.color = 'red';
-            return;
-        }
-
-        try {
-            const res = await fetch('/api/subscribe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
-
-            const data = await res.json();
-            statusMsg.textContent = data.message;
-            statusMsg.style.color = res.ok ? '#80ff80' : 'red';
-
-            if (res.ok) {
-                setTimeout(closePopup, 2000);
+        // ===== PRELOADER FUNCTIONALITY =====
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                setTimeout(() => preloader.remove(), 1000); // optional: remove it from DOM
             }
-        } catch (err) {
-            statusMsg.textContent = 'Something went wrong.';
-            statusMsg.style.color = 'red';
+        });
+
+        // for news section dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            const header = document.getElementById("newsToggle");
+            dropdown.classList.toggle("show");
+            header.classList.toggle("rotate");
         }
-    });
 
-    // ====== Load Banners ======
-    async function loadBanners() {
-        try {
-            const res = await fetch('/api/banners/latest');
-            const data = await res.json();
-            const container = document.getElementById('bannerContainer');
-            if (!container) return;
+        // ======= Subscribe Popup =======
+        const popup = document.getElementById('subscribe-popup');
+        const overlay = document.getElementById('overlay');
+        const openBtn = document.getElementById('open-subscribe');
+        const submitBtn = document.getElementById('submit-subscribe');
+        const statusMsg = document.getElementById('status-msg');
+        const emailInput = document.getElementById('email-input');
 
-            container.innerHTML = '';
+        openBtn.addEventListener('click', () => {
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
 
-            if (!res.ok || !Array.isArray(data) || data.length === 0) {
-                container.innerHTML = '<p>No banners available.</p>';
+        overlay.addEventListener('click', closePopup);
+
+        function closePopup() {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+            emailInput.value = '';
+            statusMsg.textContent = '';
+        }
+
+        submitBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            if (!email) {
+                statusMsg.textContent = 'Please enter an email.';
+                statusMsg.style.color = 'red';
                 return;
             }
 
-            data.forEach(banner => {
-                const card = document.createElement('div');
-                card.className = 'banner-card';
+            try {
+                const res = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
 
-                const imageUrl = banner.image;
-                if (imageUrl && imageUrl.startsWith('data:image')) {
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.alt = 'Banner';
-                    img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
-                    card.appendChild(img);
-                } else {
-                    card.innerHTML = '<p>Invalid image</p>';
+                const data = await res.json();
+                statusMsg.textContent = data.message;
+                statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+
+                if (res.ok) {
+                    setTimeout(closePopup, 2000);
+                }
+            } catch (err) {
+                statusMsg.textContent = 'Something went wrong.';
+                statusMsg.style.color = 'red';
+            }
+        });
+
+        // ====== Load Banners ======
+        async function loadBanners() {
+            try {
+                const res = await fetch('/api/banners/latest');
+                const data = await res.json();
+                const container = document.getElementById('bannerContainer');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No banners available.</p>';
+                    return;
                 }
 
-                container.appendChild(card);
-            });
-        } catch (err) {
-            console.error('Failed to load banners:', err);
-            const container = document.getElementById('bannerContainer');
-            if (container) {
-                container.innerHTML = '<p>Error loading banners.</p>';
+                data.forEach(banner => {
+                    const card = document.createElement('div');
+                    card.className = 'banner-card';
+
+                    const imageUrl = banner.image;
+                    if (imageUrl && imageUrl.startsWith('data:image')) {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = 'Banner';
+                        img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
+                        card.appendChild(img);
+                    } else {
+                        card.innerHTML = '<p>Invalid image</p>';
+                    }
+
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Failed to load banners:', err);
+                const container = document.getElementById('bannerContainer');
+                if (container) {
+                    container.innerHTML = '<p>Error loading banners.</p>';
+                }
             }
         }
-    }
 
-    // ====== Fetch Corporate News (by tag) ======
-    const container = document.getElementById('corporateNewsContainer');
-    const showMoreBtn = document.getElementById('showMoreBtn');
+        // ====== Fetch Corporate News (by tag) ======
+        const container = document.getElementById('corporateNewsContainer');
+        const showMoreBtn = document.getElementById('showMoreBtn');
 
-    let allNews = [];
-    let visibleCount = 6;
+        let allNews = [];
+        let visibleCount = 6;
 
-    async function fetchCorporateNews() {
-        try {
-            const res = await fetch('/api/tagged-posts/tag/corporate news');
-            const data = await res.json();
-            allNews = data.reverse(); // show latest first
-            renderNews();
-        } catch (err) {
-            console.error('Error fetching corporate news:', err);
-            container.innerHTML = '<p>Error loading news.</p>';
+        async function fetchCorporateNews() {
+            try {
+                const res = await fetch('/api/tagged-posts/tag/corporate news');
+                const data = await res.json();
+                allNews = data.reverse(); // show latest first
+                renderNews();
+            } catch (err) {
+                console.error('Error fetching corporate news:', err);
+                container.innerHTML = '<p>Error loading news.</p>';
+            }
         }
-    }
 
-    function renderNews() {
-        container.innerHTML = '';
-        const toShow = allNews.slice(0, visibleCount);
+        function renderNews() {
+            container.innerHTML = '';
+            const toShow = allNews.slice(0, visibleCount);
 
-        toShow.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'news-card';
+            toShow.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
 
-            const imageHTML = item.image ? `<img src="${item.image}" alt="${item.title}">` : '';
-            const shortDesc = item.description.replace(/<[^>]+>/g, '').slice(0, 100) + '...';
+                const imageHTML = item.image ? `<img src="${item.image}" alt="${item.title}">` : '';
+                const shortDesc = item.description.replace(/<[^>]+>/g, '').slice(0, 100) + '...';
 
-            card.innerHTML = `
+                card.innerHTML = `
                 ${imageHTML}
                 <div class="news-content">
                     <a href="corporate-news-detail.html?id=${item._id}">
@@ -1326,35 +1370,35 @@
                     <p>${shortDesc}</p>
                 </div>
             `;
-            container.appendChild(card);
+                container.appendChild(card);
+            });
+
+            if (visibleCount >= allNews.length) {
+                showMoreBtn.style.display = 'none';
+            }
+        }
+
+        showMoreBtn.addEventListener('click', () => {
+            visibleCount += 6;
+            renderNews();
         });
 
-        if (visibleCount >= allNews.length) {
-            showMoreBtn.style.display = 'none';
-        }
-    }
+        // ====== Fetch Project News by tag ======
+        async function fetchProjectNews() {
+            try {
+                const res = await fetch('/api/tagged-posts/tag/projects');
+                const data = await res.json();
+                const container = document.getElementById('projectNewsSection');
+                if (!container) return;
 
-    showMoreBtn.addEventListener('click', () => {
-        visibleCount += 6;
-        renderNews();
-    });
+                const latest = data.slice(0, 3);
 
-    // ====== Fetch Project News by tag ======
-    async function fetchProjectNews() {
-        try {
-            const res = await fetch('/api/tagged-posts/tag/projects');
-            const data = await res.json();
-            const container = document.getElementById('projectNewsSection');
-            if (!container) return;
+                latest.forEach(news => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
-            const latest = data.slice(0, 3);
-
-            latest.forEach(news => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
-
-                card.innerHTML = `
+                    card.innerHTML = `
                     <img src="${news.image}" alt="Project Image">
                     <div class="content">
                         <h4>${news.title}</h4>
@@ -1362,40 +1406,40 @@
                     </div>
                 `;
 
-                container.appendChild(card);
-            });
-        } catch (err) {
-            console.error('Failed to load project news:', err);
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Failed to load project news:', err);
+            }
         }
-    }
 
-    // ====== Fetch World News by tag ======
-    let worldNewsData = [];
-    let worldNewsDisplayed = 0;
-    const worldNewsPerPage = 3;
+        // ====== Fetch World News by tag ======
+        let worldNewsData = [];
+        let worldNewsDisplayed = 0;
+        const worldNewsPerPage = 3;
 
-    async function loadWorldNews() {
-        try {
-            const res = await fetch('/api/tagged-posts/tag/world news');
-            if (!res.ok) throw new Error('Failed to fetch world news');
+        async function loadWorldNews() {
+            try {
+                const res = await fetch('/api/tagged-posts/tag/world news');
+                if (!res.ok) throw new Error('Failed to fetch world news');
 
-            worldNewsData = await res.json();
-            worldNewsDisplayed = 0;
-            renderWorldNews();
-        } catch (error) {
-            console.error('Error loading world news:', error);
-            document.getElementById('worldNewsSection').innerHTML = '<p>Failed to load news.</p>';
+                worldNewsData = await res.json();
+                worldNewsDisplayed = 0;
+                renderWorldNews();
+            } catch (error) {
+                console.error('Error loading world news:', error);
+                document.getElementById('worldNewsSection').innerHTML = '<p>Failed to load news.</p>';
+            }
         }
-    }
 
-    function renderWorldNews() {
-        const container = document.getElementById('worldNewsSection');
-        const slice = worldNewsData.slice(worldNewsDisplayed, worldNewsDisplayed + worldNewsPerPage);
+        function renderWorldNews() {
+            const container = document.getElementById('worldNewsSection');
+            const slice = worldNewsData.slice(worldNewsDisplayed, worldNewsDisplayed + worldNewsPerPage);
 
-        slice.forEach(news => {
-            const card = document.createElement('div');
-            card.className = 'gold-card';
-            card.innerHTML = `
+            slice.forEach(news => {
+                const card = document.createElement('div');
+                card.className = 'gold-card';
+                card.innerHTML = `
                 <img src="${news.image}" alt="${news.title}">
                 <p>
                     <a href="world-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">
@@ -1403,30 +1447,30 @@
                     </a>
                 </p>
             `;
-            container.appendChild(card);
+                container.appendChild(card);
+            });
+
+            worldNewsDisplayed += slice.length;
+
+            if (worldNewsDisplayed >= worldNewsData.length) {
+                const btn = document.querySelector('.gold-btn');
+                if (btn) btn.style.display = 'none';
+            }
+        }
+
+        function showMoreWorldNews() {
+            renderWorldNews();
+        }
+
+        // ====== Init on DOM Ready ======
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBanners();
+            fetchCorporateNews();
+            fetchProjectNews();
+            loadWorldNews();
         });
 
-        worldNewsDisplayed += slice.length;
-
-        if (worldNewsDisplayed >= worldNewsData.length) {
-            const btn = document.querySelector('.gold-btn');
-            if (btn) btn.style.display = 'none';
-        }
-    }
-
-    function showMoreWorldNews() {
-        renderWorldNews();
-    }
-
-    // ====== Init on DOM Ready ======
-    document.addEventListener('DOMContentLoaded', () => {
-        loadBanners();
-        fetchCorporateNews();
-        fetchProjectNews();
-        loadWorldNews();
-    });
-
-     // for fetching research reports 
+        // for fetching research reports 
         document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const tag = 'research reports';
@@ -1472,7 +1516,7 @@
             }
         });
 
-</script>
+    </script>
 
 
 </body>

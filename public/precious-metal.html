@@ -7,6 +7,36 @@
     <title>precious Metal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            /* or your site background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #222;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -855,57 +885,60 @@
         }
 
         .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-}
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+        }
 
-.nav-links a {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  position: relative;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            position: relative;
+        }
 
-.dropdown {
-  position: relative;
-}
+        .dropdown {
+            position: relative;
+        }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: black;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 999;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
 
-.dropdown-content li {
-  list-style: none;
-}
+        .dropdown-content li {
+            list-style: none;
+        }
 
-.dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  color: whitesmoke;
-}
+        .dropdown-content a {
+            padding: 10px 15px;
+            display: block;
+            color: whitesmoke;
+        }
 
-.dropdown-content a:hover {
-  background-color: goldenrod;
-}
+        .dropdown-content a:hover {
+            background-color: goldenrod;
+        }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
 <body>
+    <div id="preloader">
+  <div class="spinner"></div>
+</div>
+
     <header class="main-header">
         <div class="header-top">
             <div class="logo-social">
@@ -917,24 +950,24 @@
                 <i class="fas fa-bars"></i>
             </button>
 
-          <div class="nav-links" id="navMenu">
-  <a href="about.html">About Us</a>
-  <a href="newss.html">News Section</a>
-  <a href="morning.html">Morning Chatter</a>
-  <a href="magazine.html">Magazine</a>
+            <div class="nav-links" id="navMenu">
+                <a href="about.html">About Us</a>
+                <a href="newss.html">News Section</a>
+                <a href="morning.html">Morning Chatter</a>
+                <a href="magazine.html">Magazine</a>
 
-  <!-- Dropdown Container -->
-  <div class="dropdown">
-    <a href="service.html" class="dropbtn">Services</a>
-    <ul class="dropdown-content">
-      <li><a href="Global.html">Global</a></li>
-      <li><a href="branding.html">Branding</a></li>
-      <li><a href="media.html">Media</a></li>
-    </ul>
-  </div>
+                <!-- Dropdown Container -->
+                <div class="dropdown">
+                    <a href="service.html" class="dropbtn">Services</a>
+                    <ul class="dropdown-content">
+                        <li><a href="Global.html">Global</a></li>
+                        <li><a href="branding.html">Branding</a></li>
+                        <li><a href="media.html">Media</a></li>
+                    </ul>
+                </div>
 
-  <a href="contant.html">Contact Us</a>
-</div>
+                <a href="contant.html">Contact Us</a>
+            </div>
 
 
             <div class="header-buttons" id="headerButtons">
@@ -1028,16 +1061,16 @@
             </div>
         </div>
 
-      <!-- Main -->
-<div class="main-content">
-    <h2>Precious Metal</h2>
-    <div class="precious-metal-news" id="precious-metal-container">
-        <!-- News cards will be inserted here dynamically -->
-    </div>
+        <!-- Main -->
+        <div class="main-content">
+            <h2>Precious Metal</h2>
+            <div class="precious-metal-news" id="precious-metal-container">
+                <!-- News cards will be inserted here dynamically -->
+            </div>
 
-    <div class="btn">
-        <button type="button" class="btn-more">show more</button>
-    </div>
+            <div class="btn">
+                <button type="button" class="btn-more">show more</button>
+            </div>
 
 
 
@@ -1068,12 +1101,12 @@
             </div>
 
             <div class="section-box">
-                 <h3>Reports</h3>
-                    <button type="button" class="gold-btn">Show More</button>
+                <h3>Reports</h3>
+                <button type="button" class="gold-btn">Show More</button>
 
-                    <div class="gold-news" id="researchReportsContainer">
-                        <!-- Top 2 reports will be injected here -->
-                    </div>
+                <div class="gold-news" id="researchReportsContainer">
+                    <!-- Top 2 reports will be injected here -->
+                </div>
             </div>
         </div>
     </div>
@@ -1136,125 +1169,135 @@
     </footer>
     </div>
 
-   <script>
-    // Toggle dropdown
-    function toggleDropdown() {
-        const dropdown = document.getElementById("dropdownMenu");
-        const header = document.getElementById("newsToggle");
-        dropdown.classList.toggle("show");
-        header.classList.toggle("rotate");
-    }
+    <script>
+        // ===== PRELOADER FUNCTIONALITY =====
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.style.opacity = '0';
+    preloader.style.visibility = 'hidden';
+    setTimeout(() => preloader.remove(), 1000); // optional: remove it from DOM
+  }
+});
 
-    // Subscribe popup
-    const popup = document.getElementById('subscribe-popup');
-    const overlay = document.getElementById('overlay');
-    const openBtn = document.getElementById('open-subscribe');
-    const submitBtn = document.getElementById('submit-subscribe');
-    const statusMsg = document.getElementById('status-msg');
-    const emailInput = document.getElementById('email-input');
-
-    openBtn.addEventListener('click', () => {
-        popup.style.display = 'block';
-        overlay.style.display = 'block';
-    });
-
-    overlay.addEventListener('click', closePopup);
-
-    function closePopup() {
-        popup.style.display = 'none';
-        overlay.style.display = 'none';
-        emailInput.value = '';
-        statusMsg.textContent = '';
-    }
-
-    submitBtn.addEventListener('click', async () => {
-        const email = emailInput.value.trim();
-        if (!email) {
-            statusMsg.textContent = 'Please enter an email.';
-            statusMsg.style.color = 'red';
-            return;
+        // Toggle dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            const header = document.getElementById("newsToggle");
+            dropdown.classList.toggle("show");
+            header.classList.toggle("rotate");
         }
 
-        try {
-            const res = await fetch('/api/subscribe', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
+        // Subscribe popup
+        const popup = document.getElementById('subscribe-popup');
+        const overlay = document.getElementById('overlay');
+        const openBtn = document.getElementById('open-subscribe');
+        const submitBtn = document.getElementById('submit-subscribe');
+        const statusMsg = document.getElementById('status-msg');
+        const emailInput = document.getElementById('email-input');
 
-            const data = await res.json();
-            statusMsg.textContent = data.message;
-            statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+        openBtn.addEventListener('click', () => {
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
 
-            if (res.ok) {
-                setTimeout(closePopup, 2000);
-            }
-        } catch (err) {
-            statusMsg.textContent = 'Something went wrong.';
-            statusMsg.style.color = 'red';
+        overlay.addEventListener('click', closePopup);
+
+        function closePopup() {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+            emailInput.value = '';
+            statusMsg.textContent = '';
         }
-    });
 
-    // Load banners
-    async function loadBanners() {
-        try {
-            const res = await fetch('/api/banners/latest');
-            const data = await res.json();
-            const container = document.getElementById('bannerContainer');
-            if (!container) return;
-
-            container.innerHTML = '';
-
-            if (!res.ok || !Array.isArray(data) || data.length === 0) {
-                container.innerHTML = '<p>No banners available.</p>';
+        submitBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            if (!email) {
+                statusMsg.textContent = 'Please enter an email.';
+                statusMsg.style.color = 'red';
                 return;
             }
 
-            data.forEach(banner => {
-                const card = document.createElement('div');
-                card.className = 'banner-card';
+            try {
+                const res = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
 
-                const imageUrl = banner.image;
-                if (imageUrl && imageUrl.startsWith('data:image')) {
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.alt = 'Banner';
-                    img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
-                    card.appendChild(img);
-                } else {
-                    card.innerHTML = '<p>Invalid image</p>';
+                const data = await res.json();
+                statusMsg.textContent = data.message;
+                statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+
+                if (res.ok) {
+                    setTimeout(closePopup, 2000);
+                }
+            } catch (err) {
+                statusMsg.textContent = 'Something went wrong.';
+                statusMsg.style.color = 'red';
+            }
+        });
+
+        // Load banners
+        async function loadBanners() {
+            try {
+                const res = await fetch('/api/banners/latest');
+                const data = await res.json();
+                const container = document.getElementById('bannerContainer');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No banners available.</p>';
+                    return;
                 }
 
-                container.appendChild(card);
-            });
-        } catch (err) {
-            console.error('Failed to load banners:', err);
-            const container = document.getElementById('bannerContainer');
-            if (container) {
-                container.innerHTML = '<p>Error loading banners.</p>';
+                data.forEach(banner => {
+                    const card = document.createElement('div');
+                    card.className = 'banner-card';
+
+                    const imageUrl = banner.image;
+                    if (imageUrl && imageUrl.startsWith('data:image')) {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = 'Banner';
+                        img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
+                        card.appendChild(img);
+                    } else {
+                        card.innerHTML = '<p>Invalid image</p>';
+                    }
+
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Failed to load banners:', err);
+                const container = document.getElementById('bannerContainer');
+                if (container) {
+                    container.innerHTML = '<p>Error loading banners.</p>';
+                }
             }
         }
-    }
 
-    // 🔸 Generic Tagged News Fetcher
-    async function fetchTaggedNews(tagName, containerId, detailPage) {
-        try {
-            const encodedTag = encodeURIComponent(tagName);
-            const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
-            const data = await res.json();
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
+        // 🔸 Generic Tagged News Fetcher
+        async function fetchTaggedNews(tagName, containerId, detailPage) {
+            try {
+                const encodedTag = encodeURIComponent(tagName);
+                const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+                const data = await res.json();
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
 
-            if (!Array.isArray(data) || data.length === 0) {
-                container.innerHTML = `<p>No ${tagName} news found.</p>`;
-                return;
-            }
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = `<p>No ${tagName} news found.</p>`;
+                    return;
+                }
 
-            data.slice(0, 3).forEach(news => {
-                const card = document.createElement('div');
-                card.className = 'gold-card';
+                data.slice(0, 3).forEach(news => {
+                    const card = document.createElement('div');
+                    card.className = 'gold-card';
 
-                card.innerHTML = `
+                    card.innerHTML = `
                     <img src="${news.image || './image/default-placeholder.png'}" alt="${tagName} Image">
                     <p>
                         <a href="${detailPage}?id=${news._id}" class="metal-link">
@@ -1262,24 +1305,24 @@
                         </a>
                     </p>
                 `;
-                container.appendChild(card);
-            });
-        } catch (err) {
-            console.error(`Error fetching ${tagName} tagged news:`, err);
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error(`Error fetching ${tagName} tagged news:`, err);
+            }
         }
-    }
 
-    // ✅ Init
-    document.addEventListener('DOMContentLoaded', () => {
-        loadBanners();
+        // ✅ Init
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBanners();
 
-        // 🔁 Use tag-based fetch for various sections
-        fetchTaggedNews('projects', 'projectNewsSection', 'project-news-details.html');
-        fetchTaggedNews('corporate news', 'corporateNewsContainer', 'corporate-news-detail.html');
-        fetchTaggedNews('precious metal', 'precious-metal-container', 'precious-metal-detail.html');
-    });
+            // 🔁 Use tag-based fetch for various sections
+            fetchTaggedNews('projects', 'projectNewsSection', 'project-news-details.html');
+            fetchTaggedNews('corporate news', 'corporateNewsContainer', 'corporate-news-detail.html');
+            fetchTaggedNews('precious metal', 'precious-metal-container', 'precious-metal-detail.html');
+        });
 
-     // for fetching research reports 
+        // for fetching research reports 
         document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const tag = 'research reports';
@@ -1324,8 +1367,8 @@
                 return div.textContent || div.innerText || '';
             }
         });
-        
-</script>
+
+    </script>
 
 
 

@@ -7,6 +7,36 @@
   <title>Digital Branding</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      /* or your site background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #ccc;
+      border-top: 5px solid #222;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -776,6 +806,11 @@
 
 <body>
 
+  <div id="preloader">
+    <div class="spinner"></div>
+  </div>
+
+
   <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
@@ -981,10 +1016,10 @@
     <!-- Right Panel -->
     <div class="right-panel">
       <div class="section-title" id="projectNewsSection">Projects</div>
-    
-<h2>Reports</h2>
+
+      <h2>Reports</h2>
       <div class="section-title" id="researchReportsContainer">Reports</div>
-      
+
     </div>
 
   </div>
@@ -1041,49 +1076,59 @@
       © 2025 Mining Discovery – Daily Mining Updates – Design by Mining Discovery.
     </div>
   </div>
- <script>
-  async function loadGlobalBanners() {
-    try {
-      const res = await fetch('/api/banners/latest');
-      const data = await res.json();
-      console.log('Global Banner API Response:', data);
-
-      const container = document.getElementById('globalBannerContainer');
-      if (!container) return;
-
-      container.innerHTML = '';
-
-      if (!res.ok || !Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<p>No banners available.</p>';
-        return;
+  <script>
+    // ===== PRELOADER FUNCTIONALITY =====
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        setTimeout(() => preloader.remove(), 1000); // optional: remove it from DOM
       }
+    });
 
-      // Limit to 3 banners just like the original
-      const bannersToShow = data.slice(0, 3);
+    async function loadGlobalBanners() {
+      try {
+        const res = await fetch('/api/banners/latest');
+        const data = await res.json();
+        console.log('Global Banner API Response:', data);
 
-      bannersToShow.forEach((banner, index) => {
-        const imageUrl = banner.image;
+        const container = document.getElementById('globalBannerContainer');
+        if (!container) return;
 
-        const img = document.createElement('img');
-        img.alt = banner.alt || `Banner ${index + 1}`;
-        img.className = 'left-banner-img';
+        container.innerHTML = '';
 
-        if (imageUrl && imageUrl.startsWith('data:image')) {
-          img.src = imageUrl;
-        } else {
-          img.alt = 'Invalid image';
+        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No banners available.</p>';
+          return;
         }
 
-        container.appendChild(img);
-      });
-    } catch (err) {
-      console.error('Failed to load global banners:', err);
-      const container = document.getElementById('globalBannerContainer');
-      if (container) container.innerHTML = '<p>Error loading banners.</p>';
-    }
-  }
+        // Limit to 3 banners just like the original
+        const bannersToShow = data.slice(0, 3);
 
-  // ====== Fetch Project News by tag ======
+        bannersToShow.forEach((banner, index) => {
+          const imageUrl = banner.image;
+
+          const img = document.createElement('img');
+          img.alt = banner.alt || `Banner ${index + 1}`;
+          img.className = 'left-banner-img';
+
+          if (imageUrl && imageUrl.startsWith('data:image')) {
+            img.src = imageUrl;
+          } else {
+            img.alt = 'Invalid image';
+          }
+
+          container.appendChild(img);
+        });
+      } catch (err) {
+        console.error('Failed to load global banners:', err);
+        const container = document.getElementById('globalBannerContainer');
+        if (container) container.innerHTML = '<p>Error loading banners.</p>';
+      }
+    }
+
+    // ====== Fetch Project News by tag ======
     async function fetchProjectNews() {
       try {
         const res = await fetch('/api/tagged-posts/tag/projects');
@@ -1114,12 +1159,12 @@
     }
 
 
-  document.addEventListener('DOMContentLoaded', () => {
-    loadGlobalBanners();
-    fetchProjectNews();
-  });
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGlobalBanners();
+      fetchProjectNews();
+    });
 
-   // for fetching research reports 
+    // for fetching research reports 
     document.addEventListener("DOMContentLoaded", async () => {
       try {
         const tag = 'research reports';
@@ -1165,7 +1210,7 @@
       }
     });
 
-</script>
+  </script>
 
 </body>
 

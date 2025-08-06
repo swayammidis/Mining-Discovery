@@ -1,3 +1,14 @@
+// ===== PRELOADER FUNCTIONALITY =====
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.style.opacity = '0';
+    preloader.style.visibility = 'hidden';
+    setTimeout(() => preloader.remove(), 1000); // optional: remove it from DOM
+  }
+});
+
+
 // ===== SUBSCRIBE BUTTON POPUP =====
 const popup = document.getElementById('subscribe-popup');
 const overlay = document.getElementById('overlay');

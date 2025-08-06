@@ -7,6 +7,36 @@
     <title>World News</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            /* or your site background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #222;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -894,58 +924,62 @@
                 margin-top: 30px;
             }
         }
+
         .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-}
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+        }
 
-.nav-links a {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  position: relative;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            position: relative;
+        }
 
-.dropdown {
-  position: relative;
-}
+        .dropdown {
+            position: relative;
+        }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: black;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 999;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
 
-.dropdown-content li {
-  list-style: none;
-}
+        .dropdown-content li {
+            list-style: none;
+        }
 
-.dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  color: whitesmoke;
-}
+        .dropdown-content a {
+            padding: 10px 15px;
+            display: block;
+            color: whitesmoke;
+        }
 
-.dropdown-content a:hover {
-  background-color: goldenrod;
-}
+        .dropdown-content a:hover {
+            background-color: goldenrod;
+        }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
 <body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
     <header class="main-header">
         <div class="header-top">
             <div class="logo-social">
@@ -958,23 +992,23 @@
             </button>
 
             <div class="nav-links" id="navMenu">
-  <a href="about.html">About Us</a>
-  <a href="newss.html">News Section</a>
-  <a href="morning.html">Morning Chatter</a>
-  <a href="magazine.html">Magazine</a>
+                <a href="about.html">About Us</a>
+                <a href="newss.html">News Section</a>
+                <a href="morning.html">Morning Chatter</a>
+                <a href="magazine.html">Magazine</a>
 
-  <!-- Dropdown Container -->
-  <div class="dropdown">
-    <a href="service.html" class="dropbtn">Services</a>
-    <ul class="dropdown-content">
-      <li><a href="Global.html">Global</a></li>
-      <li><a href="branding.html">Branding</a></li>
-      <li><a href="media.html">Media</a></li>
-    </ul>
-  </div>
+                <!-- Dropdown Container -->
+                <div class="dropdown">
+                    <a href="service.html" class="dropbtn">Services</a>
+                    <ul class="dropdown-content">
+                        <li><a href="Global.html">Global</a></li>
+                        <li><a href="branding.html">Branding</a></li>
+                        <li><a href="media.html">Media</a></li>
+                    </ul>
+                </div>
 
-  <a href="contant.html">Contact Us</a>
-</div>
+                <a href="contant.html">Contact Us</a>
+            </div>
 
 
             <div class="header-buttons" id="headerButtons">
@@ -1042,25 +1076,25 @@
         </h1>
     </div>
 
-   <!-- Dropdown Links -->
-  <div class="dropdown-links" id="dropdownMenu">
-    <a href="latest-news.html">Latest News</a>
-    <a href="gold.html">Gold News</a>
-    <a href="silver.html">Silver News</a>
-    <a href="cooper.html">Copper News</a>
-    <a href="precious-metal.html">Precious Metals</a>
-    <a href="coporate-news.html">Corporate News</a>
-    <a href="world-news.html">World News</a>
-    <a href="leadership-thoughts.html">Leadership Thoughts</a>
-    <a href="morning-chatter.html">Morning Chatter</a>
-    <a href="announcement.html">Announcement</a>
-    <a href="popular.html">Popular This Week</a>
-    <a href="project.html">Projects</a>
-    <a href="research.html">Research Reports</a>
-    <a href="sponsored.html">Sponsored Post</a>
-  </div>
+    <!-- Dropdown Links -->
+    <div class="dropdown-links" id="dropdownMenu">
+        <a href="latest-news.html">Latest News</a>
+        <a href="gold.html">Gold News</a>
+        <a href="silver.html">Silver News</a>
+        <a href="cooper.html">Copper News</a>
+        <a href="precious-metal.html">Precious Metals</a>
+        <a href="coporate-news.html">Corporate News</a>
+        <a href="world-news.html">World News</a>
+        <a href="leadership-thoughts.html">Leadership Thoughts</a>
+        <a href="morning-chatter.html">Morning Chatter</a>
+        <a href="announcement.html">Announcement</a>
+        <a href="popular.html">Popular This Week</a>
+        <a href="project.html">Projects</a>
+        <a href="research.html">Research Reports</a>
+        <a href="sponsored.html">Sponsored Post</a>
+    </div>
 
-  
+
     <!-- Content Section -->
     <div class="container">
         <!-- Left -->
@@ -1070,16 +1104,16 @@
             </div>
         </div>
 
-       <!-- Main -->
-<div class="main-content">
-    <div class="gold">
-        <h2>World News</h2>
-        <button type="button" class="btns">show more</button>
-    </div>
+        <!-- Main -->
+        <div class="main-content">
+            <div class="gold">
+                <h2>World News</h2>
+                <button type="button" class="btns">show more</button>
+            </div>
 
-    <div class="gold-news" id="worldNewsContainer">
-        <!-- World News cards will be injected here -->
-    </div>
+            <div class="gold-news" id="worldNewsContainer">
+                <!-- World News cards will be injected here -->
+            </div>
 
 
 
@@ -1110,7 +1144,7 @@
         <div class="right-sidebar">
             <div class="section-box">
                 <div class="heading">
-                     <h3>Projects</h3>
+                    <h3>Projects</h3>
                     <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show
                         More</button>
                 </div>
@@ -1124,12 +1158,12 @@
 
             <div class="section-box">
                 <h3>Reports</h3>
-                    <button type="button" class="gold-btn">Show More</button>
+                <button type="button" class="gold-btn">Show More</button>
 
-                    <div class="gold-news" id="researchReportsContainer">
-                        <!-- Top 2 reports will be injected here -->
-                    </div>
-               
+                <div class="gold-news" id="researchReportsContainer">
+                    <!-- Top 2 reports will be injected here -->
+                </div>
+
             </div>
         </div>
     </div>
@@ -1192,106 +1226,116 @@
     </footer>
     </div>
 
-   <script>
-  function toggleDropdown() {
-    const dropdown = document.getElementById("dropdownMenu");
-    const header = document.getElementById("newsToggle");
-    dropdown.classList.toggle("show");
-    header.classList.toggle("rotate");
-  }
+    <script>
+        // ===== PRELOADER FUNCTIONALITY =====
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                setTimeout(() => preloader.remove(), 1000); // optional: remove it from DOM
+            }
+        });
 
-  // ====== Subscribe Popup ======
-  const popup = document.getElementById('subscribe-popup');
-  const overlay = document.getElementById('overlay');
-  const openBtn = document.getElementById('open-subscribe');
-  const submitBtn = document.getElementById('submit-subscribe');
-  const statusMsg = document.getElementById('status-msg');
-  const emailInput = document.getElementById('email-input');
-
-  openBtn.addEventListener('click', () => {
-    popup.style.display = 'block';
-    overlay.style.display = 'block';
-  });
-
-  overlay.addEventListener('click', closePopup);
-
-  function closePopup() {
-    popup.style.display = 'none';
-    overlay.style.display = 'none';
-    emailInput.value = '';
-    statusMsg.textContent = '';
-  }
-
-  submitBtn.addEventListener('click', async () => {
-    const email = emailInput.value.trim();
-    if (!email) {
-      statusMsg.textContent = 'Please enter an email.';
-      statusMsg.style.color = 'red';
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-      statusMsg.textContent = data.message;
-      statusMsg.style.color = res.ok ? '#80ff80' : 'red';
-
-      if (res.ok) {
-        setTimeout(closePopup, 2000);
-      }
-    } catch (err) {
-      statusMsg.textContent = 'Something went wrong.';
-      statusMsg.style.color = 'red';
-    }
-  });
-
-  // ====== Load Banners ======
-  async function loadBanners() {
-    try {
-      const res = await fetch('/api/banners/latest');
-      const data = await res.json();
-      const container = document.getElementById('bannerContainer');
-      if (!container) return;
-
-      container.innerHTML = '';
-
-      if (!res.ok || !Array.isArray(data) || data.length === 0) {
-        container.innerHTML = '<p>No banners available.</p>';
-        return;
-      }
-
-      data.forEach(banner => {
-        const card = document.createElement('div');
-        card.className = 'banner-card';
-
-        const imageUrl = banner.image;
-        if (imageUrl && imageUrl.startsWith('data:image')) {
-          const img = document.createElement('img');
-          img.src = imageUrl;
-          img.alt = 'Banner';
-          img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
-          card.appendChild(img);
-        } else {
-          card.innerHTML = '<p>Invalid image</p>';
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            const header = document.getElementById("newsToggle");
+            dropdown.classList.toggle("show");
+            header.classList.toggle("rotate");
         }
 
-        container.appendChild(card);
-      });
-    } catch (err) {
-      console.error('Failed to load banners:', err);
-      const container = document.getElementById('bannerContainer');
-      if (container) {
-        container.innerHTML = '<p>Error loading banners.</p>';
-      }
-    }
-  }
+        // ====== Subscribe Popup ======
+        const popup = document.getElementById('subscribe-popup');
+        const overlay = document.getElementById('overlay');
+        const openBtn = document.getElementById('open-subscribe');
+        const submitBtn = document.getElementById('submit-subscribe');
+        const statusMsg = document.getElementById('status-msg');
+        const emailInput = document.getElementById('email-input');
 
-  // ====== Fetch Project News via Tagged Posts ======
+        openBtn.addEventListener('click', () => {
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        overlay.addEventListener('click', closePopup);
+
+        function closePopup() {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+            emailInput.value = '';
+            statusMsg.textContent = '';
+        }
+
+        submitBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            if (!email) {
+                statusMsg.textContent = 'Please enter an email.';
+                statusMsg.style.color = 'red';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+
+                const data = await res.json();
+                statusMsg.textContent = data.message;
+                statusMsg.style.color = res.ok ? '#80ff80' : 'red';
+
+                if (res.ok) {
+                    setTimeout(closePopup, 2000);
+                }
+            } catch (err) {
+                statusMsg.textContent = 'Something went wrong.';
+                statusMsg.style.color = 'red';
+            }
+        });
+
+        // ====== Load Banners ======
+        async function loadBanners() {
+            try {
+                const res = await fetch('/api/banners/latest');
+                const data = await res.json();
+                const container = document.getElementById('bannerContainer');
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No banners available.</p>';
+                    return;
+                }
+
+                data.forEach(banner => {
+                    const card = document.createElement('div');
+                    card.className = 'banner-card';
+
+                    const imageUrl = banner.image;
+                    if (imageUrl && imageUrl.startsWith('data:image')) {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.alt = 'Banner';
+                        img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
+                        card.appendChild(img);
+                    } else {
+                        card.innerHTML = '<p>Invalid image</p>';
+                    }
+
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Failed to load banners:', err);
+                const container = document.getElementById('bannerContainer');
+                if (container) {
+                    container.innerHTML = '<p>Error loading banners.</p>';
+                }
+            }
+        }
+
+        // ====== Fetch Project News via Tagged Posts ======
         async function fetchProjectNews() {
             try {
                 const res = await fetch('/api/tagged-posts/tag/projects');
@@ -1334,62 +1378,62 @@
         }
 
 
-  // ====== Fetch Corporate News ======
-  async function fetchCorporateNews() {
-    try {
-      const res = await fetch('/api/corporate-news/latest');
-      const data = await res.json();
-      const container = document.getElementById('corporateNewsSection');
-      if (!container) return;
+        // ====== Fetch Corporate News ======
+        async function fetchCorporateNews() {
+            try {
+                const res = await fetch('/api/corporate-news/latest');
+                const data = await res.json();
+                const container = document.getElementById('corporateNewsSection');
+                if (!container) return;
 
-      container.innerHTML = '';
+                container.innerHTML = '';
 
-      data.forEach(news => {
-        const card = document.createElement('div');
-        card.className = 'corporate-card';
-        card.innerHTML = `
+                data.forEach(news => {
+                    const card = document.createElement('div');
+                    card.className = 'corporate-card';
+                    card.innerHTML = `
           <img src="${news.image}" alt="${news.title}">
           <p><a href="corporate-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">${news.title}</a></p>
         `;
-        container.appendChild(card);
-      });
-    } catch (error) {
-      console.error('Error fetching corporate news:', error);
-      const container = document.getElementById('corporateNewsSection');
-      if (container) {
-        container.innerHTML = '<p>Failed to load corporate news.</p>';
-      }
-    }
-  }
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error fetching corporate news:', error);
+                const container = document.getElementById('corporateNewsSection');
+                if (container) {
+                    container.innerHTML = '<p>Failed to load corporate news.</p>';
+                }
+            }
+        }
 
-  // ====== Load World News from tagged-posts ======
- async function loadWorldNews() {
-  try {
-    const res = await fetch('/api/tagged-posts/tag/world news');
-    const data = await res.json();
+        // ====== Load World News from tagged-posts ======
+        async function loadWorldNews() {
+            try {
+                const res = await fetch('/api/tagged-posts/tag/world news');
+                const data = await res.json();
 
-    // Defensive fallback: if response is not an array, check if it's wrapped inside an object
-    const newsItems = Array.isArray(data) ? data : data.posts || data.data || [];
+                // Defensive fallback: if response is not an array, check if it's wrapped inside an object
+                const newsItems = Array.isArray(data) ? data : data.posts || data.data || [];
 
-    const container = document.getElementById('worldNewsContainer');
-    if (!container) return;
+                const container = document.getElementById('worldNewsContainer');
+                if (!container) return;
 
-    container.innerHTML = '';
+                container.innerHTML = '';
 
-    if (newsItems.length === 0) {
-      container.innerHTML = '<p>No world news found.</p>';
-      return;
-    }
+                if (newsItems.length === 0) {
+                    container.innerHTML = '<p>No world news found.</p>';
+                    return;
+                }
 
-    newsItems.forEach(news => {
-      const card = document.createElement('div');
-      card.className = 'gold-card';
+                newsItems.forEach(news => {
+                    const card = document.createElement('div');
+                    card.className = 'gold-card';
 
-      const imgSrc = news.image?.startsWith('/uploads')
-        ? `http://localhost:5000${news.image}`
-        : news.image || './default.jpg'; // fallback image
+                    const imgSrc = news.image?.startsWith('/uploads')
+                        ? `http://localhost:5000${news.image}`
+                        : news.image || './default.jpg'; // fallback image
 
-      card.innerHTML = `
+                    card.innerHTML = `
         <img src="${imgSrc}" alt="${news.title}">
         <p>
           <a href="world-news-detail.html?id=${news._id}" style="text-decoration: none; color: inherit;">
@@ -1397,23 +1441,23 @@
           </a>
         </p>
       `;
-      container.appendChild(card);
-    });
-  } catch (error) {
-    console.error('Error fetching world news:', error);
-    document.getElementById('worldNewsContainer').innerHTML = '<p>Failed to load news.</p>';
-  }
-}
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error fetching world news:', error);
+                document.getElementById('worldNewsContainer').innerHTML = '<p>Failed to load news.</p>';
+            }
+        }
 
-  // ====== Initial Load ======
-  document.addEventListener('DOMContentLoaded', () => {
-    loadBanners();
-    fetchProjectNews();
-    fetchCorporateNews();
-    loadWorldNews(); // ✅ Tagged world news
-  });
+        // ====== Initial Load ======
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBanners();
+            fetchProjectNews();
+            fetchCorporateNews();
+            loadWorldNews(); // ✅ Tagged world news
+        });
 
-   // for fetching research reports 
+        // for fetching research reports 
         document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const tag = 'research reports';
@@ -1459,7 +1503,7 @@
             }
         });
 
-</script>
+    </script>
 
 
 </body>

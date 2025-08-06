@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Research Report Details</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            /* or your site background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #222;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         /* Optional: Add some basic styles for readability */
         .container {
             max-width: 800px;
@@ -14,16 +45,19 @@
             color: #000;
             line-height: 1.6;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         img {
             max-width: 100%;
             margin: 20px 0;
         }
+
         h1 {
             font-size: 2rem;
             margin-bottom: 15px;
         }
+
         .author {
             font-style: italic;
             margin-bottom: 20px;
@@ -31,7 +65,12 @@
         }
     </style>
 </head>
+
 <body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
     <div class="container">
         <div class="detail-section" id="reportDetail">
             <!-- Full research report will be loaded here -->
@@ -39,6 +78,16 @@
     </div>
 
     <script>
+        // ===== PRELOADER FUNCTIONALITY =====
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                setTimeout(() => preloader.remove(), 500); // optional: remove it from DOM
+            }
+        });
+
         async function fetchReportById(id) {
             try {
                 const res = await fetch(`/api/research-reports/${id}`);
@@ -72,4 +121,5 @@
         });
     </script>
 </body>
+
 </html>
