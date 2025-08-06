@@ -1137,7 +1137,7 @@
             </div>
         </div>
 
-        <!-- Right -->
+       <!-- Right -->
         <div class="right-sidebar">
             <div class="section-box">
                 <div class="heading">
@@ -1154,14 +1154,18 @@
             <div class="section-box">
                 <div class="report">
                     <h3>Reports</h3>
+                    <button type="button" class="gold-btn">Show More</button>
 
-                    <button type="button" class="gold-btn">show more</button>
+                    <div class="gold-news" id="researchReportsContainer">
+                        <!-- Top 2 reports will be injected here -->
+                    </div>
                 </div>
-                <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-                <p>Global Mining Report 2025</p>
+
             </div>
         </div>
     </div>
+
+
     <!-- Footer Section -->
     <div class="footer-container">
         <div class="footer-content">
@@ -1320,13 +1324,18 @@
             }
         }
 
-        // ====== Fetch Project News ======
+         // ====== Fetch Project News via Tagged Posts ======
         async function fetchProjectNews() {
             try {
-                const res = await fetch('/api/project-news');
+                const res = await fetch('/api/tagged-posts/tag/projects');
                 const data = await res.json();
                 const container = document.getElementById('projectNewsSection');
                 if (!container) return;
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No project news available.</p>';
+                    return;
+                }
 
                 const latest = data.slice(0, 3);
 
@@ -1336,10 +1345,10 @@
                     card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
                     card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
+          ${news.image ? `<img src="${news.image}" alt="Project Image">` : ''}
           <div class="content">
             <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 80)}...</p>
+            <p>${stripHTML(news.description).slice(0, 80)}...</p>
           </div>
         `;
 
@@ -1347,6 +1356,53 @@
                 });
             } catch (err) {
                 console.error('Failed to load project news:', err);
+            }
+        }
+
+        // Helper to strip HTML from description
+        function stripHTML(html) {
+            const div = document.createElement("div");
+            div.innerHTML = html || '';
+            return div.textContent || div.innerText || '';
+        }
+
+        // for fetching sponsored news 
+        let sponsoredPage = 0;
+        const postsPerPage = 3;
+        let sponsoredData = [];
+
+        async function loadMoreSponsored() {
+            const container = document.getElementById('sponsoredPostsContainer');
+
+            try {
+                // Only fetch once
+                if (sponsoredData.length === 0) {
+                    const res = await fetch('/api/tagged-posts/tag/sponsored posts'); // ✅ updated endpoint
+                    sponsoredData = await res.json();
+                }
+
+                const start = sponsoredPage * postsPerPage;
+                const end = start + postsPerPage;
+                const sliced = sponsoredData.slice(start, end);
+
+                sliced.forEach(post => {
+                    const div = document.createElement('div');
+                    div.classList.add('sponsored-card');
+                    div.innerHTML = `
+          ${post.image ? `<img src="${post.image}" alt="Sponsored Image" />` : ''}
+          <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
+          <p>${post.description.slice(0, 150)}...</p>
+        `;
+                    container.appendChild(div);
+                });
+
+                sponsoredPage++;
+                if (end >= sponsoredData.length) {
+                    document.querySelector('.btn-more').style.display = 'none';
+                }
+            } catch (err) {
+                console.error('Error loading sponsored posts:', err);
+                container.innerHTML = '<p>Error loading sponsored posts.</p>';
             }
         }
 
@@ -1390,6 +1446,53 @@
             fetchProjectNews();
             fetchAnnouncements();
         });
+
+         // for fetching research reports 
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const tag = 'research reports';
+                const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+                const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+                const data = await res.json();
+
+                const container = document.getElementById("researchReportsContainer");
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No research reports found.</p>';
+                    return;
+                }
+
+                const topReports = data.slice(0, 2); // Show top 2
+
+                topReports.forEach(report => {
+                    const card = document.createElement("div");
+                    card.classList.add("research-card");
+
+                    card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching research reports:", error);
+            }
+
+            // Helper function to remove HTML tags from description
+            function stripHTML(html) {
+                const div = document.createElement("div");
+                div.innerHTML = html || '';
+                return div.textContent || div.innerText || '';
+            }
+        });
+
     </script>
 
 

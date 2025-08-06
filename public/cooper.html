@@ -722,54 +722,54 @@
         justify-content: flex-start;
       }
     }
+
     .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-}
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+    }
 
-.nav-links a {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  position: relative;
-}
+    .nav-links a {
+      text-decoration: none;
+      color: black;
+      padding: 10px;
+      position: relative;
+    }
 
-.dropdown {
-  position: relative;
-}
+    .dropdown {
+      position: relative;
+    }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: black;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 999;
-}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: black;
+      top: 100%;
+      left: 0;
+      min-width: 160px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
 
-.dropdown-content li {
-  list-style: none;
-}
+    .dropdown-content li {
+      list-style: none;
+    }
 
-.dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  color: whitesmoke;
-}
+    .dropdown-content a {
+      padding: 10px 15px;
+      display: block;
+      color: whitesmoke;
+    }
 
-.dropdown-content a:hover {
-  background-color: goldenrod;
-}
+    .dropdown-content a:hover {
+      background-color: goldenrod;
+    }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+    /* Show dropdown on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
   </style>
 </head>
 
@@ -785,24 +785,24 @@
         <i class="fas fa-bars"></i>
       </button>
 
-     <div class="nav-links" id="navMenu">
-  <a href="about.html">About Us</a>
-  <a href="newss.html">News Section</a>
-  <a href="morning.html">Morning Chatter</a>
-  <a href="magazine.html">Magazine</a>
+      <div class="nav-links" id="navMenu">
+        <a href="about.html">About Us</a>
+        <a href="newss.html">News Section</a>
+        <a href="morning.html">Morning Chatter</a>
+        <a href="magazine.html">Magazine</a>
 
-  <!-- Dropdown Container -->
-  <div class="dropdown">
-    <a href="service.html" class="dropbtn">Services</a>
-    <ul class="dropdown-content">
-      <li><a href="Global.html">Global</a></li>
-      <li><a href="branding.html">Branding</a></li>
-      <li><a href="media.html">Media</a></li>
-    </ul>
-  </div>
+        <!-- Dropdown Container -->
+        <div class="dropdown">
+          <a href="service.html" class="dropbtn">Services</a>
+          <ul class="dropdown-content">
+            <li><a href="Global.html">Global</a></li>
+            <li><a href="branding.html">Branding</a></li>
+            <li><a href="media.html">Media</a></li>
+          </ul>
+        </div>
 
-  <a href="contant.html">Contact Us</a>
-</div>
+        <a href="contant.html">Contact Us</a>
+      </div>
 
 
       <div class="header-buttons" id="headerButtons">
@@ -1034,6 +1034,7 @@
   </div>
 
   <script>
+    // === Dropdown Toggle ===
     function toggleDropdown() {
       const dropdown = document.getElementById("dropdownMenu");
       const header = document.getElementById("newsToggle");
@@ -1041,7 +1042,7 @@
       header.classList.toggle("rotate");
     }
 
-    // ======= Subscribe Popup Logic =======
+    // === Subscribe Popup Logic ===
     const popup = document.getElementById('subscribe-popup');
     const overlay = document.getElementById('overlay');
     const openBtn = document.getElementById('open-subscribe');
@@ -1089,7 +1090,7 @@
       }
     });
 
-    // ======= Load Banners (Optional) =======
+    // === Load Banners ===
     async function loadBanners() {
       try {
         const res = await fetch('/api/banners/latest');
@@ -1127,82 +1128,88 @@
       }
     }
 
-    // load copper news 
-  let copperOffset = 0;
-  const copperLimit = 6;
+    // === Load Copper News ===
+    let copperOffset = 0;
+    const copperLimit = 6;
 
-  async function loadCopperNews() {
-    try {
-      const res = await fetch('/api/tagged-posts/tag/copper');
-      const posts = await res.json();
+    async function loadCopperNews() {
+      try {
+        const res = await fetch('/api/tagged-posts/tag/copper');
+        const posts = await res.json();
 
-      if (!Array.isArray(posts)) {
-        console.error('Invalid data returned:', posts);
-        return;
-      }
+        if (!Array.isArray(posts)) {
+          console.error('Invalid data returned:', posts);
+          return;
+        }
 
-      const container = document.getElementById('copperNewsContainer');
-      const visiblePosts = posts.slice(copperOffset, copperOffset + copperLimit);
+        const container = document.getElementById('copperNewsContainer');
+        const visiblePosts = posts.slice(copperOffset, copperOffset + copperLimit);
 
-      if (visiblePosts.length === 0) {
-        document.querySelector('.btn-more').style.display = 'none';
-        return;
-      }
+        if (visiblePosts.length === 0) {
+          const btn = document.querySelector('.btn-more');
+          if (btn) btn.style.display = 'none';
+          return;
+        }
 
-      visiblePosts.forEach(post => {
-        const card = document.createElement('div');
-        card.className = 'news-card';
-        card.innerHTML = `
+        visiblePosts.forEach(post => {
+          const card = document.createElement('div');
+          card.className = 'news-card';
+          card.innerHTML = `
           <img src="${post.image}" alt="${post.title}" />
           <h3><a href="/tagged-news-detail.html?id=${post._id}" style="text-decoration:none; color:#222;">${post.title}</a></h3>
           <p>${post.description.substring(0, 100)}...</p>
           <a href="/tagged-news-detail.html?id=${post._id}" class="read-more">Read More</a>
         `;
-        container.appendChild(card);
-      });
-
-      copperOffset += copperLimit;
-    } catch (err) {
-      console.error('Error loading Copper News:', err);
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', loadCopperNews);
-
-
-
-    // ======= Load Top 3 Project News =======
-    function loadProjectNews() {
-      fetch('/api/project-news')
-        .then(res => res.json())
-        .then(data => {
-          const container = document.getElementById('project-news-container');
-          if (!container) return;
-
-          container.innerHTML = '';
-          data.slice(0, 3).forEach(news => {
-            const card = document.createElement('div');
-            card.className = 'project-card';
-
-            card.innerHTML = `
-            <img src="${news.image}" alt="Project Image">
-            <div class="text">${news.title}</div>
-          `;
-
-            container.appendChild(card);
-          });
-        })
-        .catch(err => {
-          console.error('Error fetching project news:', err);
+          container.appendChild(card);
         });
+
+        copperOffset += copperLimit;
+      } catch (err) {
+        console.error('Error loading Copper News:', err);
+      }
     }
 
+    // === Load Top 3 Project News ===
+    async function loadProjectNews() {
+      try {
+        const res = await fetch('/api/project-news');
+        const data = await res.json();
+
+        if (!Array.isArray(data)) {
+          console.error('Invalid project news data:', data);
+          return;
+        }
+
+        const container = document.getElementById('project-news-container');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        data.slice(0, 3).forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.onclick = () => window.location.href = `/project-news-details.html?id=${news._id}`;
+
+          card.innerHTML = `
+          <img src="${news.image}" alt="Project Image" />
+          <div class="text">${news.title}</div>
+        `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Error fetching project news:', err);
+      }
+    }
+
+    // === INIT ===
     document.addEventListener('DOMContentLoaded', () => {
-      loadBanners();      // Optional
-      loadCopperNews(); // ✅ Required
-      loadProjectNews();  // Optional
+      loadBanners();
+      loadCopperNews();
+      loadProjectNews();
     });
   </script>
+
 
 
 </body>

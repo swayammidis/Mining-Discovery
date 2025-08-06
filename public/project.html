@@ -747,6 +747,84 @@
             }
         }
 
+         #sponsoredPostsContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .sponsored-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            width: 300px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+        }
+
+        .sponsored-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .sponsored-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .sponsored-card h4 {
+            font-size: 1.1rem;
+            margin: 0 0 10px;
+            color: #222;
+        }
+
+        .sponsored-card h4 a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        .sponsored-card h4 a:hover {
+            color: #007BFF;
+        }
+
+        .sponsored-card p {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.4;
+            max-height: 3.6em;
+            /* approx 2 lines */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-more {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-more:hover {
+            background-color: #0056b3;
+        }
+
+
         .footer-container {
             background-image: url(./image/footer-bg\ 1.png);
             padding: 50px 30px 20px;
@@ -1147,12 +1225,14 @@
 
             <div class="gold">
                 <h2>Sponsored Posts</h2>
-                <button type="button" class="gold-btn" onclick="location.href='sponsored.html'">Show
-                    More</button>
+
+                <div id="sponsoredPostsContainer"></div>
+
+                <div class="btn">
+                    <button type="button" class="btn-more" onclick="loadMoreSponsored()">Show More</button>
+                </div>
+
             </div>
-
-            <div class="gold-news" id="sponsoredPostsContainer"></div>
-
 
 
         </div>
@@ -1165,13 +1245,12 @@
             <div class="section-box">
                 <div class="report">
                     <h3>Reports</h3>
-                    <button type="button" class="gold-btn" onclick="location.href='all-research-reports.html'">Show
-                        More</button>
+                    <button type="button" class="gold-btn">Show More</button>
 
-                    <div id="researchReportsContainer"></div>
-
+                    <div class="gold-news" id="researchReportsContainer">
+                        <!-- Top 2 reports will be injected here -->
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -1349,33 +1428,45 @@
             return p?.innerText || tempDiv.innerText.substring(0, 150);
         }
 
-        // ✅ Fetch top sponsored posts
-        async function fetchTopSponsoredPosts() {
+        // for fetching sponsored news 
+        let sponsoredPage = 0;
+        const postsPerPage = 3;
+        let sponsoredData = [];
+
+        async function loadMoreSponsored() {
+            const container = document.getElementById('sponsoredPostsContainer');
+
             try {
-                const res = await fetch('http://localhost:5000/api/sponsored');
-                const data = await res.json();
+                // Only fetch once
+                if (sponsoredData.length === 0) {
+                    const res = await fetch('/api/tagged-posts/tag/sponsored posts'); // ✅ updated endpoint
+                    sponsoredData = await res.json();
+                }
 
-                const topThree = data.slice(0, 3);
-                const container = document.getElementById('sponsoredPostsContainer');
-                container.innerHTML = '';
+                const start = sponsoredPage * postsPerPage;
+                const end = start + postsPerPage;
+                const sliced = sponsoredData.slice(start, end);
 
-                topThree.forEach(post => {
+                sliced.forEach(post => {
                     const div = document.createElement('div');
-                    div.classList.add('report-card');
-
+                    div.classList.add('sponsored-card');
                     div.innerHTML = `
-          ${post.image ? `<img src="${post.image}" alt="Sponsored Post Image" />` : ''}
+          ${post.image ? `<img src="${post.image}" alt="Sponsored Image" />` : ''}
           <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
           <p>${post.description.slice(0, 150)}...</p>
         `;
-
                     container.appendChild(div);
                 });
+
+                sponsoredPage++;
+                if (end >= sponsoredData.length) {
+                    document.querySelector('.btn-more').style.display = 'none';
+                }
             } catch (err) {
-                console.error('Error fetching sponsored posts:', err);
+                console.error('Error loading sponsored posts:', err);
+                container.innerHTML = '<p>Error loading sponsored posts.</p>';
             }
         }
-
 
 
         // fetch research reports 
@@ -1407,16 +1498,60 @@
         }
 
 
-
-
-
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
-            fetchTopSponsoredPosts();
+            loadMoreSponsored();
             fetchTopResearchReports();
 
         });
+
+        // for fetching research reports 
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const tag = 'research reports';
+                const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+                const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+                const data = await res.json();
+
+                const container = document.getElementById("researchReportsContainer");
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No research reports found.</p>';
+                    return;
+                }
+
+                const topReports = data.slice(0, 2); // Show top 2
+
+                topReports.forEach(report => {
+                    const card = document.createElement("div");
+                    card.classList.add("research-card");
+
+                    card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching research reports:", error);
+            }
+
+            // Helper function to remove HTML tags from description
+            function stripHTML(html) {
+                const div = document.createElement("div");
+                div.innerHTML = html || '';
+                return div.textContent || div.innerText || '';
+            }
+        });
+
     </script>
 
 </body>

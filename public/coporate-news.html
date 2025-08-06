@@ -1118,12 +1118,14 @@
             <div class="section-box">
                 <div class="report">
                     <h3>Reports</h3>
+                    <button type="button" class="gold-btn">Show More</button>
 
-                    <button type="button" class="gold-btn">show more</button>
-                </div>
-                <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-                <p>Global Mining Report 2025</p>
-            </div>
+                    <div class="gold-news" id="researchReportsContainer">
+                        <!-- Top 2 reports will be injected here -->
+                    </div>
+
+                    </div>
+                    </div>
         </div>
     </div>
     <!-- Footer Section -->
@@ -1423,6 +1425,53 @@
         fetchProjectNews();
         loadWorldNews();
     });
+
+     // for fetching research reports 
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const tag = 'research reports';
+                const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+                const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+                const data = await res.json();
+
+                const container = document.getElementById("researchReportsContainer");
+                if (!container) return;
+
+                container.innerHTML = '';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No research reports found.</p>';
+                    return;
+                }
+
+                const topReports = data.slice(0, 2); // Show top 2
+
+                topReports.forEach(report => {
+                    const card = document.createElement("div");
+                    card.classList.add("research-card");
+
+                    card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching research reports:", error);
+            }
+
+            // Helper function to remove HTML tags from description
+            function stripHTML(html) {
+                const div = document.createElement("div");
+                div.innerHTML = html || '';
+                return div.textContent || div.innerText || '';
+            }
+        });
+
 </script>
 
 

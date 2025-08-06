@@ -870,54 +870,54 @@
         margin-top: 30px;
       }
     }
+
     .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-}
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+    }
 
-.nav-links a {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  position: relative;
-}
+    .nav-links a {
+      text-decoration: none;
+      color: black;
+      padding: 10px;
+      position: relative;
+    }
 
-.dropdown {
-  position: relative;
-}
+    .dropdown {
+      position: relative;
+    }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: black;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 999;
-}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: black;
+      top: 100%;
+      left: 0;
+      min-width: 160px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
 
-.dropdown-content li {
-  list-style: none;
-}
+    .dropdown-content li {
+      list-style: none;
+    }
 
-.dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  color: whitesmoke;
-}
+    .dropdown-content a {
+      padding: 10px 15px;
+      display: block;
+      color: whitesmoke;
+    }
 
-.dropdown-content a:hover {
-  background-color: goldenrod;
-}
+    .dropdown-content a:hover {
+      background-color: goldenrod;
+    }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+    /* Show dropdown on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
   </style>
 </head>
 
@@ -934,23 +934,23 @@
       </button>
 
       <div class="nav-links" id="navMenu">
-  <a href="about.html">About Us</a>
-  <a href="newss.html">News Section</a>
-  <a href="morning.html">Morning Chatter</a>
-  <a href="magazine.html">Magazine</a>
+        <a href="about.html">About Us</a>
+        <a href="newss.html">News Section</a>
+        <a href="morning.html">Morning Chatter</a>
+        <a href="magazine.html">Magazine</a>
 
-  <!-- Dropdown Container -->
-  <div class="dropdown">
-    <a href="service.html" class="dropbtn">Services</a>
-    <ul class="dropdown-content">
-      <li><a href="Global.html">Global</a></li>
-      <li><a href="branding.html">Branding</a></li>
-      <li><a href="media.html">Media</a></li>
-    </ul>
-  </div>
+        <!-- Dropdown Container -->
+        <div class="dropdown">
+          <a href="service.html" class="dropbtn">Services</a>
+          <ul class="dropdown-content">
+            <li><a href="Global.html">Global</a></li>
+            <li><a href="branding.html">Branding</a></li>
+            <li><a href="media.html">Media</a></li>
+          </ul>
+        </div>
 
-  <a href="contant.html">Contact Us</a>
-</div>
+        <a href="contant.html">Contact Us</a>
+      </div>
 
       <div class="header-buttons" id="headerButtons">
         <button class="login-btn">Login</button>
@@ -1045,21 +1045,11 @@
 
       <div class="gold">
         <h2>Gold News</h2>
-        <button type="button" class="btns">show more</button>
+        <button type="button" class="btns" onclick="loadMoreSilver()">show more</button>
       </div>
-      <div class="gold-news">
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>US Gold Corp.</p>
-        </div>
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>Andorra Solid & Silver</p>
-        </div>
-        <div class="gold-card">
-          <img src="./image/adrien-tanic-l5uz4UqHqzc-unsplash 1.png" alt="">
-          <p>Astro Drills</p>
-        </div>
+
+      <div class="gold-news" id="silverNewsContainer">
+        <!-- Silver news cards will be injected here -->
       </div>
     </div>
 
@@ -1071,8 +1061,8 @@
           <button type="button" class="gold-btn" onclick="window.location.href='project.html'">Show More</button>
         </div>
 
-        <div class="project-news-container" id="projectNewsCards">
-          <!-- Project news cards will be loaded here -->
+        <div class="project-card-container" id="projectCardContainer">
+          <!-- Project news cards will be injected here -->
         </div>
       </div>
 
@@ -1081,12 +1071,17 @@
 
       <div class="section-box">
         <h3>Reports</h3>
-        <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-        <p>Global Mining Report 2025</p>
+        <button type="button" class="gold-btn">Show More</button>
+
+        <div class="gold-news" id="researchReportsContainer">
+          <!-- Top 2 reports will be injected here -->
+        </div>
       </div>
     </div>
   </div>
   <!-- Footer Section -->
+
+
   <div class="footer-container">
     <div class="footer-content">
 
@@ -1096,7 +1091,8 @@
       <div class="footer-left">
         <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" height="60px" />
         <p>
-          Mining Discovery provides daily mining news, a weekly mining newsletter,<br> a monthly mining magazine and an
+          Mining Discovery provides daily mining news, a weekly mining newsletter,<br> a monthly mining magazine and
+          an
           interactive mining website for mining<br> companies, mining associations and mining executives globally.
         </p>
         <div class="search-bar-container-last" id="searchContainer">
@@ -1248,42 +1244,168 @@
     }
 
 
-    // load project news 
-    async function loadProjectNewsCards() {
+    // ===== Utility: Strip HTML Tags =====
+    function stripHTML(html) {
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      return div.textContent || div.innerText || '';
+    }
+
+    // ===== Load Project News (Tagged: projects) =====
+    async function fetchProjectNews() {
       try {
-        const res = await fetch('/api/project-news');
-        const newsItems = await res.json();
+        const res = await fetch('/api/tagged-posts/tag/projects');
+        const data = await res.json();
+        const container = document.getElementById('projectCardContainer');
+        if (!container) return;
 
-        const container = document.getElementById('projectNewsCards');
-        const display = newsItems.slice(0, 3); // Show only 3
+        container.innerHTML = '';
 
-        display.forEach(news => {
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No project news available.</p>';
+          return;
+        }
+
+        const latest = data.slice(0, 3);
+
+        latest.forEach(news => {
           const card = document.createElement('div');
           card.className = 'project-card';
           card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
+          const imgTag = news.image ? `<img src="${news.image}" alt="Project Image">` : '';
+          const desc = stripHTML(news.description || '').slice(0, 80);
+
           card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
+          ${imgTag}
           <div class="content">
             <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 70)}...</p>
+            <p>${desc}...</p>
           </div>
         `;
 
           container.appendChild(card);
         });
-      } catch (error) {
-        console.error('Error loading project news:', error);
+      } catch (err) {
+        console.error('Failed to load project news:', err);
       }
     }
 
+// for fetching gold news 
+    let allGoldNews = [];
+  let loadedGoldCount = 0;
+  const goldPerPage = 3;
 
+  async function fetchGoldNews() {
+    try {
+      const res = await fetch('/api/tagged-posts/tag/gold');
+      const data = await res.json();
+      allGoldNews = data;
+      loadedGoldCount = 0;
+      loadMoreGold(); // load initial 3 news
+    } catch (err) {
+      console.error("Failed to fetch gold news:", err);
+    }
+  }
+
+  function loadMoreGold() {
+    const container = document.getElementById('goldNewsContainer');
+    if (!container) return;
+
+    const nextBatch = allGoldNews.slice(loadedGoldCount, loadedGoldCount + goldPerPage);
+
+    nextBatch.forEach(news => {
+      const card = document.createElement('div');
+      card.className = 'news-card';
+
+      const firstParagraph = extractFirstParagraph(news.description);
+
+      card.innerHTML = `
+        <img src="${news.image}" alt="">
+        <div class="text-content">
+          <h3>
+            <a href="project-news-details.html?id=${news._id}" style="text-decoration: none; color: inherit;">
+              ${news.title}
+            </a>
+          </h3>
+          <p>${firstParagraph} <span>read more.....</span></p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    loadedGoldCount += goldPerPage;
+
+    const btn = document.querySelector('.btns');
+    if (btn && loadedGoldCount >= allGoldNews.length) {
+      btn.style.display = 'none';
+    }
+  }
+
+  function extractFirstParagraph(html) {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    const p = tempDiv.querySelector('p');
+    return p?.innerText || tempDiv.innerText.substring(0, 150);
+  }
+
+
+
+    // ===== DOMContentLoaded =====
     document.addEventListener('DOMContentLoaded', () => {
       loadBanners();
       fetchSilverNews();
-      loadProjectNewsCards();
+      fetchProjectNews();
+      fetchGoldNews();
     });
 
+
+    // for fetching research reports 
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const tag = 'research reports';
+        const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+        const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+        const data = await res.json();
+
+        const container = document.getElementById("researchReportsContainer");
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No research reports found.</p>';
+          return;
+        }
+
+        const topReports = data.slice(0, 2); // Show top 2
+
+        topReports.forEach(report => {
+          const card = document.createElement("div");
+          card.classList.add("research-card");
+
+          card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching research reports:", error);
+      }
+
+      // Helper function to remove HTML tags from description
+      function stripHTML(html) {
+        const div = document.createElement("div");
+        div.innerHTML = html || '';
+        return div.textContent || div.innerText || '';
+      }
+    });
   </script>
 
 </body>

@@ -978,54 +978,54 @@
                 margin-top: 30px;
             }
         }
+
         .nav-links {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  position: relative;
-}
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            position: relative;
+        }
 
-.nav-links a {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  position: relative;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            position: relative;
+        }
 
-.dropdown {
-  position: relative;
-}
+        .dropdown {
+            position: relative;
+        }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: black;
-  top: 100%;
-  left: 0;
-  min-width: 160px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 999;
-}
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
 
-.dropdown-content li {
-  list-style: none;
-}
+        .dropdown-content li {
+            list-style: none;
+        }
 
-.dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  color: whitesmoke;
-}
+        .dropdown-content a {
+            padding: 10px 15px;
+            display: block;
+            color: whitesmoke;
+        }
 
-.dropdown-content a:hover {
-  background-color: goldenrod;
-}
+        .dropdown-content a:hover {
+            background-color: goldenrod;
+        }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+        /* Show dropdown on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
@@ -1041,24 +1041,24 @@
                 <i class="fas fa-bars"></i>
             </button>
 
-             <div class="nav-links" id="navMenu">
-  <a href="about.html">About Us</a>
-  <a href="newss.html">News Section</a>
-  <a href="morning.html">Morning Chatter</a>
-  <a href="magazine.html">Magazine</a>
+            <div class="nav-links" id="navMenu">
+                <a href="about.html">About Us</a>
+                <a href="newss.html">News Section</a>
+                <a href="morning.html">Morning Chatter</a>
+                <a href="magazine.html">Magazine</a>
 
-  <!-- Dropdown Container -->
-  <div class="dropdown">
-    <a href="service.html" class="dropbtn">Services</a>
-    <ul class="dropdown-content">
-      <li><a href="Global.html">Global</a></li>
-      <li><a href="branding.html">Branding</a></li>
-      <li><a href="media.html">Media</a></li>
-    </ul>
-  </div>
+                <!-- Dropdown Container -->
+                <div class="dropdown">
+                    <a href="service.html" class="dropbtn">Services</a>
+                    <ul class="dropdown-content">
+                        <li><a href="Global.html">Global</a></li>
+                        <li><a href="branding.html">Branding</a></li>
+                        <li><a href="media.html">Media</a></li>
+                    </ul>
+                </div>
 
-  <a href="contant.html">Contact Us</a>
-</div>
+                <a href="contant.html">Contact Us</a>
+            </div>
 
 
             <div class="header-buttons" id="headerButtons">
@@ -1166,7 +1166,7 @@
 
 
             <div class="gold">
-                <h2>Popular This Week</h2>
+                <h2>Sponsored Posts</h2>
                 <button type="button" class="gold-btn" onclick="location.href='sponsored.html'">Show More</button>
             </div>
 
@@ -1187,7 +1187,6 @@
                     <!-- Project news cards will be injected here -->
                 </div>
             </div>
-
 
         </div>
     </div>
@@ -1349,13 +1348,18 @@
             }
         }
 
-        // ====== Fetch Project News ======
+        // ====== Fetch Project News via Tagged Posts ======
         async function fetchProjectNews() {
             try {
-                const res = await fetch('/api/project-news');
+                const res = await fetch('/api/tagged-posts/tag/projects');
                 const data = await res.json();
                 const container = document.getElementById('projectNewsSection');
                 if (!container) return;
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    container.innerHTML = '<p>No project news available.</p>';
+                    return;
+                }
 
                 const latest = data.slice(0, 3);
 
@@ -1365,10 +1369,10 @@
                     card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
 
                     card.innerHTML = `
-          <img src="${news.image}" alt="Project Image">
+          ${news.image ? `<img src="${news.image}" alt="Project Image">` : ''}
           <div class="content">
             <h4>${news.title}</h4>
-            <p>${news.description.slice(0, 80)}...</p>
+            <p>${stripHTML(news.description).slice(0, 80)}...</p>
           </div>
         `;
 
@@ -1377,6 +1381,13 @@
             } catch (err) {
                 console.error('Failed to load project news:', err);
             }
+        }
+
+        // Helper to strip HTML from description
+        function stripHTML(html) {
+            const div = document.createElement("div");
+            div.innerHTML = html || '';
+            return div.textContent || div.innerText || '';
         }
 
         // fetch research reports 
@@ -1447,35 +1458,45 @@
             fetchTopSponsoredPosts();
         });
 
-        // fetching sponsored posts 
-        async function fetchTopSponsoredPosts() {
+        // for fetching sponsored news 
+        let sponsoredPage = 0;
+        const postsPerPage = 3;
+        let sponsoredData = [];
+
+        async function loadMoreSponsored() {
+            const container = document.getElementById('sponsoredPostsContainer');
+
             try {
-                const res = await fetch('http://localhost:5000/api/sponsored');
-                const data = await res.json();
+                // Only fetch once
+                if (sponsoredData.length === 0) {
+                    const res = await fetch('/api/tagged-posts/tag/sponsored posts'); // ✅ updated endpoint
+                    sponsoredData = await res.json();
+                }
 
-                const topThree = data.slice(0, 3); // Top 3 posts only
-                const container = document.getElementById('sponsoredPostsContainer');
-                container.innerHTML = '';
+                const start = sponsoredPage * postsPerPage;
+                const end = start + postsPerPage;
+                const sliced = sponsoredData.slice(start, end);
 
-                topThree.forEach(post => {
+                sliced.forEach(post => {
                     const div = document.createElement('div');
                     div.classList.add('sponsored-card');
-
                     div.innerHTML = `
           ${post.image ? `<img src="${post.image}" alt="Sponsored Image" />` : ''}
           <h4><a href="sponsored-detail.html?id=${post._id}">${post.title}</a></h4>
           <p>${post.description.slice(0, 150)}...</p>
-          <a href="sponsored-detail.html?id=${post._id}" class="read-more">Read More</a>
         `;
-
                     container.appendChild(div);
                 });
 
+                sponsoredPage++;
+                if (end >= sponsoredData.length) {
+                    document.querySelector('.btn-more').style.display = 'none';
+                }
             } catch (err) {
-                console.error('Error fetching sponsored posts:', err);
+                console.error('Error loading sponsored posts:', err);
+                container.innerHTML = '<p>Error loading sponsored posts.</p>';
             }
         }
-
 
 
 
@@ -1483,8 +1504,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadBanners();
             fetchProjectNews();
-            fetchTaggedResearchReports('research reports'); // ✅ Use tag name exactly as stored in DB
-            fetchTopSponsoredPosts();
+            fetchTaggedResearchReports('research reports'); 
+            loadMoreSponsored();
         });
 
     </script>
