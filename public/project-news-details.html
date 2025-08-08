@@ -13,7 +13,6 @@
       width: 100%;
       height: 100%;
       background-color: white;
-      /* or your site background */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -70,6 +69,16 @@
     .news-description {
       margin-top: 20px;
     }
+
+    /* Prevent embedded images in description from overflowing */
+    .news-description img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+      border-radius: 4px;
+      object-fit: contain;
+    }
   </style>
 </head>
 
@@ -89,7 +98,7 @@
       if (preloader) {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
-        setTimeout(() => preloader.remove(), 500); // optional: remove it from DOM
+        setTimeout(() => preloader.remove(), 500);
       }
     });
 
@@ -108,22 +117,24 @@
 
         const news = await res.json();
 
+        // OPTIONAL: remove all embedded images from description if not needed
+        // const cleanedDescription = news.description.replace(/<img[^>]*>/g, '');
+
         const container = document.getElementById('projectNewsDetails');
         container.innerHTML = `
-      <h1>${news.title}</h1>
-      <div class="news-meta">${new Date(news.createdAt).toLocaleDateString()}</div>
-      ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
-      <div class="news-description">${news.description}</div>
-    `;
+          <h1>${news.title}</h1>
+          <div class="news-meta">${new Date(news.createdAt).toLocaleDateString()}</div>
+          ${news.image ? `<img src="${news.image}" alt="News Image" class="main-image">` : ''}
+          <div class="news-description">${news.description}</div>
+          <!-- Use cleanedDescription instead of news.description above if images should be stripped -->
+        `;
       } catch (err) {
         document.getElementById('projectNewsDetails').innerHTML = `<p>Failed to load news: ${err.message}</p>`;
       }
     }
 
     fetchProjectNewsById();
-
   </script>
-
 </body>
 
 </html>

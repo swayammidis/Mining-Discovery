@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Investor Campaigns</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  
-   <style>
-    *{
-        margin: 0;
-        padding: 0;
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      /* or your site background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
-       .first-header {
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #ccc;
+      border-top: 5px solid #222;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .first-header {
       padding: 20px;
       height: 24px;
       display: flex;
@@ -21,10 +53,12 @@
       background-color: #2E2E2E;
       font-size: 16px;
     }
-    .first-header p{
-        color: white;
+
+    .first-header p {
+      color: white;
     }
-    .first-header:hover{
+
+    .first-header:hover {
       text-decoration: underline;
     }
 
@@ -93,62 +127,64 @@
       background-color: #000;
     }
 
-   
- .search-bar-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding-top: 14px;
-}
 
-.search-bar-bg {
-  background-color: #2e2e2e;
-  height: 24px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  width: 70%;
-  overflow: hidden;
-  position: relative;
-}
+    .search-bar-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding-top: 14px;
+    }
 
-.scrolling-track {
-  display: flex;
-  width: max-content;
-  animation: scroll-loop 8s linear infinite;
-}
+    .search-bar-bg {
+      background-color: #2e2e2e;
+      height: 24px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      width: 70%;
+      overflow: hidden;
+      position: relative;
+    }
 
-.scrolling-content {
-  display: flex;
-  white-space: nowrap;
-  color: white;
-  font-size: 14px;
-}
+    .scrolling-track {
+      display: flex;
+      width: max-content;
+      animation: scroll-loop 8s linear infinite;
+    }
 
-.up {
-  color: #22ed00;
-}
-.down {
-  color: #ff0000;
-}
+    .scrolling-content {
+      display: flex;
+      white-space: nowrap;
+      color: white;
+      font-size: 14px;
+    }
 
-@keyframes scroll-loop {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
+    .up {
+      color: #22ed00;
+    }
+
+    .down {
+      color: #ff0000;
+    }
+
+    @keyframes scroll-loop {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
 
 
-.search-box {
+    .search-box {
       position: relative;
       width: 220px;
     }
 
     .search-box input {
-      
- 
+
+
       padding: 5px 15px;
       padding-right: 35px;
       border: 1px solid #ccc;
@@ -192,18 +228,22 @@
         transform: translateY(100%);
         opacity: 0;
       }
+
       10% {
         transform: translateY(0);
         opacity: 1;
       }
+
       40% {
         transform: translateY(0);
         opacity: 1;
       }
+
       50% {
         transform: translateY(-100%);
         opacity: 0;
       }
+
       100% {
         transform: translateY(-100%);
         opacity: 0;
@@ -211,17 +251,17 @@
     }
 
     /* Hide animated text when user types */
-    .search-box input:focus + .animated-text-container,
-    .search-box input:not(:placeholder-shown) + .animated-text-container {
+    .search-box input:focus+.animated-text-container,
+    .search-box input:not(:placeholder-shown)+.animated-text-container {
       display: none;
     }
- 
+
 
     .social-icons {
       display: flex;
       align-items: center;
       gap: 10px;
-      
+
     }
 
     .social-icons i {
@@ -278,126 +318,128 @@
       .social-icon {
         margin-bottom: -20px;
       }
+
       .search-bar-bg {
         width: 100%;
       }
     }
 
     /* === Header / Dropdown Toggle === */
-.topbar {
-   background: #8d6d2a;
-  color: #fff;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  flex-wrap: wrap;
-}
+    .topbar {
+      background: #8d6d2a;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      flex-wrap: wrap;
+    }
 
-.topbar h1 {
-    color: white;
-  font-size: 20px;
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
+    .topbar h1 {
+      color: white;
+      font-size: 20px;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
 
-.topbar h1 i {
-  font-size: 12px;
-  transition: transform 0.3s ease;
-}
+    .topbar h1 i {
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
 
-.topbar h1.rotate i {
-  transform: rotate(180deg);
-}
+    .topbar h1.rotate i {
+      transform: rotate(180deg);
+    }
 
-.dropdown-links {
-  display: none;
-  background: #1f1f1f;
-  padding: 10px 20px;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 14px;
-  border-top: 1px solid #333;
-}
+    .dropdown-links {
+      display: none;
+      background: #1f1f1f;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+      border-top: 1px solid #333;
+    }
 
-.dropdown-links a {
-  color: #ccc;
-  text-decoration: none;
-  margin-right: 15px;
-  transition: 0.3s;
-}
+    .dropdown-links a {
+      color: #ccc;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
 
-.dropdown-links a:hover,
-.dropdown-links a.active {
-  color: gold;
-  border-bottom: 2px solid gold;
-  padding-bottom: 3px;
-}
+    .dropdown-links a:hover,
+    .dropdown-links a.active {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 3px;
+    }
 
-.dropdown-links.show {
-  display: flex;
-  flex-wrap: wrap;
-}
+    .dropdown-links.show {
+      display: flex;
+      flex-wrap: wrap;
+    }
 
-/* === Media Queries === */
+    /* === Media Queries === */
 
-/* Small phones */
-@media (max-width: 480px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 15px;
-  }
+    /* Small phones */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
 
-  .topbar h1 {
-    font-size: 18px;
-    gap: 6px;
-  }
+      .topbar h1 {
+        font-size: 18px;
+        gap: 6px;
+      }
 
-  .dropdown-links {
-    flex-direction: column;
-    padding: 10px 15px;
-    gap: 8px;
-    font-size: 13px;
-  }
+      .dropdown-links {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 8px;
+        font-size: 13px;
+      }
 
-  .dropdown-links a {
-    margin: 5px 0;
-  }
-}
+      .dropdown-links a {
+        margin: 5px 0;
+      }
+    }
 
-/* Tablets */
-@media (min-width: 481px) and (max-width: 768px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 20px;
-  }
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
 
-  .dropdown-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 12px 20px;
-  }
-}
+      .dropdown-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+    }
 
-/* Desktops (already optimized, but just in case) */
-@media (min-width: 769px) {
-  .topbar {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+    /* Desktops (already optimized, but just in case) */
+    @media (min-width: 769px) {
+      .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+      }
 
-  .dropdown-links {
-    flex-direction: row;
-    gap: 15px;
-  }
-}
+      .dropdown-links {
+        flex-direction: row;
+        gap: 15px;
+      }
+    }
+
     .container {
       display: flex;
       justify-content: space-between;
@@ -426,7 +468,9 @@
       border-radius: 5px;
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       color: #333;
     }
 
@@ -459,7 +503,7 @@
       border-radius: 10px;
       overflow: hidden;
       margin-bottom: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     .card img {
@@ -490,49 +534,54 @@
       border-left: 2px solid #c2922b;
       padding-left: 15px;
     }
+
     @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    padding: 15px;
-  }
+      .container {
+        flex-direction: column;
+        padding: 15px;
+      }
 
-  .left-panel,
-  .middle-panel,
-  .right-panel {
-    width: 100%;
-    padding-right: 0;
-  }
+      .left-panel,
+      .middle-panel,
+      .right-panel {
+        width: 100%;
+        padding-right: 0;
+      }
 
-  h1 {
-    font-size: 22px;
-  }
+      h1 {
+        font-size: 22px;
+      }
 
-  h2 {
-    font-size: 18px;
-  }
+      h2 {
+        font-size: 18px;
+      }
 
-  p {
-    font-size: 13px;
-  }
+      p {
+        font-size: 13px;
+      }
 
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
+
 <body>
-     <div class="first-header">
+  <div id="preloader">
+    <div class="spinner"></div>
+  </div>
+  <div class="first-header">
     <p>SOME IMPORTANT HIGHLIGHTED NEWS</p>
   </div>
- 
+
 
   <header class="main-header">
     <div class="header-top">
-     <div class="logo-social">
-       <a href="./index.html"><img src="./image/LOGO FOR Print.png" alt="Mining Discovery Logo" class="logo" />
-    </a>   </div>
+      <div class="logo-social">
+        <a href="./index.html"><img src="./image/LOGO FOR Print.png" alt="Mining Discovery Logo" class="logo" />
+        </a>
+      </div>
       <button class="hamburger" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
       </button>
@@ -556,42 +605,42 @@
       <div class="social-icons">
         <img src="./image/Group.png">
         <img src="./image/Group (4).png">
-       <img src="./image/Group (1).png">
-         <img src="./image/Group (2).png">
-           <img src="./image/Group (3).png">
-         
-        
-        
+        <img src="./image/Group (1).png">
+        <img src="./image/Group (2).png">
+        <img src="./image/Group (3).png">
+
+
+
       </div>
-<div class="search-bar-bg">
-  <div class="scrolling-track">
-    <div class="scrolling-content">
-      <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
-    </div>
-    <!-- Duplicate content for seamless loop -->
-    <div class="scrolling-content">
-      <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
-    </div>
-  </div>
-</div>
+      <div class="search-bar-bg">
+        <div class="scrolling-track">
+          <div class="scrolling-content">
+            <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
+          </div>
+          <!-- Duplicate content for seamless loop -->
+          <div class="scrolling-content">
+            <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
+          </div>
+        </div>
+      </div>
 
 
-     <div class="search-box">
-    <input type="text" id="searchInput" placeholder=" " />
-    <div class="animated-text-container">
-      <span id="animatedText">Search gold prices</span>
-    </div>
-    <button class="search-icon"><i class="fas fa-search"></i></button>
-  </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder=" " />
+        <div class="animated-text-container">
+          <span id="animatedText">Search gold prices</span>
+        </div>
+        <button class="search-icon"><i class="fas fa-search"></i></button>
+      </div>
     </div>
   </header>
-     
+
   <!-- Header + Dropdown -->
   <div class="topbar">
     <h1 onclick="toggleDropdown()" id="newsToggle">
@@ -599,8 +648,8 @@
       <i class="fas fa-chevron-down"></i>
     </h1>
   </div>
-<!-- Dropdown Links -->
-   <div class="dropdown-links" id="dropdownMenu">
+  <!-- Dropdown Links -->
+  <div class="dropdown-links" id="dropdownMenu">
     <a href="./service.html">Investor Campaigns</a>
     <a href="./multimedia.html">Multimedia & you tube</a>
     <a href="./newsynd.html">News Syndication</a>
@@ -608,23 +657,20 @@
     <a href="./branding.html">Digital Branding</a>
     <a href="./Global.html">Global Outreach</a>
     <a href="./media.html">Social Media Growth
-</a>
+    </a>
     <a href="./podcast.html">Podcast & Interview Features</a>
     <a href="">Newsletter & Email Blasts</a>
     <a href="">Paid Ad Campaigns</a>
     <a href="./pressoffice.html">Press Office</a>
-  
-  
-</div>
-   
+
+
+  </div>
+
   <div class="container">
     <!-- Left Column -->
     <div class="left-panel">
-      <div class="section">
-        <img src="./image/Untitled design (1).png" alt="Campaign Promo" />
-      </div>
-      <div class="section">
-        <img src="./image/mrngbanner.webp" alt="Ad Banner" />
+      <div class="section" id="bannerContainerGlobal">
+        <p>Loading banners...</p>
       </div>
     </div>
 
@@ -634,10 +680,17 @@
         <h1>Investor Campaigns</h1>
         <div class="highlight-title">UNCOVER YOUR NEXT</div>
         <h2>MINING DISCOVERY OPPORTUNITY</h2>
-       <p>Mining Discovery offers exclusive access to groundbreaking mineral exploration ventures and early-stage discoveries. Our events and platforms are designed to connect forward-thinking investors, geologists, and industry leaders with companies at the forefront of mining innovation and resource development.
-Unlock the potential of the next major mining discovery by joining Mining Discovery. Our initiatives spotlight high-potential exploration companies and undiscovered resource opportunities from around the globe. Through curated meetings, discovery showcases, and direct access to technical teams, we ensure you gain deep insights into emerging prospects before they hit the mainstream.
-With advanced exploration insights, regional geological data, and discovery-focused networking, Mining Discovery maximizes your chances of identifying the next big mineral find—before the market catches on.
-Participation is free for qualified discovery investors who schedule a minimum of five meetings with exploration companies via the Mining Discovery Match Connect platform.</p>
+        <p>Mining Discovery offers exclusive access to groundbreaking mineral exploration ventures and early-stage
+          discoveries. Our events and platforms are designed to connect forward-thinking investors, geologists, and
+          industry leaders with companies at the forefront of mining innovation and resource development.
+          Unlock the potential of the next major mining discovery by joining Mining Discovery. Our initiatives spotlight
+          high-potential exploration companies and undiscovered resource opportunities from around the globe. Through
+          curated meetings, discovery showcases, and direct access to technical teams, we ensure you gain deep insights
+          into emerging prospects before they hit the mainstream.
+          With advanced exploration insights, regional geological data, and discovery-focused networking, Mining
+          Discovery maximizes your chances of identifying the next big mineral find—before the market catches on.
+          Participation is free for qualified discovery investors who schedule a minimum of five meetings with
+          exploration companies via the Mining Discovery Match Connect platform.</p>
       </div>
 
       <div class="section">
@@ -647,23 +700,29 @@ Participation is free for qualified discovery investors who schedule a minimum o
           <div class="grid-item">
             <div class="grid-icon">📌</div>
             <strong>CONFIRM INTEREST</strong>
-            <p>Once you confirm your participation in a Mining Discovery event, we’ll ask a few key questions about your exploration interests, mineral focus, and investment strategy - helping us connect you with the most relevant discovery-stage companies.</p>
+            <p>Once you confirm your participation in a Mining Discovery event, we’ll ask a few key questions about your
+              exploration interests, mineral focus, and investment strategy - helping us connect you with the most
+              relevant discovery-stage companies.</p>
           </div>
           <div class="grid-item">
             <div class="grid-icon">🧠</div>
             <strong>PROJECT MATCHING</strong>
-            <p>Our intelligent matchmaking engine recommends high-potential exploration companies aligned with your goals. You can also manually explore by commodity, geology, region, or project status giving you complete control over your discovery journey.</p>
-        </div>
+            <p>Our intelligent matchmaking engine recommends high-potential exploration companies aligned with your
+              goals. You can also manually explore by commodity, geology, region, or project status giving you complete
+              control over your discovery journey.</p>
+          </div>
           <div class="grid-item">
             <div class="grid-icon">📅</div>
             <strong>SCHEDULE DISCOVERY MEETINGS</strong>
-            <p>Our discovery concierge team will coordinate your one-on-one or small group meetings, ensuring a packed schedule with promising new ventures — before you even walk in the door.</p>
-         </div>
+            <p>Our discovery concierge team will coordinate your one-on-one or small group meetings, ensuring a packed
+              schedule with promising new ventures — before you even walk in the door.</p>
+          </div>
           <div class="grid-item">
             <div class="grid-icon">🔍</div>
             <strong>EXPLORE INNOVATION</strong>
-            <p>Engage directly with exploration leaders, review field data and drill results, and gain insights through live presentations and face-to-face meetings in focused networking zones.</p>
-      </div>
+            <p>Engage directly with exploration leaders, review field data and drill results, and gain insights through
+              live presentations and face-to-face meetings in focused networking zones.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -673,38 +732,172 @@ Participation is free for qualified discovery investors who schedule a minimum o
       <div class="section">
         <h2>Projects</h2>
         <div class="card-list">
-          <div class="card">
-            <img src="./image/pexels-afterdark-31543888.png" alt="Project 1" />
-            <div class="card-text">Arizona news latest project</div>
+          <div class="card" id="projectNewsSection">
+
           </div>
-          <div class="card">
-            <img src="./image/pexels-hson-17126246.png" alt="Project 2" />
-            <div class="card-text">Astra news latest project</div>
-          </div>
-          <div class="card">
-            <img src="./image/pexels-urtimud-89-76108288-14263362 (1) 1.png" alt="Project 3" />
-            <div class="card-text">US Gold Crop, latest project</div>
-          </div>
+
         </div>
       </div>
 
       <div class="section">
         <h2>Reports</h2>
         <div class="card-list">
-          <div class="card">
-            <img src="./image/pexels-tomfisk-2101137.png" alt="Report 1" />
-            <div class="card-text">Phenom research report</div>
+          <div class="card" id="researchReportsContainer">
+
           </div>
         </div>
-         <div class="card-list">
-          <div class="card">
-            <img src="./image/0a11d81c2f8bf91d05c58c9bd53b0d3380afc2eb-2048x1536.jpg.png" alt="Report 1" />
-            <div class="card-text">Phenom research report</div>
-          </div>
+        <div class="card-list">
+
         </div>
       </div>
     </div>
   </div>
-  <script src="./script.js"></script>
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdownMenu");
+      const header = document.getElementById("newsToggle");
+      dropdown.classList.toggle("show");
+      header.classList.toggle("rotate");
+    }
+
+    
+    // ===== PRELOADER FUNCTIONALITY =====
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        setTimeout(() => preloader.remove(), 500); // optional: remove it from DOM
+      }
+    });
+
+    async function loadBannersGlobal() {
+      try {
+        const res = await fetch('/api/banners/latest');
+        const data = await res.json();
+        console.log('Banner API response (global):', data);
+
+        const container = document.getElementById('bannerContainerGlobal');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No banners available.</p>';
+          return;
+        }
+
+        const bannersToShow = data.slice(0, 5); // Show top 5 banners
+
+        bannersToShow.forEach((banner, index) => {
+          const imageUrl = banner.image;
+
+          const adDiv = document.createElement('div');
+          adDiv.className = 'left-ad';
+
+          if (imageUrl && imageUrl.startsWith('data:image')) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = banner.alt || `Banner ${index + 1}`;
+            img.className = 'logo-img';
+
+            adDiv.appendChild(img);
+          } else {
+            adDiv.innerHTML = '<p>Invalid image</p>';
+          }
+
+          container.appendChild(adDiv);
+        });
+      } catch (err) {
+        console.error('Failed to load banners (global):', err);
+        const container = document.getElementById('bannerContainerGlobal');
+        if (container) container.innerHTML = '<p>Error loading banners.</p>';
+      }
+    }
+
+    // ====== Fetch Project News by tag ======
+    async function fetchProjectNews() {
+      try {
+        const res = await fetch('/api/tagged-posts/tag/projects');
+        const data = await res.json();
+        const container = document.getElementById('projectNewsSection');
+        if (!container) return;
+
+        const latest = data.slice(0, 3);
+
+        latest.forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
+
+          card.innerHTML = `
+                    <img src="${news.image}" alt="Project Image">
+                    <div class="content">
+                        <h4>${news.title}</h4>
+                        <p>${news.description.replace(/<[^>]+>/g, '').slice(0, 80)}...</p>
+                    </div>
+                `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Failed to load project news:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBannersGlobal();
+      fetchProjectNews();
+    });
+
+
+    // for fetching research reports 
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const tag = 'research reports';
+        const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+        const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+        const data = await res.json();
+
+        const container = document.getElementById("researchReportsContainer");
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No research reports found.</p>';
+          return;
+        }
+
+        const topReports = data.slice(0, 2); // Show top 2
+
+        topReports.forEach(report => {
+          const card = document.createElement("div");
+          card.classList.add("research-card");
+
+          card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching research reports:", error);
+      }
+
+      // Helper function to remove HTML tags from description
+      function stripHTML(html) {
+        const div = document.createElement("div");
+        div.innerHTML = html || '';
+        return div.textContent || div.innerText || '';
+      }
+    });
+
+  </script>
 </body>
+
 </html>

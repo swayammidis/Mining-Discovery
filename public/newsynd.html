@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>News Section</title>
+  <title>News Syndication</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
  * {
@@ -950,7 +950,7 @@ span{
     <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
-         <a href="./index.html">  <img src="./discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
+         <a href="index.html">  <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
      
   </div>
 
@@ -959,11 +959,11 @@ span{
       </button>
 
       <div class="nav-links" id="navMenu">
-      <a href="./about.html">About Us</a>
-        <a href="./newss.html">News Section</a>
-        <a href="./morning.html">Morning Chatter</a>
-        <a href="#">Magazine</a>
-        <a href="#">Services</a>
+      <a href="about.html">About Us</a>
+        <a href="newss.html">News Section</a>
+        <a href="morning.html">Morning Chatter</a>
+        <a href="magzin.html">Magazine</a>
+        <a href="service.html">Services</a>
         <a href="#">Contact Us</a>
       </div>
 
@@ -1010,43 +1010,37 @@ span{
     </div>
   </header>
   
-  <!-- Header + Dropdown -->
+ <!-- Header + Dropdown -->
   <div class="topbar">
     <h1 onclick="toggleDropdown()" id="newsToggle">
-      News Section
+      Services
       <i class="fas fa-chevron-down"></i>
     </h1>
   </div>
-
-  <!-- Dropdown Links -->
-    <div class="dropdown-links" id="dropdownMenu">
-      <a href="./newss.html">Latest News</a>
-    <a href="./gold.html">Gold News</a>
-    <a href="./silver.html">Silver News</a>
-    <a href="./cooper.html">Copper News</a>
-    <a href="./metal.html">Precious Metals</a>
-    <a href="./corporate.html">Corporate News</a>
-    <a href="./world.html">World News</a>
-    <a href="./leader.html">Leadership Thoughts</a>
-    <a href="./morning.html">Morning Chatter</a>
-    <a href="./Announcement.html">Announcement</a>
-    <a href="./popular.html">Popular This Week</a>
-    <a href="./project.html">Projects</a>
-    <a href="./research.html">Research Reports</a>
-    <a href="./Sponsored.html">Sponsored Post</a>
-  </div>
+<!-- Dropdown Links -->
+   <div class="dropdown-links" id="dropdownMenu">
+    <a href="service.html">Investor Campaigns</a>
+    <a href="multimedia.html">Multimedia & you tube</a>
+    <a href="newsynd.html">News Syndication</a>
+    <a href="confrence.html">Conference Media Coverage</a>
+    <a href="branding.html">Digital Branding</a>
+    <a href="Global.html">Global Outreach</a>
+    <a href="media.html">Social Media Growth
+</a>
+    <a href="podcast.html">Podcast & Interview Features</a>
+    <a href="letter.html">Newsletter & Email Blasts</a>
+    <a href="paid.html">Paid Ad Campaigns</a>
+    <a href="pressoffice.html">Press Office</a>
+  
+  
+</div>
 
   <!-- Content Section -->
   <div class="container">
     <!-- Left -->
     <div class="left-sidebar">
-      <div class="box">
-       
-        <img src="./image/image (2) - Copy.png" alt="">
-      </div>
-      <div class="box">
-       
-        <img src="./image/image (4) - Copy.png" alt="">
+      <div class="box" id="bannerContainerGlobal">
+       <p>Loading banners...</p>
       </div>
     </div>
 
@@ -1122,27 +1116,20 @@ span{
 
     <!-- Right -->
     <div class="right-sidebar">
-      <div class="section-box">
-        <h3>Projects</h3>
-      <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
-       
-      <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
-      <div class="section-box">
-        
-      <img src="./image/pexels-tomfisk-2101137.png" alt="">
-        <p>Gold Eagle Corp Latest Exploration</p>
-      </div>
+              <h3>Projects</h3>
 
-      <div class="section-box">
-        <h3>Reports</h3>
-        <img src="./image/pexels-castorlystock-5139206 1.png" alt="">
-        <p>Global Mining Report 2025</p>
+      <div class="section-box" id="projectNewsSection" >
+  
       </div>
+      <h2>Reports</h2>
+        <div class="card-list">
+          <div class="card" id="researchReportsContainer">
+
+          </div>
+        </div>
+     
+
+      
     </div>
   </div>
 <!-- Footer Section -->
@@ -1209,6 +1196,142 @@ span{
       dropdown.classList.toggle("show");
       header.classList.toggle("rotate");
     }
+     // ===== PRELOADER FUNCTIONALITY =====
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        setTimeout(() => preloader.remove(), 500); // optional: remove it from DOM
+      }
+    });
+
+    async function loadBannersGlobal() {
+      try {
+        const res = await fetch('/api/banners/latest');
+        const data = await res.json();
+        console.log('Banner API response (global):', data);
+
+        const container = document.getElementById('bannerContainerGlobal');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No banners available.</p>';
+          return;
+        }
+
+        const bannersToShow = data.slice(0, 5); // Show top 5 banners
+
+        bannersToShow.forEach((banner, index) => {
+          const imageUrl = banner.image;
+
+          const adDiv = document.createElement('div');
+          adDiv.className = 'left-ad';
+
+          if (imageUrl && imageUrl.startsWith('data:image')) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = banner.alt || `Banner ${index + 1}`;
+            img.className = 'logo-img';
+
+            adDiv.appendChild(img);
+          } else {
+            adDiv.innerHTML = '<p>Invalid image</p>';
+          }
+
+          container.appendChild(adDiv);
+        });
+      } catch (err) {
+        console.error('Failed to load banners (global):', err);
+        const container = document.getElementById('bannerContainerGlobal');
+        if (container) container.innerHTML = '<p>Error loading banners.</p>';
+      }
+    }
+
+    // ====== Fetch Project News by tag ======
+    async function fetchProjectNews() {
+      try {
+        const res = await fetch('/api/tagged-posts/tag/projects');
+        const data = await res.json();
+        const container = document.getElementById('projectNewsSection');
+        if (!container) return;
+
+        const latest = data.slice(0, 3);
+
+        latest.forEach(news => {
+          const card = document.createElement('div');
+          card.className = 'project-card';
+          card.onclick = () => window.location.href = `project-news-details.html?id=${news._id}`;
+
+          card.innerHTML = `
+                    <img src="${news.image}" alt="Project Image">
+                    <div class="content">
+                        <h4>${news.title}</h4>
+                        <p>${news.description.replace(/<[^>]+>/g, '').slice(0, 80)}...</p>
+                    </div>
+                `;
+
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Failed to load project news:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBannersGlobal();
+      fetchProjectNews();
+    });
+
+
+    // for fetching research reports 
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const tag = 'research reports';
+        const encodedTag = encodeURIComponent(tag); // 'research%20reports'
+        const res = await fetch(`/api/tagged-posts/tag/${encodedTag}`);
+        const data = await res.json();
+
+        const container = document.getElementById("researchReportsContainer");
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No research reports found.</p>';
+          return;
+        }
+
+        const topReports = data.slice(0, 2); // Show top 2
+
+        topReports.forEach(report => {
+          const card = document.createElement("div");
+          card.classList.add("research-card");
+
+          card.innerHTML = `
+                ${report.image ? `<img src="${report.image}" alt="Report Image" class="research-img" />` : ''}
+                <h4 class="research-title">
+                    <a href="research-detail.html?id=${report._id}">${report.title}</a>
+                </h4>
+                <p class="research-desc">${stripHTML(report.description).slice(0, 150)}...</p>
+            `;
+
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching research reports:", error);
+      }
+
+      // Helper function to remove HTML tags from description
+      function stripHTML(html) {
+        const div = document.createElement("div");
+        div.innerHTML = html || '';
+        return div.textContent || div.innerText || '';
+      }
+    });
+
   </script>
 
 </body>
