@@ -35,7 +35,6 @@ mongoose.connect(process.env.MONGO_URI, {
 // Routes
 const subscribeRoute = require('./routes/subscribe');
 const authRoute = require('./routes/auth');
-const flipbookRoute = require('./routes/flipbook');
 const adminRoute = require('./routes/admin');
 const bannerRoutes = require('./routes/banners');
 const companyRoutes = require('./routes/company');
@@ -44,11 +43,11 @@ const copperRoutes = require('./routes/copper');
 const uploadRoute = require('./routes/upload');
 const taggedPostRoutes = require('./routes/taggedPosts');
 const servicePostRoutes = require('./routes/servicePost');
+const magazineRoutes = require('./routes/magazine');
 
 // Mount API routes
 app.use('/api/subscribe', subscribeRoute);
 app.use('/api/auth', authRoute);
-app.use('/api/flipbooks', flipbookRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/company', companyRoutes);
@@ -57,6 +56,8 @@ app.use('/api/copper-news', copperRoutes);
 app.use('/api/upload', uploadRoute);
 app.use('/api/tagged-posts', taggedPostRoutes);
 app.use('/api/service-posts', servicePostRoutes);
+app.use('/api/magazines', magazineRoutes);
+
 
 // API Health Check
 app.get('/api/health', (req, res) => {

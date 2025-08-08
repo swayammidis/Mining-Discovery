@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Magazine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .radio-group {
+      margin-bottom: 10px;
+    }
+
+    .radio-group label {
+      display: inline-block;
+      margin-right: 15px;
+      font-weight: normal;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .magazine-list {
+      margin-top: 40px;
+    }
+
+    .magazine-item {
+      background: #fafafa;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .magazine-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .magazine-item h4 {
+      margin: 10px 0 5px;
+    }
+
+    .magazine-item p {
+      font-size: 14px;
+    }
+
+    .delete-btn {
+      background-color: red;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Post Magazine</h2>
+    <form id="magazineForm" enctype="multipart/form-data">
+      <label for="month">Month (e.g., June Edition)</label>
+      <input type="text" name="month" id="month" required>
+
+      <label for="coverImage">Cover Image</label>
+      <input type="file" name="coverImage" id="coverImage" accept="image/*" required>
+
+      <label>Choose PDF Source</label>
+      <div class="radio-group">
+        <label><input type="radio" name="pdfOption" value="upload" checked> Upload PDF</label>
+        <label><input type="radio" name="pdfOption" value="link"> Provide Link</label>
+      </div>
+
+      <div id="uploadPdfSection">
+        <label for="pdfFile">Upload Magazine PDF</label>
+        <input type="file" name="pdfFile" id="pdfFile" accept="application/pdf">
+      </div>
+
+      <div id="linkPdfSection" style="display: none;">
+        <label for="pdfLink">Magazine PDF Link</label>
+        <input type="text" name="pdfLink" id="pdfLink" placeholder="https://example.com/magazine.pdf">
+      </div>
+
+      <button type="submit">Upload Magazine</button>
+    </form>
+
+    <!-- List of magazines -->
+    <div class="magazine-list" id="magazineList">
+      <h2>Uploaded Magazines</h2>
+      <!-- Loaded dynamically -->
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('magazineForm');
+    const pdfOptionRadios = document.querySelectorAll('input[name="pdfOption"]');
+    const uploadSection = document.getElementById('uploadPdfSection');
+    const linkSection = document.getElementById('linkPdfSection');
+    const magazineList = document.getElementById('magazineList');
+
+    // Toggle PDF input
+    pdfOptionRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === 'upload') {
+          uploadSection.style.display = 'block';
+          linkSection.style.display = 'none';
+        } else {
+          uploadSection.style.display = 'none';
+          linkSection.style.display = 'block';
+        }
+      });
+    });
+
+    // Upload magazine
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('month', document.getElementById('month').value);
+      formData.append('coverImage', document.getElementById('coverImage').files[0]);
+
+      const selectedOption = document.querySelector('input[name="pdfOption"]:checked').value;
+
+      if (selectedOption === 'upload') {
+        const pdfFile = document.getElementById('pdfFile').files[0];
+        if (!pdfFile) return alert("Please upload a PDF file.");
+        formData.append('pdf', pdfFile);
+      } else {
+        const pdfLink = document.getElementById('pdfLink').value;
+        if (!pdfLink) return alert("Please provide a valid PDF link.");
+        formData.append('pdfLink', pdfLink);
+      }
+
+      try {
+        const res = await fetch('/api/magazines', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await res.json();
+        alert(result.message || "Uploaded");
+        form.reset();
+        uploadSection.style.display = 'block';
+        linkSection.style.display = 'none';
+        loadMagazines(); // Reload magazines
+      } catch (err) {
+        alert("Error uploading magazine");
+        console.error(err);
+      }
+    });
+
+    // Load magazines from backend
+    async function loadMagazines() {
+      try {
+        const res = await fetch('/api/magazines');
+        const data = await res.json();
+
+        magazineList.innerHTML = '<h2>Uploaded Magazines</h2>';
+
+        if (!data || data.length === 0) {
+          magazineList.innerHTML += '<p>No magazines uploaded yet.</p>';
+          return;
+        }
+
+        data.forEach(mag => {
+          const div = document.createElement('div');
+          div.className = 'magazine-item';
+          div.innerHTML = `
+            <img src="${mag.coverImage}" alt="Cover">
+            <h4>${mag.month}</h4>
+            <p><a href="${mag.pdf}" target="_blank">View PDF</a></p>
+            <button class="delete-btn" onclick="deleteMagazine('${mag._id}')">Delete</button>
+          `;
+          magazineList.appendChild(div);
+        });
+      } catch (err) {
+        console.error('Error loading magazines:', err);
+        magazineList.innerHTML += '<p>Error loading magazines</p>';
+      }
+    }
+
+    // Delete a magazine
+    async function deleteMagazine(id) {
+      if (!confirm("Are you sure you want to delete this magazine?")) return;
+      try {
+        const res = await fetch(`/api/magazines/${id}`, { method: 'DELETE' });
+        const result = await res.json();
+        alert(result.message || "Deleted");
+        loadMagazines(); // Refresh list
+      } catch (err) {
+        console.error('Error deleting magazine:', err);
+        alert('Error deleting magazine');
+      }
+    }
+
+    // Initial load
+    window.onload = loadMagazines;
+  </script>
+
+</body>
+</html>

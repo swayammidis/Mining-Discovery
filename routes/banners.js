@@ -17,8 +17,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Routes
+// ✅ ROUTES
+
+// Upload a banner
 router.post('/', upload.single('image'), bannerController.uploadBanner);
+
+// Get latest 3 banners
 router.get('/latest', bannerController.getLatestBanners);
+
+// ✅ Get ALL banners (new route)
+router.get('/', bannerController.getAllBanners);
 
 module.exports = router;

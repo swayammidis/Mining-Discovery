@@ -48,3 +48,19 @@ exports.getLatestBanners = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch banners' });
   }
 };
+
+// ✅ NEW: GET /api/banners — Fetch all banners
+exports.getAllBanners = async (req, res) => {
+  try {
+    const banners = await Banner.find().sort({ createdAt: -1 });
+
+    if (!banners || banners.length === 0) {
+      return res.status(200).json([]);
+    }
+
+    res.json(banners);
+  } catch (error) {
+    console.error('Error fetching all banners:', error);
+    res.status(500).json({ message: 'Failed to fetch all banners' });
+  }
+};

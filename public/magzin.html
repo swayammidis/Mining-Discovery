@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mining Discovery Magazine</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #222;
+    }
+
+    .main-header {
+      background-color: #fff;
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-social {
+
+      padding-top: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding-left: 24px;
+    }
+
+    .logo {
+      height: 70px;
+
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #000;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #8d6d2a;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .login-btn,
+    .subscribe-btn {
+      padding: 5px 15px;
+      border: none;
+      border-radius: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+    }
+
+    .login-btn {
+      background-color: #8d6d2a;
+    }
+
+    .subscribe-btn {
+      background-color: #000;
+    }
+
+
+    .search-bar-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+    }
+
+    .search-bar-bg {
+      background-color: #2e2e2e;
+      height: 24px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      width: 70%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scrolling-track {
+      display: flex;
+      width: max-content;
+      animation: scroll-loop 8s linear infinite;
+      padding-top: 3px;
+    }
+
+    .scrolling-content {
+      display: flex;
+      white-space: nowrap;
+      color: white;
+      font-size: 14px;
+    }
+
+    .up {
+      color: #22ed00;
+    }
+
+    .down {
+      color: #ff0000;
+    }
+
+    @keyframes scroll-loop {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+
+    .search-box {
+      position: relative;
+      width: 174px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 25px;
+      padding: 5px 15px;
+      padding-right: 35px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #555;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Animated text */
+    .animated-text-container {
+      position: absolute;
+      left: 15px;
+      top: 30%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #999;
+      font-size: 14px;
+      overflow: hidden;
+      height: 16px;
+    }
+
+    .animated-text-container span {
+      display: block;
+      animation: slideText 3s ease-in-out infinite;
+    }
+
+    @keyframes slideText {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+
+      10% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      40% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
+
+    /* Hide animated text when user types */
+    .search-box input:focus+.animated-text-container,
+    .search-box input:not(:placeholder-shown)+.animated-text-container {
+      display: none;
+    }
+
+
+    .social-icons {
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 32px;
+
+
+    }
+
+    .social-icons i {
+      background-color: black;
+
+
+      color: #8d6d2a;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #8d6d2a;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-links,
+      .header-buttons,
+      .search-bar-container {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+      }
+
+      .nav-links a {
+        padding: 8px 0;
+      }
+
+      .mobile-active .nav-links,
+      .mobile-active .header-buttons,
+      .mobile-active .search-bar-container {
+        display: flex;
+        gap: 20px;
+      }
+
+      .search-box {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .social-icon {
+        margin-bottom: -20px;
+      }
+
+      .search-bar-bg {
+        width: 100%;
+      }
+    }
+
+
+    /* === Header / Dropdown Toggle === */
+    .topbar {
+      background: #1f1f1f;
+      color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .topbar h1 {
+      font-size: 20px;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .topbar h1 i {
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .topbar h1.rotate i {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-links {
+      display: none;
+      background: #1f1f1f;
+      padding: 10px 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 14px;
+      border-top: 1px solid #333;
+    }
+
+    .dropdown-links a {
+      color: #ccc;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+
+    .dropdown-links a:hover,
+    .dropdown-links a.active {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 3px;
+    }
+
+    .dropdown-links.show {
+      display: flex;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* === Header / Dropdown Toggle === */
+    .topbar {
+      background: #1f1f1f;
+      color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .topbar h1 {
+      font-size: 20px;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .topbar h1 i {
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .topbar h1.rotate i {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-links {
+      display: none;
+      background: #1f1f1f;
+      padding: 10px 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 14px;
+      border-top: 1px solid #333;
+    }
+
+    .dropdown-links a {
+      color: #ccc;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+
+    .dropdown-links a:hover,
+    .dropdown-links a.active {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 3px;
+    }
+
+    .dropdown-links.show {
+      display: flex;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* === Header / Dropdown Toggle === */
+    .topbar {
+      background: #8d6d2a;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .topbar h1 {
+      font-size: 20px;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .topbar h1 i {
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .topbar h1.rotate i {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-links {
+      display: none;
+      background: #1f1f1f;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+      border-top: 1px solid #333;
+    }
+
+    .dropdown-links a {
+      color: #ccc;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
+
+    .dropdown-links a:hover,
+    .dropdown-links a.active {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 3px;
+    }
+
+    .dropdown-links.show {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    /* === Media Queries === */
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
+
+      .topbar h1 {
+        font-size: 18px;
+        gap: 6px;
+      }
+
+      .dropdown-links {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      .dropdown-links a {
+        margin: 5px 0;
+      }
+    }
+
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+    }
+
+    /* Desktops (already optimized, but just in case) */
+    @media (min-width: 769px) {
+      .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        gap: 15px;
+      }
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #111;
+      padding: 12px 20px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    /* Layout */
+    .main-container {
+      display: flex;
+      padding: 20px 30px;
+      gap: 30px;
+    }
+
+    /* Sidebar */
+    .left-sidebar {
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Main Content */
+    .magazine-section {
+      flex: 1;
+    }
+
+    .dropdown-heading {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .magazine-grid {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .magazine-info {
+      flex: 1;
+    }
+
+    .magazine-info h3 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .produced-by {
+
+      margin-bottom: 10px;
+      color: #8d6d2a;
+    }
+
+    .desc {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .features-list {
+      padding-left: 20px;
+      list-style: disc;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .features-list li {
+      color: #8d6d2a;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      font-size: 13px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .btn.dark {
+      background: #8d6d2a;
+      color: #fff;
+    }
+
+    .btn.gold {
+      background: #8d6d2a;
+
+      color: #fff;
+    }
+
+    .btn.subscribe {
+      background: #111;
+      color: white;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    /* Magazine Cover */
+.magazine-cover img {
+  width: 300px;
+  border-radius: 4px;
+}
+
+/* Editions */
+.editions-title {
+  font-size: 22px;
+  margin: 40px 0 20px;
+}
+
+/* Slider Wrapper */
+.slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.editions-slider {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+}
+
+.editions-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.editions-slider {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.edition-card {
+  flex: 0 0 calc(20% - 16px); /* 5 cards per view with gap */
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+.edition-card img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.edition-card button {
+  margin-top: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Slider arrows */
+.slider-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: #111;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.slider-btn.prev {
+  left: 0;
+}
+
+.slider-btn.next {
+  right: 0;
+}
+
+/* Responsive: 3 per row on medium devices */
+@media (max-width: 1024px) {
+  .edition-card {
+    flex: 0 0 calc(33.33% - 16px);
+  }
+}
+
+/* Responsive: 2 per row on small devices */
+@media (max-width: 768px) {
+  .edition-card {
+    flex: 0 0 calc(50% - 16px);
+  }
+}
+
+/* Mobile: 1 per row */
+@media (max-width: 480px) {
+  .edition-card {
+    flex: 0 0 100%;
+  }
+}
+
+/* Ultra small screens (360px and below) */
+@media (max-width: 360px) {
+  .logo {
+    height: 50px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .dropdown-heading {
+    font-size: 18px;
+  }
+
+  .magazine-info h3 {
+    font-size: 18px;
+  }
+
+  .desc,
+  .features-list {
+    font-size: 13px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .search-box input {
+    font-size: 12px;
+  }
+
+  .scrolling-content {
+    font-size: 12px;
+  }
+
+  .slider-btn {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .edition-card img {
+    width: 100%;
+  }
+}
+
+/* Mobile Layout Adjustments */
+@media (max-width: 480px) {
+  .main-container {
+    flex-direction: column;
+    padding: 25px;
+  }
+
+  .left-sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .magazine-cover img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .magazine-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .magazine-info h3 {
+    font-size: 20px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .editions-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .edition-card img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .edition-card button {
+    width: 100%;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Navbar -->
+
+  <div class="topbar">
+    <h1 onclick="toggleDropdown()" id="newsToggle">
+      Magzine
+      <i class="fas fa-chevron-down"></i>
+    </h1>
+  </div>
+
+  <!-- Dropdown Links -->
+  <div class="dropdown-links" id="dropdownMenu">
+    <a href="magzin.html">Magzine</a>
+    <a href="gold.html">CEO Profile</a>
+    <a href="silver.html">Newsletter </a>
+    <a href="cooper.html">Company Profile</a>
+    <a href="metal.html">Digital Edition</a>
+    <a href="corporate.html">Webinar Recording</a>
+    <a href="world.html">Monthly Newsletter</a>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Left Sidebar Ads -->
+    <aside class="left-sidebar">
+      <img src="./image/Untitled design (1).png" alt="">
+      <img src="./image/image (4) - Copy.png" alt="">
+    </aside>
+
+    <!-- Main Magazine Section -->
+    <main class="magazine-section">
+      <h2 class="dropdown-heading">Magzine 2025 ▼</h2>
+
+      <div class="magazine-grid">
+        <div class="magazine-info">
+          <h3>Monthly Magzine July Edition 2025</h3>
+          <p class="produced-by">Produced by Mining Discovery</p>
+          <p class="desc">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+          <ul class="features-list">
+            <li>Exclusive CEO Interview: Future of Sustainable Mining...</li>
+            <li>Exploration Hotspots in Latin America...</li>
+            <li>Quarterly Commodity Price Forecasts...</li>
+            <li>Top 10 Emerging Mining Startups...</li>
+            <li>Watch Inside the July 2025 Magazine...</li>
+            <li>Small Mining Companies Growth...</li>
+          </ul>
+
+          <button class="btn subscribe">Subscribe to Get the Access</button>
+        </div>
+
+        <div class="magazine-cover">
+          <img src="./image/WhatsApp Image 2025-08-04 at 17.09.17_43cfa992.png" alt="Magazine Cover" />
+        </div>
+      </div>
+
+      <!-- Editions 2025 Section -->
+      <h2 class="editions-title">Editions 2025</h2>
+
+      <div class="slider-wrapper">
+        <button class="slider-btn prev">&#10094;</button>
+        <div class="editions-slider" id="magazineContainer"></div>
+        <button class="slider-btn next">&#10095;</button>
+      </div>
+
+
+
+
+
+  </div>
+  </main>
+  </div>
+
+
+  <script>
+  async function loadMagazines() {
+    const res = await fetch('/api/magazines');
+    const magazines = await res.json();
+    const container = document.getElementById('magazineContainer');
+    container.innerHTML = '';
+
+    magazines.forEach(mag => {
+      const div = document.createElement('div');
+      div.className = 'edition-card';
+      div.innerHTML = `
+        <img src="${mag.coverImage}" />
+        <p>${mag.month}</p>
+        <a href="${mag.pdf}" target="_blank"><button>View More</button></a>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadMagazines();
+
+    const slider = document.getElementById('magazineContainer');
+
+    document.querySelector('.slider-btn.next').addEventListener('click', () => {
+      const cardWidth = slider.querySelector('.edition-card')?.offsetWidth || 250;
+      slider.scrollLeft += cardWidth * 5;
+    });
+
+    document.querySelector('.slider-btn.prev').addEventListener('click', () => {
+      const cardWidth = slider.querySelector('.edition-card')?.offsetWidth || 250;
+      slider.scrollLeft -= cardWidth * 5;
+    });
+  });
+</script>
+
+
+
+</body>
+
+</html>
