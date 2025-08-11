@@ -382,23 +382,6 @@
             display: flex;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         .container {
             display: flex;
             max-width: 1400px;
@@ -845,7 +828,7 @@
     <div class="container">
 
         <!-- Sidebar -->
-        <div class="sidebar" id="globalBannerContainer">
+        <div class="sidebar" id="bannerContainer">
             <p>Loading banners...</p>
         </div>
 
@@ -864,7 +847,8 @@
                         resource, positioning the company to capitalize on both precious metals and green-energy
                         markets.</p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://www.phenomresources.com/'">View More</button>
+
             </div>
 
             <div class="card">
@@ -876,7 +860,7 @@
                         resources. They aim to meet rising domestic uranium demand through capital-efficient,
                         environmentally friendly In Situ Recovery operations.</p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://nobleplains.com/'">View More</button>
             </div>
 
             <div class="card" style="border: 2px solid #3399ff;">
@@ -888,7 +872,7 @@
                         resources. They aim to meet rising domestic uranium demand through capital-efficient,
                         environmentally friendly In Situ Recovery operations.</p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://astra-exploration.com/'">View More</button>
             </div>
             <div class="card" style="border: 2px solid #3399ff;">
                 <img src="image/download 1.png" alt="Logo" />
@@ -899,7 +883,7 @@
                         resources. They aim to meet rising domestic uranium demand through capital-efficient,
                         environmentally friendly In Situ Recovery operations.</p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://loyalistexploration.com/'">View More</button>
             </div>
             <div class="card" style="border: 2px solid #3399ff;">
                 <img src="image/LOGO FOR Print.png" alt="Logo" />
@@ -910,7 +894,7 @@
                         networking—enabling early-stage mining ventures to reach investors and build momentum through
                         curated showcases and partnerships.</p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://miningdiscovery.com/'">View More</button>
             </div>
             <div class="card" style="border: 2px solid #3399ff;">
                 <img src="image/arizona  1.png" alt="Logo" />
@@ -922,7 +906,7 @@
                         Nickel-Copper-PGM-Gold-Silver Nisk project into potentially Canada's next polymetallic mine.
                     </p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://www.powermetallic.com/'">View More</button>
             </div>
             <div class="card" style="border: 2px solid #3399ff;">
                 <img src="image/ARRAS 1.png" alt="Logo" />
@@ -933,7 +917,7 @@
                         hub‑and‑spoke strategy centered in one of the world’s oldest silver camps. Operated by a fully
                         Mexican management team.</p>
                 </div>
-                <button>View More</button>
+               <button onclick="window.location.href='https://www.gsilver.com/'">View More</button>
             </div>
             <div class="card" style="border: 2px solid #3399ff;">
 
@@ -1086,47 +1070,64 @@
             }
         });
 
-        async function loadGlobalBanners() {
+        // ===== LOAD BANNERS =====
+        async function loadBanners() {
+            const container = document.getElementById('bannerContainer');
+            if (!container) return;
+
+            container.innerHTML = '<p>Loading banners...</p>';
+
             try {
-                const res = await fetch('/api/banners/latest');
+                const res = await fetch('/api/banners'); // fetch all banners
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
                 const data = await res.json();
-                console.log('Global banner API response:', data);
+                console.log('Banner API response:', data);
 
-                const container = document.getElementById('globalBannerContainer');
-                if (!container) return;
+                container.innerHTML = ''; // Clear previous content
 
-                container.innerHTML = '';
-
-                if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                if (!Array.isArray(data) || data.length === 0) {
                     container.innerHTML = '<p>No banners available.</p>';
                     return;
                 }
 
-                const bannersToShow = data.slice(0, 3); // Show 3 banners just like static example
-
-                bannersToShow.forEach((banner, index) => {
+                data.forEach((banner, index) => {
                     const imageUrl = banner.image;
 
-                    const img = document.createElement('img');
-                    img.alt = banner.alt || `Banner ${index + 1}`;
-                    img.className = 'left-banner-img';
+                    const adDiv = document.createElement('div');
+                    adDiv.className = 'left-ad';
 
                     if (imageUrl && imageUrl.startsWith('data:image')) {
+                        const img = document.createElement('img');
                         img.src = imageUrl;
+                        img.alt = banner.alt || `Banner ${index + 1}`;
+                        img.className = 'logo-img';
+
+                        if (banner.link) {
+                            const anchor = document.createElement('a');
+                            anchor.href = banner.link;
+                            anchor.target = '_blank';
+                            anchor.rel = 'noopener noreferrer';
+                            anchor.appendChild(img);
+                            adDiv.appendChild(anchor);
+                        } else {
+                            adDiv.appendChild(img);
+                        }
                     } else {
-                        img.alt = 'Invalid image';
-                        img.src = '';
+                        adDiv.innerHTML = '<p>Invalid image</p>';
                     }
 
-                    container.appendChild(img);
+                    container.appendChild(adDiv);
                 });
+
             } catch (err) {
-                console.error('Error loading global banners:', err);
-                const container = document.getElementById('globalBannerContainer');
-                if (container) container.innerHTML = '<p>Error loading banners.</p>';
+                console.error('Failed to load banners:', err);
+                container.innerHTML = '<p>Error loading banners.</p>';
             }
         }
-
         // ====== Fetch Project News by tag ======
         async function fetchProjectNews() {
             try {
@@ -1158,7 +1159,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadGlobalBanners();
+        loadBanners();
             fetchProjectNews();
 
         });

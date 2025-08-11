@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
     cb(null, uniqueSuffix + path.extname(file.originalname));
   }
 });
@@ -19,13 +19,13 @@ const upload = multer({ storage: storage });
 
 // ✅ ROUTES
 
-// Upload a banner
+// Upload a banner with company link
 router.post('/', upload.single('image'), bannerController.uploadBanner);
 
 // Get latest 3 banners
 router.get('/latest', bannerController.getLatestBanners);
 
-// ✅ Get ALL banners (new route)
+// Get ALL banners
 router.get('/', bannerController.getAllBanners);
 
 module.exports = router;

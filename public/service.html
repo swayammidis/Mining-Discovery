@@ -579,7 +579,7 @@
   <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
-        <a href="./index.html"><img src="./image/LOGO FOR Print.png" alt="Mining Discovery Logo" class="logo" />
+        <a href="index.html"><img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" />
         </a>
       </div>
       <button class="hamburger" onclick="toggleMenu()">
@@ -587,12 +587,12 @@
       </button>
 
       <div class="nav-links" id="navMenu">
-        <a href="./about.html">About Us</a>
-        <a href="./newss.html">News Section</a>
-        <a href="./morning.html">Morning Chatter</a>
-        <a href=".//miningpage/index.html">Magazine</a>
+        <a href="about.html">About Us</a>
+        <a href="latest-news.html">News Section</a>
+        <a href="morning-chatter.html">Morning Chatter</a>
+        <a href="magzin.html">Magazine</a>
         <a href="#">Services</a>
-        <a href="./contant.html">Contact Us</a>
+        <a href="contant.html">Contact Us</a>
       </div>
 
       <div class="header-buttons" id="headerButtons">
@@ -650,18 +650,18 @@
   </div>
   <!-- Dropdown Links -->
   <div class="dropdown-links" id="dropdownMenu">
-    <a href="./service.html">Investor Campaigns</a>
-    <a href="./multimedia.html">Multimedia & you tube</a>
-    <a href="./newsynd.html">News Syndication</a>
-    <a href="">Conference Media Coverage</a>
-    <a href="./branding.html">Digital Branding</a>
-    <a href="./Global.html">Global Outreach</a>
-    <a href="./media.html">Social Media Growth
+    <a href="service.html">Investor Campaigns</a>
+    <a href="multimedia.html">Multimedia & you tube</a>
+    <a href="newsynd.html">News Syndication</a>
+    <a href="confrence.html">Conference Media Coverage</a>
+    <a href="branding.html">Digital Branding</a>
+    <a href="Global.html">Global Outreach</a>
+    <a href="media.html">Social Media Growth
     </a>
-    <a href="./podcast.html">Podcast & Interview Features</a>
+    <a href="podcast.html">Podcast & Interview Features</a>
     <a href="">Newsletter & Email Blasts</a>
     <a href="">Paid Ad Campaigns</a>
-    <a href="./pressoffice.html">Press Office</a>
+    <a href="pressoffice.html">Press Office</a>
 
 
   </div>
@@ -669,7 +669,7 @@
   <div class="container">
     <!-- Left Column -->
     <div class="left-panel">
-      <div class="section" id="bannerContainerGlobal">
+      <div class="section" id="bannerContainer">
         <p>Loading banners...</p>
       </div>
     </div>
@@ -760,7 +760,7 @@
       header.classList.toggle("rotate");
     }
 
-    
+
     // ===== PRELOADER FUNCTIONALITY =====
     window.addEventListener('load', () => {
       const preloader = document.getElementById('preloader');
@@ -771,49 +771,64 @@
       }
     });
 
-    async function loadBannersGlobal() {
-      try {
-        const res = await fetch('/api/banners/latest');
-        const data = await res.json();
-        console.log('Banner API response (global):', data);
+    // ===== LOAD BANNERS =====
+    async function loadBanners() {
+  const container = document.getElementById('bannerContainer');
+  if (!container) return;
 
-        const container = document.getElementById('bannerContainerGlobal');
-        if (!container) return;
+  container.innerHTML = '<p>Loading banners...</p>';
 
-        container.innerHTML = '';
+  try {
+    const res = await fetch('/api/banners'); // fetch all banners
 
-        if (!res.ok || !Array.isArray(data) || data.length === 0) {
-          container.innerHTML = '<p>No banners available.</p>';
-          return;
-        }
-
-        const bannersToShow = data.slice(0, 5); // Show top 5 banners
-
-        bannersToShow.forEach((banner, index) => {
-          const imageUrl = banner.image;
-
-          const adDiv = document.createElement('div');
-          adDiv.className = 'left-ad';
-
-          if (imageUrl && imageUrl.startsWith('data:image')) {
-            const img = document.createElement('img');
-            img.src = imageUrl;
-            img.alt = banner.alt || `Banner ${index + 1}`;
-            img.className = 'logo-img';
-
-            adDiv.appendChild(img);
-          } else {
-            adDiv.innerHTML = '<p>Invalid image</p>';
-          }
-
-          container.appendChild(adDiv);
-        });
-      } catch (err) {
-        console.error('Failed to load banners (global):', err);
-        const container = document.getElementById('bannerContainerGlobal');
-        if (container) container.innerHTML = '<p>Error loading banners.</p>';
-      }
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
+
+    const data = await res.json();
+    console.log('Banner API response:', data);
+
+    container.innerHTML = ''; // Clear previous content
+
+    if (!Array.isArray(data) || data.length === 0) {
+      container.innerHTML = '<p>No banners available.</p>';
+      return;
+    }
+
+    data.forEach((banner, index) => {
+      const imageUrl = banner.image;
+
+      const adDiv = document.createElement('div');
+      adDiv.className = 'left-ad';
+
+      if (imageUrl && imageUrl.startsWith('data:image')) {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = banner.alt || `Banner ${index + 1}`;
+        img.className = 'logo-img';
+
+        if (banner.link) {
+          const anchor = document.createElement('a');
+          anchor.href = banner.link;
+          anchor.target = '_blank';
+          anchor.rel = 'noopener noreferrer';
+          anchor.appendChild(img);
+          adDiv.appendChild(anchor);
+        } else {
+          adDiv.appendChild(img);
+        }
+      } else {
+        adDiv.innerHTML = '<p>Invalid image</p>';
+      }
+
+      container.appendChild(adDiv);
+    });
+
+  } catch (err) {
+    console.error('Failed to load banners:', err);
+    container.innerHTML = '<p>Error loading banners.</p>';
+  }
+}
 
     // ====== Fetch Project News by tag ======
     async function fetchProjectNews() {
@@ -846,7 +861,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadBannersGlobal();
+        loadBanners();
       fetchProjectNews();
     });
 

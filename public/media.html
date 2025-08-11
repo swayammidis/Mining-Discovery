@@ -1047,47 +1047,64 @@
       }
     });
 
-    async function loadGlobalBanners() {
-      try {
-        const res = await fetch('/api/banners/latest');
-        const data = await res.json();
-        console.log('Global banner API response:', data);
+   // ===== LOAD BANNERS =====
+async function loadBanners() {
+  const container = document.getElementById('bannerContainer');
+  if (!container) return;
 
-        const container = document.getElementById('globalBannerContainer');
-        if (!container) return;
+  container.innerHTML = '<p>Loading banners...</p>';
 
-        container.innerHTML = '';
+  try {
+    const res = await fetch('/api/banners'); // fetch all banners
 
-        if (!res.ok || !Array.isArray(data) || data.length === 0) {
-          container.innerHTML = '<p>No banners available.</p>';
-          return;
-        }
-
-        const bannersToShow = data.slice(0, 3); // Show 3 banners just like static example
-
-        bannersToShow.forEach((banner, index) => {
-          const imageUrl = banner.image;
-
-          const img = document.createElement('img');
-          img.alt = banner.alt || `Banner ${index + 1}`;
-          img.className = 'left-banner-img';
-
-          if (imageUrl && imageUrl.startsWith('data:image')) {
-            img.src = imageUrl;
-          } else {
-            img.alt = 'Invalid image';
-            img.src = '';
-          }
-
-          container.appendChild(img);
-        });
-      } catch (err) {
-        console.error('Error loading global banners:', err);
-        const container = document.getElementById('globalBannerContainer');
-        if (container) container.innerHTML = '<p>Error loading banners.</p>';
-      }
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
 
+    const data = await res.json();
+    console.log('Banner API response:', data);
+
+    container.innerHTML = ''; // Clear previous content
+
+    if (!Array.isArray(data) || data.length === 0) {
+      container.innerHTML = '<p>No banners available.</p>';
+      return;
+    }
+
+    data.forEach((banner, index) => {
+      const imageUrl = banner.image;
+
+      const adDiv = document.createElement('div');
+      adDiv.className = 'left-ad';
+
+      if (imageUrl && imageUrl.startsWith('data:image')) {
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = banner.alt || `Banner ${index + 1}`;
+        img.className = 'logo-img';
+
+        if (banner.link) {
+          const anchor = document.createElement('a');
+          anchor.href = banner.link;
+          anchor.target = '_blank';
+          anchor.rel = 'noopener noreferrer';
+          anchor.appendChild(img);
+          adDiv.appendChild(anchor);
+        } else {
+          adDiv.appendChild(img);
+        }
+      } else {
+        adDiv.innerHTML = '<p>Invalid image</p>';
+      }
+
+      container.appendChild(adDiv);
+    });
+
+  } catch (err) {
+    console.error('Failed to load banners:', err);
+    container.innerHTML = '<p>Error loading banners.</p>';
+  }
+}
     // ====== Fetch Project News by tag ======
     async function fetchProjectNews() {
       try {

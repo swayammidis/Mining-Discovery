@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/taggedPostController');
+const taggedPostController = require('../controllers/taggedPostController');
 
-// 🔹 Create a new tagged post
-router.post('/', controller.createTaggedPost);
+// ✅ Create a new tagged post (requires author, title, description, tags)
+router.post('/', taggedPostController.createTaggedPost);
 
-// 🔹 Get all tagged posts
-router.get('/', controller.getAllTaggedPosts);
+// ✅ Get all tagged posts (latest first)
+router.get('/', taggedPostController.getAllTaggedPosts);
 
-// 🔹 Get posts by tag (e.g., /api/tagged-posts/tag/gold)
-router.get('/tag/:tag', controller.getPostsByTag);
+// ✅ Get posts by a specific tag (e.g., /api/tagged-posts/tag/gold)
+router.get('/tag/:tag', taggedPostController.getPostsByTag);
 
-// 🔹 Get a single tagged post by ID
-router.get('/:id', controller.getTaggedPostById);
+// ✅ Get a single tagged post by ID
+router.get('/:id', taggedPostController.getTaggedPostById);
 
 module.exports = router;

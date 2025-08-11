@@ -1327,47 +1327,64 @@
             }
         });
 
-        // ====== Load Banners ======
+        // ===== LOAD BANNERS =====
         async function loadBanners() {
+            const container = document.getElementById('bannerContainer');
+            if (!container) return;
+
+            container.innerHTML = '<p>Loading banners...</p>';
+
             try {
-                const res = await fetch('/api/banners/latest');
+                const res = await fetch('/api/banners'); // fetch all banners
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
                 const data = await res.json();
-                const container = document.getElementById('bannerContainer');
-                if (!container) return;
+                console.log('Banner API response:', data);
 
-                container.innerHTML = '';
+                container.innerHTML = ''; // Clear previous content
 
-                if (!res.ok || !Array.isArray(data) || data.length === 0) {
+                if (!Array.isArray(data) || data.length === 0) {
                     container.innerHTML = '<p>No banners available.</p>';
                     return;
                 }
 
-                data.forEach(banner => {
-                    const card = document.createElement('div');
-                    card.className = 'banner-card';
-
+                data.forEach((banner, index) => {
                     const imageUrl = banner.image;
+
+                    const adDiv = document.createElement('div');
+                    adDiv.className = 'left-ad';
+
                     if (imageUrl && imageUrl.startsWith('data:image')) {
                         const img = document.createElement('img');
                         img.src = imageUrl;
-                        img.alt = 'Banner';
-                        img.style = 'max-width: 100%; height: auto; margin-bottom: 10px; display: block; border-radius: 8px;';
-                        card.appendChild(img);
+                        img.alt = banner.alt || `Banner ${index + 1}`;
+                        img.className = 'logo-img';
+
+                        if (banner.link) {
+                            const anchor = document.createElement('a');
+                            anchor.href = banner.link;
+                            anchor.target = '_blank';
+                            anchor.rel = 'noopener noreferrer';
+                            anchor.appendChild(img);
+                            adDiv.appendChild(anchor);
+                        } else {
+                            adDiv.appendChild(img);
+                        }
                     } else {
-                        card.innerHTML = '<p>Invalid image</p>';
+                        adDiv.innerHTML = '<p>Invalid image</p>';
                     }
 
-                    container.appendChild(card);
+                    container.appendChild(adDiv);
                 });
+
             } catch (err) {
                 console.error('Failed to load banners:', err);
-                const container = document.getElementById('bannerContainer');
-                if (container) {
-                    container.innerHTML = '<p>Error loading banners.</p>';
-                }
+                container.innerHTML = '<p>Error loading banners.</p>';
             }
         }
-
         // ====== Fetch Project News via Tagged Posts ======
         async function fetchProjectNews() {
             try {

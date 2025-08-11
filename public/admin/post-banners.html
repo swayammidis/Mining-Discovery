@@ -50,6 +50,9 @@
     <label>Select Banner Image</label>
     <input type="file" name="image" accept="image/*" required />
 
+    <label>Company Website Link</label>
+    <input type="url" name="link" placeholder="https://example.com" required />
+
     <button type="submit">Upload Banner</button>
   </form>
 
@@ -59,7 +62,7 @@
 
       const form = e.target;
       const submitBtn = form.querySelector("button[type='submit']");
-      const formData = new FormData(form); // auto-includes file with name="image"
+      const formData = new FormData(form); // includes both image and link
 
       try {
         submitBtn.disabled = true;

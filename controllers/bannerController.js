@@ -2,26 +2,32 @@ const Banner = require('../models/Banner');
 const fs = require('fs');
 const path = require('path');
 
-// POST /api/banners — Store image as base64 in MongoDB
+// POST /api/banners — Store image + link in MongoDB
 exports.uploadBanner = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No image file provided' });
     }
 
+    const { link } = req.body;
+
+    if (!link || !/^https?:\/\/.+/i.test(link)) {
+      return res.status(400).json({ message: 'A valid company link is required' });
+    }
+
     const imagePath = path.join(__dirname, '../uploads', req.file.filename);
 
-    // Read the image file as a buffer
+    // Read image as buffer
     const imageBuffer = fs.readFileSync(imagePath);
 
-    // Create a valid base64 string with MIME type prefix
+    // Convert to base64 string
     const base64Image = `data:${req.file.mimetype};base64,${imageBuffer.toString('base64')}`;
 
-    // Save to MongoDB
-    const newBanner = new Banner({ image: base64Image });
+    // Save banner with image + link
+    const newBanner = new Banner({ image: base64Image, link });
     await newBanner.save();
 
-    // Clean up: delete file from /uploads
+    // Delete temp file
     fs.unlink(imagePath, err => {
       if (err) console.error('Failed to delete file:', err);
     });
@@ -38,7 +44,7 @@ exports.getLatestBanners = async (req, res) => {
   try {
     const banners = await Banner.find().sort({ createdAt: -1 }).limit(3);
 
-    if (!banners || banners.length === 0) {
+    if (!banners.length) {
       return res.status(200).json([]);
     }
 
@@ -49,12 +55,12 @@ exports.getLatestBanners = async (req, res) => {
   }
 };
 
-// ✅ NEW: GET /api/banners — Fetch all banners
+// GET /api/banners — Fetch all banners
 exports.getAllBanners = async (req, res) => {
   try {
     const banners = await Banner.find().sort({ createdAt: -1 });
 
-    if (!banners || banners.length === 0) {
+    if (!banners.length) {
       return res.status(200).json([]);
     }
 

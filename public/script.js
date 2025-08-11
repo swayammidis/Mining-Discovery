@@ -184,7 +184,17 @@ async function loadBanners() {
         img.src = imageUrl;
         img.alt = banner.alt || `Banner ${index + 1}`;
         img.className = 'logo-img';
-        adDiv.appendChild(img);
+
+        if (banner.link) {
+          const anchor = document.createElement('a');
+          anchor.href = banner.link;
+          anchor.target = '_blank';
+          anchor.rel = 'noopener noreferrer';
+          anchor.appendChild(img);
+          adDiv.appendChild(anchor);
+        } else {
+          adDiv.appendChild(img);
+        }
       } else {
         adDiv.innerHTML = '<p>Invalid image</p>';
       }
@@ -239,7 +249,6 @@ async function loadLatestNewsSidebar() {
     const res = await fetch('/api/tagged-posts/tag/' + encodeURIComponent('latest news'));
     const data = await res.json();
 
-    // ✅ Use correct ID
     const container = document.getElementById('latest-news-list');
     if (!container) return;
 
@@ -266,13 +275,13 @@ async function loadLatestNewsSidebar() {
       const title = document.createElement('p');
       title.appendChild(titleLink);
 
-      const date = new Date(news.date).toLocaleDateString('en-GB', {
+      const date = new Date(news.createdAt).toLocaleDateString('en-GB', {
         day: '2-digit', month: 'long', year: 'numeric'
       });
 
       const meta = document.createElement('p');
       meta.className = 'date';
-      meta.innerHTML = `${date} <span class="author">By: ${news.by || 'Anonymous'}</span>`;
+      meta.innerHTML = `${date} <span class="author">By: ${news.author || 'Anonymous'}</span>`;
 
       latestItem.appendChild(title);
       latestItem.appendChild(meta);
@@ -280,7 +289,7 @@ async function loadLatestNewsSidebar() {
     });
   } catch (error) {
     console.error('Error loading latest news for sidebar:', error);
-    const container = document.getElementById('latest-news-list'); // match this too
+    const container = document.getElementById('latest-news-list');
     if (container) {
       container.innerHTML = '<p>Error loading latest news.</p>';
     }

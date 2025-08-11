@@ -1087,47 +1087,64 @@
       }
     });
 
-    async function loadGlobalBanners() {
+    // ===== LOAD BANNERS =====
+    async function loadBanners() {
+      const container = document.getElementById('bannerContainer');
+      if (!container) return;
+
+      container.innerHTML = '<p>Loading banners...</p>';
+
       try {
-        const res = await fetch('/api/banners/latest');
+        const res = await fetch('/api/banners'); // fetch all banners
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
         const data = await res.json();
-        console.log('Global Banner API Response:', data);
+        console.log('Banner API response:', data);
 
-        const container = document.getElementById('globalBannerContainer');
-        if (!container) return;
+        container.innerHTML = ''; // Clear previous content
 
-        container.innerHTML = '';
-
-        if (!res.ok || !Array.isArray(data) || data.length === 0) {
+        if (!Array.isArray(data) || data.length === 0) {
           container.innerHTML = '<p>No banners available.</p>';
           return;
         }
 
-        // Limit to 3 banners just like the original
-        const bannersToShow = data.slice(0, 3);
-
-        bannersToShow.forEach((banner, index) => {
+        data.forEach((banner, index) => {
           const imageUrl = banner.image;
 
-          const img = document.createElement('img');
-          img.alt = banner.alt || `Banner ${index + 1}`;
-          img.className = 'left-banner-img';
+          const adDiv = document.createElement('div');
+          adDiv.className = 'left-ad';
 
           if (imageUrl && imageUrl.startsWith('data:image')) {
+            const img = document.createElement('img');
             img.src = imageUrl;
+            img.alt = banner.alt || `Banner ${index + 1}`;
+            img.className = 'logo-img';
+
+            if (banner.link) {
+              const anchor = document.createElement('a');
+              anchor.href = banner.link;
+              anchor.target = '_blank';
+              anchor.rel = 'noopener noreferrer';
+              anchor.appendChild(img);
+              adDiv.appendChild(anchor);
+            } else {
+              adDiv.appendChild(img);
+            }
           } else {
-            img.alt = 'Invalid image';
+            adDiv.innerHTML = '<p>Invalid image</p>';
           }
 
-          container.appendChild(img);
+          container.appendChild(adDiv);
         });
+
       } catch (err) {
-        console.error('Failed to load global banners:', err);
-        const container = document.getElementById('globalBannerContainer');
-        if (container) container.innerHTML = '<p>Error loading banners.</p>';
+        console.error('Failed to load banners:', err);
+        container.innerHTML = '<p>Error loading banners.</p>';
       }
     }
-
     // ====== Fetch Project News by tag ======
     async function fetchProjectNews() {
       try {

@@ -3,21 +3,22 @@ const TaggedPost = require('../models/TaggedPost');
 // ✅ Create a new tagged post
 exports.createTaggedPost = async (req, res) => {
   try {
-    const { title, image, description, tags } = req.body;
+    const { author, title, image, description, tags } = req.body;
 
     // Basic validation
-    if (!title || !description || !tags || !Array.isArray(tags) || tags.length === 0) {
-      return res.status(400).json({ message: 'Title, description, and at least one tag are required.' });
+    if (!author || !title || !description || !tags || !Array.isArray(tags) || tags.length === 0) {
+      return res.status(400).json({ message: 'Author, title, description, and at least one tag are required.' });
     }
 
     // Normalize tags to lowercase and trim
     const normalizedTags = tags.map(tag => tag.toLowerCase().trim());
 
     const newPost = new TaggedPost({
+      author: author.trim(),
       title: title.trim(),
       image: image?.trim() || '',
       description: description.trim(),
-      tags: normalizedTags,
+      tags: normalizedTags
     });
 
     await newPost.save();
@@ -82,5 +83,27 @@ exports.getTaggedPostById = async (req, res) => {
   } catch (err) {
     console.error(`Error fetching tagged post by ID "${req.params.id}":`, err);
     res.status(500).json({ message: 'Server error while fetching tagged post by ID', error: err.message });
+  }
+};
+
+// ✅ Delete a tagged post by ID
+exports.deleteTaggedPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: 'Post ID is required.' });
+    }
+
+    const deletedPost = await TaggedPost.findByIdAndDelete(id);
+
+    if (!deletedPost) {
+      return res.status(404).json({ message: 'Tagged post not found' });
+    }
+
+    res.status(200).json({ message: 'Tagged post deleted successfully' });
+  } catch (err) {
+    console.error(`Error deleting tagged post by ID "${req.params.id}":`, err);
+    res.status(500).json({ message: 'Server error while deleting tagged post', error: err.message });
   }
 };
