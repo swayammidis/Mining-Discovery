@@ -4,39 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Global</title>
+  <title>News Section</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: white;
-      /* or your site background */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
-
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #ccc;
-      border-top: 5px solid #222;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
     * {
       margin: 0;
       padding: 0;
@@ -44,9 +14,23 @@
     }
 
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff;
-      color: #222;
+      font-family: 'Pontano Sans', sans-serif;
+      background: white;
+    }
+
+    .first-header {
+      padding: 20px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background-color: #2E2E2E;
+      font-size: 16px;
+    }
+
+    .first-header:hover {
+      text-decoration: underline;
     }
 
     .main-header {
@@ -63,25 +47,19 @@
     }
 
     .logo-social {
-
-      padding-top: 5px;
       display: flex;
-      justify-content: center;
       align-items: center;
       gap: 20px;
-      padding-left: 24px;
     }
 
     .logo {
       height: 70px;
-
     }
 
     .nav-links {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
-
     }
 
     .nav-links a {
@@ -125,7 +103,7 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-
+      padding-top: 14px;
     }
 
     .search-bar-bg {
@@ -142,7 +120,6 @@
       display: flex;
       width: max-content;
       animation: scroll-loop 8s linear infinite;
-      padding-top: 3px;
     }
 
     .scrolling-content {
@@ -173,12 +150,12 @@
 
     .search-box {
       position: relative;
-      width: 174px;
+      width: 220px;
     }
 
     .search-box input {
       width: 100%;
-      height: 25px;
+      height: 35px;
       padding: 5px 15px;
       padding-right: 35px;
       border: 1px solid #ccc;
@@ -203,7 +180,7 @@
     .animated-text-container {
       position: absolute;
       left: 15px;
-      top: 30%;
+      top: 50%;
       transform: translateY(-50%);
       pointer-events: none;
       color: #999;
@@ -252,19 +229,13 @@
 
 
     .social-icons {
-
       display: flex;
       align-items: center;
       gap: 10px;
-      padding-left: 32px;
-
 
     }
 
     .social-icons i {
-      background-color: black;
-
-
       color: #8d6d2a;
       font-size: 18px;
       cursor: pointer;
@@ -324,16 +295,16 @@
       }
     }
 
-
     /* === Header / Dropdown Toggle === */
     .topbar {
       background: #1f1f1f;
       color: #fff;
-      padding: 15px 30px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: relative;
+      flex-wrap: wrap;
     }
 
     .topbar h1 {
@@ -357,9 +328,9 @@
     .dropdown-links {
       display: none;
       background: #1f1f1f;
-      padding: 10px 30px;
+      padding: 10px 20px;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 10px;
       font-size: 14px;
       border-top: 1px solid #333;
     }
@@ -380,211 +351,550 @@
 
     .dropdown-links.show {
       display: flex;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .container {
-      display: flex;
-      gap: 20px;
-      padding: 30px;
-
-    }
-
-    .subtext {
-      color: #c2922b;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-
-    .left-panel,
-    .middle-panel,
-    .right-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .left-panel,
-    .right-panel {
-      width: 22%;
-    }
-
-    .middle-panel {
-      width: 53%;
-    }
-
-    .left-panel img,
-    .right-panel img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    .middle-panel h1 {
-      font-size: 24px;
-      color: #000;
-      margin-bottom: 10px;
-    }
-
-    .top-cards {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 30px;
       flex-wrap: wrap;
     }
 
-    .card {
-      padding: 20px;
-      width: 48%;
-      background: #f9f9f9;
-      border-radius: 10px;
-      overflow: hidden;
-      text-align: center;
-      font-size: 12px;
-      padding-bottom: 10px;
+    /* === Media Queries === */
+
+    /* Small phones */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
+
+      .topbar h1 {
+        font-size: 18px;
+        gap: 6px;
+      }
+
+      .dropdown-links {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 8px;
+        font-size: 13px;
+      }
+
+      .dropdown-links a {
+        margin: 5px 0;
+      }
     }
 
-    .card img {
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+    }
+
+    /* Desktops (already optimized, but just in case) */
+    @media (min-width: 769px) {
+      .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .dropdown-links {
+        flex-direction: row;
+        gap: 15px;
+      }
+    }
+
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      justify-items: center;
+    }
+
+    .offer-card {
+      padding: 20px 25px;
+      border-radius: 10px;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      line-height: 1.4;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    /* Specific color cards */
+    .google {
+      background: #caa34d;
+      color: #000;
+    }
+
+    .ppc {
+      background: #1d1d1d;
+    }
+
+    .social {
+      background: #caa34d;
+      border: 2px solid #0077cc;
+      color: #000;
+    }
+
+    .native {
+      background: #1d1d1d;
+    }
+
+    .retargeting {
+      background: #1d1d1d;
+    }
+
+    /* Row 2 cards full-width across 2 columns */
+    .bottom-row {
+      grid-column: 1 / span 3;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .offer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bottom-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+      display: inline-block;
+      padding-bottom: 5px;
+      margin-bottom: 30px;
+    }
+
+    .how-it-works {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      padding: 0 15px;
+      /* position: relative; */
+    }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      top: 40px;
+      right: -20px;
+      width: 40px;
+      height: 2px;
+      background: #ccc;
+    }
+
+    .step:last-child::after {
+      display: none;
+    }
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      border: 2px solid #000;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 15px;
+      font-size: 28px;
+    }
+
+    .step h4 {
+      font-size: 16px;
+      margin: 10px 0 8px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: #b88c36;
+      /* golden brown */
+    }
+
+    @media (max-width: 768px) {
+      .how-it-works {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .step::after {
+        display: none;
+      }
+
+      .step {
+        margin-bottom: 40px;
+      }
+    }
+
+    /* === Main Layout === */
+    /* Base Styles - Desktop (default) */
+    .container {
+      display: flex;
+      padding: 30px;
+      gap: 20px;
+    }
+
+    .left-sidebar {
+      width: 20%;
+    }
+
+    .left-sidebar .box {
+      background: white;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .left-sidebar .box img {
       width: 100%;
       height: auto;
     }
 
-    .section-title {
-      text-align: center;
-      font-weight: bold;
-      color: #c2922b;
+    .main-content {
+      width: 60%;
+    }
+
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+    }
+
+    span {
+      color: #8d6d2a;
+    }
+
+    /* Main Content */
+    .main-content {
+      width: 55%;
+    }
+
+    .main-content h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
       font-size: 16px;
-      margin: 30px 0 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
 
-    .hello {
-      font-size: 10px;
-      color: black;
-      font-weight: normal;
+    .campaign-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
     }
 
-    .solution-grid {
+    .btn {
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .gold {
+      background: #e4c48f;
+      border: 1px solid #cba658;
+    }
+
+    .dark {
+      background: #222;
+      color: #fff;
+      border: 1px solid #000;
+    }
+
+    /* How it Works */
+    .how-section {
+      margin-bottom: 30px;
+    }
+
+    .how-section h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .steps {
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
     }
 
-    .solution-grid div {
+    .step {
+      background: #f4f4f4;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 6px;
       text-align: center;
       flex: 1;
-      min-width: 100px;
+      font-weight: bold;
     }
 
-    .solution-grid i {
-      color: #c2922b;
+    .step.active {
+      background: #d3eaff;
+      border: 2px solid #0073e6;
+    }
+
+    /* Clients Section */
+    .clients h2 {
       font-size: 20px;
-      margin-bottom: 5px;
+      margin: 20px 0 10px;
     }
 
-    .philosophy {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 15px;
+    .clients ul {
+      padding-left: 20px;
+      margin-bottom: 20px;
     }
 
-    .philosophy div {
+    .clients li {
+      margin-bottom: 10px;
+    }
+
+    .testimonial {
+      background: #fff7e2;
+      padding: 15px;
+      border-left: 5px solid #e2b653;
+      margin-top: 20px;
+      border-radius: 6px;
+    }
+
+
+
+    .right-sidebar {
+      width: 20%;
+    }
+
+    .section-box {
+      background: white;
+      margin-bottom: 20px;
       padding: 10px;
+    }
+
+    .section-box img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .gold-news {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 30px;
+    }
+
+    .gold-card {
+      flex: 1;
+      min-width: 150px;
+      border-radius: 10px;
+      background: #AC8A4A4F;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .gold-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .gold-card p {
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    .container3 {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    li span {
+      color: #f5a623;
+      font-weight: 500;
+    }
+
+    hr {
+      margin: 40px 0;
+      border: none;
+      border-top: 1px solid #ccc;
+    }
+
+    .case-snapshots {
+      text-align: center;
+    }
+
+    .case-snapshots h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .case-snapshots p {
+      font-size: 15px;
+      color: #444;
+    }
+
+    .case-snapshots a {
+      display: inline-block;
+      margin-top: 15px;
+      color: #f5a623;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .cta-boxs {
+      background: #eee;
+      padding: 25px;
       text-align: center;
       border-radius: 6px;
-      font-size: 14px;
+      margin-top: 40px;
     }
 
-    .color {
-      background-color: #AC8A4A;
+    .cta-boxs h4 {
+      font-size: 17px;
+      margin-bottom: 10px;
     }
 
-    .black {
-      background-color: black;
-      color: white;
+    .cta-boxs p {
+      font-size: 15px;
+      margin-bottom: 20px;
     }
 
-    .chnage {
-      color: #c2922b;
+    .cta-boxs button {
+      background: #1c1c1c;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    span {
-      color: #c2922b;
+    .cta-boxs button:hover {
+      background: #333;
     }
 
-    /* ---------------- RESPONSIVE STYLES ---------------- */
 
-    /* Tablet (max-width: 991px) */
-    @media (max-width: 991px) {
+    /* === Responsive: Tablet === */
+    @media (max-width: 992px) {
       .container {
         flex-direction: column;
-        padding: 20px;
       }
 
-      .left-panel,
-      .right-panel,
-      .middle-panel {
+      .left-sidebar,
+      .right-sidebar,
+      .main-content {
         width: 100%;
       }
 
-      .card {
-        width: 100%;
-      }
-
-      .philosophy {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Mobile (max-width: 576px) */
-    @media (max-width: 576px) {
-      .middle-panel h1 {
-        font-size: 20px;
-      }
-
-      .subtext {
-        font-size: 12px;
-      }
-
-      .section-title {
-        font-size: 14px;
-      }
-
-      .card {
-        font-size: 11px;
-      }
-
-      .solution-grid {
+      .news-card {
         flex-direction: column;
       }
 
-      .solution-grid div {
+      .news-card img {
         width: 100%;
+        height: auto;
+      }
+
+      .gold-news {
+        flex-direction: column;
+      }
+
+      .gold-card {
+        width: 100%;
+      }
+    }
+
+    /* === Responsive: Phone === */
+    @media (max-width: 576px) {
+      .container {
+        padding: 15px;
+        gap: 15px;
+      }
+
+      .news-card {
+        gap: 10px;
+      }
+
+      .text-content {
+        padding: 10px;
+      }
+
+      .gold-card img {
+        height: auto;
+      }
+
+      .btn-more,
+      .gold-btn {
+        font-size: 14px;
+        padding: 4px 10px;
+      }
+
+      .gold-news {
+        gap: 15px;
       }
     }
 
     .footer-container {
       background-image: url(./image/footer-bg\ 1.png);
-      background-size: cover;
-      background-position: center;
-      padding: 60px 40px 30px;
+      padding: 50px 30px 20px;
       color: #fff;
       position: relative;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .divider {
@@ -593,21 +903,21 @@
       height: 60%;
       position: absolute;
       left: 50%;
-      top: 10%;
+      top: 5%;
     }
+
 
     .footer-content {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       flex-wrap: wrap;
       max-width: 1300px;
       margin: auto;
-      gap: 30px;
     }
 
     .footer-left {
       flex: 1;
-      min-width: 280px;
+      max-width: 50%;
       padding-right: 40px;
     }
 
@@ -615,12 +925,49 @@
       height: 60px;
     }
 
-    .footer-left p {
+    .social-iconss {
+      padding-top: 10px;
+      color: #8d6d2a;
+      font-size: 18px;
+      cursor: pointer;
+      padding-bottom: 10px;
+    }
+
+    .search-boxs {
+      position: relative;
+      width: 170px;
+
+
+    }
+
+
+    .search-boxs input {
+      width: 100%;
+      height: 25px;
+      padding: 5px 15px;
+      padding-right: 35px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #555;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    */ .footer-left p {
       font-size: 15px;
       margin-top: 15px;
-      line-height: 2.0;
+      line-height: 1.6;
       max-width: 500px;
-      color: #ddd;
     }
 
     .footer-left .socials {
@@ -629,19 +976,15 @@
 
     .footer-left .socials i {
       margin-right: 15px;
-      font-size: 20px;
+      font-size: 18px;
       color: #ccc;
       cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .footer-left .socials i:hover {
-      color: orange;
     }
 
     .footer-center {
+
       min-width: 220px;
-      padding-left: 20px;
+      padding-left: 30px;
     }
 
     .footer-center ul {
@@ -651,73 +994,40 @@
 
     .footer-center li {
       margin-bottom: 12px;
-      font-size: 15px;
-      color: #ccc;
+      font-size: 14px;
       cursor: pointer;
-      transition: color 0.3s;
     }
 
     .footer-center li:first-child {
       font-weight: bold;
       color: orange;
-      font-size: 16px;
-      margin-bottom: 18px;
-    }
-
-    .footer-center li:hover {
-      color: orange;
     }
 
     .footer-right {
-      flex: 1;
-      min-width: 280px;
-      padding-left: 20px;
-      display: flex;
+      flex: 1.3;
+      min-width: 300px;
+
       flex-wrap: wrap;
-      gap: 15px;
-      align-items: center;
+
+      padding-left: 30px;
+    }
+
+    .logo2 {
+      padding-left: 50px;
+    }
+
+    .logo5 {
+      padding-left: 24%;
     }
 
     .footer-right img {
+      margin: 5px;
       height: 60px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
       width: 100px;
       object-fit: contain;
-      padding: 10px;
-      background: #fff;
-      border-radius: 10px;
-      transition: transform 0.3s;
-    }
-
-    .footer-right img:hover {
-      transform: scale(1.05);
-    }
-
-    .search-boxs {
-      position: relative;
-      width: 180px;
-      margin-top: 20px;
-    }
-
-    .search-boxs input {
-      width: 100%;
-      height: 25px;
-      padding: 5px 15px;
-      padding-right: 35px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      outline: none;
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 10px;
-      top: 39%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #555;
-      font-size: 16px;
-      cursor: pointer;
     }
 
     .footer-bottom {
@@ -776,6 +1086,9 @@
     }
 
     @media (max-width: 480px) {
+      .left-sidebar {
+        display: none;
+      }
 
       .footer-left img,
       .footer-right img {
@@ -805,15 +1118,13 @@
 </head>
 
 <body>
-  <div id="preloader">
-    <div class="spinner"></div>
-  </div>
-
   <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
-        <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" />
+        <a href="index.html"> <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
+
       </div>
+
       <button class="hamburger" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
       </button>
@@ -823,26 +1134,23 @@
         <a href="latest-news.html">News Section</a>
         <a href="morning-chatter.html">Morning Chatter</a>
         <a href="magzin.html">Magazine</a>
-        <a href="#">Services</a>
+        <a href="services">Services</a>
         <a href="contant.html">Contact Us</a>
       </div>
 
       <div class="header-buttons" id="headerButtons">
-        <a href="./sub-btn.html"><button class="login-btn">Login</button></a>
+        <button class="login-btn">Login</button>
         <button class="subscribe-btn">Subscribe</button>
       </div>
     </div>
 
     <div class="search-bar-container" id="searchContainer">
       <div class="social-icons">
-        <img src="image/Group.png">
-        <img src="image/Group (4).png">
-        <img src="image/Group (1).png">
-        <img src="image/Group (2).png">
-        <img src="image/Group (3).png">
-
-
-
+        <i class="fab fa-linkedin"></i>
+        <i class="fab fa-x-twitter"></i>
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-youtube"></i>
       </div>
       <div class="search-bar-bg">
         <div class="scrolling-track">
@@ -873,17 +1181,16 @@
     </div>
   </header>
 
-
-
- <!-- Header + Dropdown -->
+  <!-- Header + Dropdown -->
   <div class="topbar">
     <h1 onclick="toggleDropdown()" id="newsToggle">
       Services
       <i class="fas fa-chevron-down"></i>
     </h1>
   </div>
-<!-- Dropdown Links -->
-   <div class="dropdown-links" id="dropdownMenu">
+
+  <!-- Dropdown Links -->
+  <div class="dropdown-links" id="dropdownMenu">
     <a href="service.html">Investor Campaigns</a>
     <a href="multimedia.html">Multimedia & you tube</a>
     <a href="newsynd.html">News Syndication</a>
@@ -892,84 +1199,148 @@
     <a href="Global.html">Global Outreach</a>
     <a href="media.html">Social Media Growth </a>
     <a href="podcast.html">Podcast & Interview Features</a>
-    <a href="letter.html">Newsletter & Email Blasts</a>
+    <a href="lett">Newsletter & Email Blasts</a>
     <a href="paid.html">Paid Ad Campaigns</a>
     <a href="pressoffice.html">Press Office</a>
-  
+  </div>
 
-</div>
-
+  <!-- Content Section -->
   <div class="container">
-
-    <!-- Left Panel -->
-    <div class="left-panel">
-      <!-- Dynamic Banners will be loaded here -->
-      <div class="section" id="bannerContainer">
-        <p>Loading banners...</p>
+    <!-- Left -->
+    <div class="left-sidebar">
+      <div class="box">
+        <div class="section" id="bannerContainer">
+          <p>Loading banners...</p>
+        </div>
       </div>
     </div>
 
+    <!-- Main -->
+    <main class="main-content">
+      <h1>Paid Ad Campaigns</h1>
+      <p class="highlight">Elevate your visibility in the mining sector with targeted paid advertising. <br>
+        We deliver high-impact ad campaigns across search, display, and social channels—meticulously tailored to your
+        business and audience.
+      </p>
 
-    <!-- Middle Panel -->
-    <div class="middle-panel">
-      <h1>Global Outreach</h1>
-      <p class="subtext">We offer a platform of integrated application services and solutions that...</p>
+      <div class="campaign-boxes">
 
-      <div class="top-cards">
-        <div class="card">
-          <p>At Mining Discovery, we’re all about creating meaningful connections across the mining world. Through our
-            Global Outreach initiative, we bring together exploration companies, tech innovators, policymakers, and
-            industry groups to promote smarter, more sustainable discovery practices.</p>
 
-          <p>We’re building regional and digital networks that support early-stage projects, making it easier for them
-            to gain global visibility and investor attention. </p>
+        <div class="offer-grid">
+          <div class="offer-card google">
+            <div class="card-title">Google Ads (Search & Display)</div>
+            <div>Keyword-targeted campaigns and banners.</div>
+          </div>
 
-          <p>Our “100 Game-Changers in Mining” spotlight series highlights the pioneers and bold ideas shaping the
-            future of mineral exploration. Plus, with our curated events calendar and #DiscoveryVoices speaker platform,
-            we help ensure the brightest minds in the industry are heard on the biggest stages.</p>
+          <div class="offer-card ppc">
+            <div class="card-title">PPC Campaigns</div>
+            <div>Precision-targeting with robust ROI tracking.</div>
+          </div>
 
-          <p>Whether you’re looking for the next big discovery or a way to connect with forward-thinking partners,
-            Mining Discovery is where it all comes together.</p>
+          <div class="offer-card social">
+            <div class="card-title">Social Media Ads</div>
+            <div>LinkedIn, Facebook, Twitter/X - build thought leadership and demand.</div>
+          </div>
 
+          <div class="bottom-row">
+            <div class="offer-card native">
+              <div class="card-title">Native Advertising</div>
+              <div>Editorial-style ads integrated into content, maintaining brand alignment.</div>
+            </div>
+
+            <div class="offer-card retargeting">
+              <div class="card-title">Retargeting Ads</div>
+              <div>Recapture audience interest by staying top-of-mind as they browse online.</div>
+            </div>
+          </div>
         </div>
-
-        <div class="card">
-          <img src="image/pexels-olly-3754686 1.png">
-
-        </div>
-      </div>
-
-      <div class="section-title">
-
-
-      </div>
-      <div class="solution-grid">
-        <div class="image-size">
-          <img src="image/ChatGPT Image Jul 31, 2025, 11_03_48 AM 1.png"></i>
-        </div>
-        <div><img src="image/ChatGPT Image Jul 31, 2025, 11_03_48 AM 2.png">
-
-        </div>
-        <div><img src="image/ChatGPT Image Jul 31, 2025, 11_03_48 AM 3.png">
-        </div>
-
 
       </div>
 
+      <!-- How it Works Section -->
+
+      <!-- Services / Clients -->
+      <div class="section-title">How It Works</div>
+
+      <div class="how-it-works">
+        <div class="step">
+          <div class="icon"><i class="fas fa-user-tie"></i></div>
+          <h4>Consultation & Strategy</h4>
+          <p>Define targeting, platforms, and budget.</p>
+        </div>
+        <div class="step">
+          <div class="icon"><i class="fas fa-th-large"></i></div>
+          <h4>Creative Development</h4>
+          <p>Develop ad copy, visuals, and messaging.</p>
+        </div>
+        <div class="step">
+          <div class="icon"><i class="fas fa-arrow-up-right-from-square"></i></div>
+          <h4>Launch & Optimize</h4>
+          <p>Deploy ads and continuously refine targeting and creative.</p>
+        </div>
+        <div class="step">
+          <div class="icon"><i class="fas fa-chart-bar"></i></div>
+          <h4>Performance Reporting</h4>
+          <p>Provide dashboards measuring CTR, conversions, and ROI.</p>
+        </div>
+      </div>
+      <div class="container3">
+        <h2>Why It Works for Mining Clients</h2>
+        <ul>
+          <li><span>• Flexible budgets</span> - From pilot tests to large-scale campaigns.</li>
+          <li><span>• Editorial-safe placements</span> - Native ads that match reader experience for higher trust.</li>
+          <li><span>• Geo & account-based targeting</span> - Promote by region, mine-site, or company list.</li>
+          <li><span>• Industry-targeted reach</span> - Reach mining execs, procurement teams, and project engineers.
+          </li>
+          <li><span>• Measured ROI</span> - Monthly dashboards, UTMs, and conversion funnels.</li>
+          <li><span>• Creative & landing support</span> - We can build landing pages and ad banners on request.</li>
+        </ul>
+
+        <hr />
+
+        <div class="case-snapshots">
+          <h3>Case Snapshot – Exploration Campaign</h3>
+          <p>
+            Our targeted campaign for an exploration firm drove a 3.8x ROAS and a 42% increase in qualified<br>
+            leads over 60 days, using a mix of LinkedIn sponsored content and search ads.
+          </p>
+          <a href="#">Want similar results?</a>
+        </div>
+
+        <div class="cta-boxs">
+          <h4>Ready to amplify your message?</h4>
+          <p>Book a strategy call or request a tailored proposal for your mining campaign.</p>
+          <button>Plan Your Campaign</button>
+        </div>
+      </div>
 
 
+    </main>
 
+    <!-- Right -->
+    <div class="right-sidebar">
+
+      <div class="section-box">
+        <div class="heading">
+          <h3>Projects</h3>
+          <button type="button" class="gold-btn">show more</button>
+        </div>
+      </div>
+      <div class="section-box">
+          <div class="card" id="projectNewsSection">
+          </div>
+      </div>
+
+      <div class="section-box">
+        <div class="report">
+          <h3>Reports</h3>
+          <div class="card" id="researchReportsContainer">
+</div>
+          <button type="button" class="gold-btn">show more</button>
+        </div>
+        
+      </div>
     </div>
-
-    <!-- Right Panel -->
-    <div class="right-panel">
-      <div class="section-title" id="projectNewsSection">Projects</div>
-
-      <h2>Reports</h2>
-      <div class="section-title" id="researchReportsContainer"></div>
-
-    </div>
-
   </div>
   <!-- Footer Section -->
   <div class="footer-container">
@@ -979,7 +1350,7 @@
 
       <!-- Left -->
       <div class="footer-left">
-        <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" height="60px" />
+        <img src="./discoverylogo.jpg" alt="Mining Discovery Logo" height="60px" />
         <p>
           Mining Discovery provides daily mining news, a weekly mining newsletter,<br> a monthly mining magazine and an
           interactive mining website for mining<br> companies, mining associations and mining executives globally.
@@ -1026,8 +1397,17 @@
   </div>
 
 
+  </footer>
+  </div>
 
   <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdownMenu");
+      const header = document.getElementById("newsToggle");
+      dropdown.classList.toggle("show");
+      header.classList.toggle("rotate");
+    }
+
 
     // ===== PRELOADER FUNCTIONALITY =====
     window.addEventListener('load', () => {

@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News Syndication</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
- * {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
     body {
-           font-family: 'Pontano Sans', sans-serif;
+      font-family: 'Pontano Sans', sans-serif;
       background: white;
     }
-        .first-header {
+
+    .first-header {
       padding: 20px;
       height: 24px;
       display: flex;
@@ -26,7 +28,8 @@
       background-color: #2E2E2E;
       font-size: 16px;
     }
-    .first-header:hover{
+
+    .first-header:hover {
       text-decoration: underline;
     }
 
@@ -95,55 +98,57 @@
       background-color: #000;
     }
 
-   
- .search-bar-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding-top: 14px;
-}
 
-.search-bar-bg {
-  background-color: #2e2e2e;
-  height: 24px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  width: 70%;
-  overflow: hidden;
-  position: relative;
-}
+    .search-bar-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding-top: 14px;
+    }
 
-.scrolling-track {
-  display: flex;
-  width: max-content;
-  animation: scroll-loop 8s linear infinite;
-}
+    .search-bar-bg {
+      background-color: #2e2e2e;
+      height: 24px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      width: 70%;
+      overflow: hidden;
+      position: relative;
+    }
 
-.scrolling-content {
-  display: flex;
-  white-space: nowrap;
-  color: white;
-  font-size: 14px;
-}
+    .scrolling-track {
+      display: flex;
+      width: max-content;
+      animation: scroll-loop 8s linear infinite;
+    }
 
-.up {
-  color: #22ed00;
-}
-.down {
-  color: #ff0000;
-}
+    .scrolling-content {
+      display: flex;
+      white-space: nowrap;
+      color: white;
+      font-size: 14px;
+    }
 
-@keyframes scroll-loop {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
+    .up {
+      color: #22ed00;
+    }
+
+    .down {
+      color: #ff0000;
+    }
+
+    @keyframes scroll-loop {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
 
 
-.search-box {
+    .search-box {
       position: relative;
       width: 220px;
     }
@@ -194,18 +199,22 @@
         transform: translateY(100%);
         opacity: 0;
       }
+
       10% {
         transform: translateY(0);
         opacity: 1;
       }
+
       40% {
         transform: translateY(0);
         opacity: 1;
       }
+
       50% {
         transform: translateY(-100%);
         opacity: 0;
       }
+
       100% {
         transform: translateY(-100%);
         opacity: 0;
@@ -213,17 +222,17 @@
     }
 
     /* Hide animated text when user types */
-    .search-box input:focus + .animated-text-container,
-    .search-box input:not(:placeholder-shown) + .animated-text-container {
+    .search-box input:focus+.animated-text-container,
+    .search-box input:not(:placeholder-shown)+.animated-text-container {
       display: none;
     }
- 
+
 
     .social-icons {
       display: flex;
       align-items: center;
       gap: 10px;
-      
+
     }
 
     .social-icons i {
@@ -280,149 +289,151 @@
       .social-icon {
         margin-bottom: -20px;
       }
+
       .search-bar-bg {
         width: 100%;
       }
     }
 
     /* === Header / Dropdown Toggle === */
-.topbar {
-  background: #1f1f1f;
-  color: #fff;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  flex-wrap: wrap;
-}
+    .topbar {
+      background: #1f1f1f;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      flex-wrap: wrap;
+    }
 
-.topbar h1 {
-  font-size: 20px;
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
+    .topbar h1 {
+      font-size: 20px;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
 
-.topbar h1 i {
-  font-size: 12px;
-  transition: transform 0.3s ease;
-}
+    .topbar h1 i {
+      font-size: 12px;
+      transition: transform 0.3s ease;
+    }
 
-.topbar h1.rotate i {
-  transform: rotate(180deg);
-}
+    .topbar h1.rotate i {
+      transform: rotate(180deg);
+    }
 
-.dropdown-links {
-  display: none;
-  background: #1f1f1f;
-  padding: 10px 20px;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 14px;
-  border-top: 1px solid #333;
-}
+    .dropdown-links {
+      display: none;
+      background: #1f1f1f;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+      border-top: 1px solid #333;
+    }
 
-.dropdown-links a {
-  color: #ccc;
-  text-decoration: none;
-  margin-right: 15px;
-  transition: 0.3s;
-}
+    .dropdown-links a {
+      color: #ccc;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: 0.3s;
+    }
 
-.dropdown-links a:hover,
-.dropdown-links a.active {
-  color: gold;
-  border-bottom: 2px solid gold;
-  padding-bottom: 3px;
-}
+    .dropdown-links a:hover,
+    .dropdown-links a.active {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 3px;
+    }
 
-.dropdown-links.show {
-  display: flex;
-  flex-wrap: wrap;
-}
+    .dropdown-links.show {
+      display: flex;
+      flex-wrap: wrap;
+    }
 
-/* === Media Queries === */
+    /* === Media Queries === */
 
-/* Small phones */
-@media (max-width: 480px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 15px;
-  }
+    /* Small phones */
+    @media (max-width: 480px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
 
-  .topbar h1 {
-    font-size: 18px;
-    gap: 6px;
-  }
+      .topbar h1 {
+        font-size: 18px;
+        gap: 6px;
+      }
 
-  .dropdown-links {
-    flex-direction: column;
-    padding: 10px 15px;
-    gap: 8px;
-    font-size: 13px;
-  }
+      .dropdown-links {
+        flex-direction: column;
+        padding: 10px 15px;
+        gap: 8px;
+        font-size: 13px;
+      }
 
-  .dropdown-links a {
-    margin: 5px 0;
-  }
-}
+      .dropdown-links a {
+        margin: 5px 0;
+      }
+    }
 
-/* Tablets */
-@media (min-width: 481px) and (max-width: 768px) {
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 20px;
-  }
+    /* Tablets */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
 
-  .dropdown-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 12px 20px;
-  }
-}
+      .dropdown-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+    }
 
-/* Desktops (already optimized, but just in case) */
-@media (min-width: 769px) {
-  .topbar {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+    /* Desktops (already optimized, but just in case) */
+    @media (min-width: 769px) {
+      .topbar {
+        flex-direction: row;
+        justify-content: space-between;
+      }
 
-  .dropdown-links {
-    flex-direction: row;
-    gap: 15px;
-  }
-}
+      .dropdown-links {
+        flex-direction: row;
+        gap: 15px;
+      }
+    }
 
     /* === Main Layout === */
     /* Base Styles - Desktop (default) */
-.container {
-  display: flex;
-  padding: 30px;
-  gap: 20px;
-}
+    .container {
+      display: flex;
+      padding: 30px;
+      gap: 20px;
+    }
 
-.left-sidebar {
-  width: 20%;
-}
+    .left-sidebar {
+      width: 20%;
+    }
 
-.left-sidebar .box {
-  background: white;
-  padding: 15px;
-  margin-bottom: 20px;
-}
+    .left-sidebar .box {
+      background: white;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
 
-.left-sidebar .box img {
-  width: 100%;
-  height: auto;
-}
-.section-title {
+    .left-sidebar .box img {
+      width: 100%;
+      height: auto;
+    }
+
+    .section-title {
       font-size: 28px;
       font-weight: bold;
       margin-bottom: 20px;
@@ -484,9 +495,9 @@
     }
 
     .cta {
-       display: flex;
-       justify-content: center;
-       align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       margin-top: 30px;
       display: flex;
       gap: 15px;
@@ -497,7 +508,7 @@
       border: none;
       border-radius: 25px;
       background: #1c1c1c;
-       color: #8d6d2a;
+      color: #8d6d2a;
       cursor: pointer;
       transition: 0.3s;
     }
@@ -556,174 +567,175 @@
     .illustration img {
       width: 160px;
     }
-    .center{
-        display: flex;
-       gap: 90px;
-       align-items: center;
+
+    .center {
+      display: flex;
+      gap: 90px;
+      align-items: center;
     }
 
-.main-content {
-  width: 60%;
-}
+    .main-content {
+      width: 60%;
+    }
 
-h2 {
-  border-bottom: 2px solid #333;
-}
+    h2 {
+      border-bottom: 2px solid #333;
+    }
 
-.main-content h2 {
-  margin-bottom: 15px;
-}
+    .main-content h2 {
+      margin-bottom: 15px;
+    }
 
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-}
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+    }
 
-.btn-more,
-.gold-btn {
-  border: 1px solid #AC8A4A;
-  padding: 5px;
-  border-radius: 20px;
-  background-color: white;
-  color: #AC8A4A;
-}
+    .btn-more,
+    .gold-btn {
+      border: 1px solid #AC8A4A;
+      padding: 5px;
+      border-radius: 20px;
+      background-color: white;
+      color: #AC8A4A;
+    }
 
-.gold-btn {
-  margin-bottom: 10px;
-}
+    .gold-btn {
+      margin-bottom: 10px;
+    }
 
-.heading,
-.report,
-.gold {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+    .heading,
+    .report,
+    .gold {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
 
-.news-card {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  background: #D9D9D9;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
+    .news-card {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      background: #D9D9D9;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
 
-.news-card img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-}
+    .news-card img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+    }
 
-.text-content {
-  padding: 15px;
-}
+    .text-content {
+      padding: 15px;
+    }
 
-.right-sidebar {
-  width: 20%;
-}
+    .right-sidebar {
+      width: 20%;
+    }
 
-.section-box {
-  background: white;
-  margin-bottom: 20px;
-  padding: 10px;
-}
+    .section-box {
+      background: white;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
 
-.section-box img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-}
+    .section-box img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
 
-.gold-news {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding-bottom: 30px;
-}
+    .gold-news {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 30px;
+    }
 
-.gold-card {
-  flex: 1;
-  min-width: 150px;
-  border-radius: 10px;
- background: #AC8A4A4F;
-  border: 1px solid #ddd;
-  text-align: center;
-}
+    .gold-card {
+      flex: 1;
+      min-width: 150px;
+      border-radius: 10px;
+      background: #AC8A4A4F;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
 
-.gold-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
+    .gold-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
 
-.gold-card p {
-  padding: 10px;
-  font-weight: bold;
-}
+    .gold-card p {
+      padding: 10px;
+      font-weight: bold;
+    }
 
-/* === Responsive: Tablet === */
-@media (max-width: 992px) {
-  .container {
-    flex-direction: column;
-  }
+    /* === Responsive: Tablet === */
+    @media (max-width: 992px) {
+      .container {
+        flex-direction: column;
+      }
 
-  .left-sidebar,
-  .right-sidebar,
-  .main-content {
-    width: 100%;
-  }
+      .left-sidebar,
+      .right-sidebar,
+      .main-content {
+        width: 100%;
+      }
 
-  .news-card {
-    flex-direction: column;
-  }
+      .news-card {
+        flex-direction: column;
+      }
 
-  .news-card img {
-    width: 100%;
-    height: auto;
-  }
+      .news-card img {
+        width: 100%;
+        height: auto;
+      }
 
-  .gold-news {
-    flex-direction: column;
-  }
+      .gold-news {
+        flex-direction: column;
+      }
 
-  .gold-card {
-    width: 100%;
-  }
-}
+      .gold-card {
+        width: 100%;
+      }
+    }
 
-/* === Responsive: Phone === */
-@media (max-width: 576px) {
-  .container {
-    padding: 15px;
-    gap: 15px;
-  }
+    /* === Responsive: Phone === */
+    @media (max-width: 576px) {
+      .container {
+        padding: 15px;
+        gap: 15px;
+      }
 
-  .news-card {
-    gap: 10px;
-  }
+      .news-card {
+        gap: 10px;
+      }
 
-  .text-content {
-    padding: 10px;
-  }
+      .text-content {
+        padding: 10px;
+      }
 
-  .gold-card img {
-    height: auto;
-  }
+      .gold-card img {
+        height: auto;
+      }
 
-  .btn-more,
-  .gold-btn {
-    font-size: 14px;
-    padding: 4px 10px;
-  }
+      .btn-more,
+      .gold-btn {
+        font-size: 14px;
+        padding: 4px 10px;
+      }
 
-  .gold-news {
-    gap: 15px;
-  }
-}
+      .gold-news {
+        gap: 15px;
+      }
+    }
 
     .footer-container {
       background-image: url(./image/footer-bg\ 1.png);
@@ -731,7 +743,8 @@ h2 {
       color: #fff;
       position: relative;
     }
-     .divider {
+
+    .divider {
       width: 1px;
       background: #444;
       height: 60%;
@@ -750,7 +763,7 @@ h2 {
     }
 
     .footer-left {
-     flex: 1;
+      flex: 1;
       max-width: 50%;
       padding-right: 40px;
     }
@@ -758,20 +771,22 @@ h2 {
     .footer-left img {
       height: 60px;
     }
-   .social-iconss{
-    padding-top: 10px;
- color: #8d6d2a;
+
+    .social-iconss {
+      padding-top: 10px;
+      color: #8d6d2a;
       font-size: 18px;
       cursor: pointer;
       padding-bottom: 10px;
-   }
-   .search-boxs{
-     position: relative;
+    }
+
+    .search-boxs {
+      position: relative;
       width: 170px;
 
 
-   }
-    
+    }
+
 
     .search-boxs input {
       width: 100%;
@@ -793,9 +808,9 @@ h2 {
       color: #555;
       font-size: 16px;
       cursor: pointer;
-    } */
+    }
 
-    .footer-left p {
+    */ .footer-left p {
       font-size: 15px;
       margin-top: 15px;
       line-height: 1.6;
@@ -814,7 +829,7 @@ h2 {
     }
 
     .footer-center {
-    
+
       min-width: 220px;
       padding-left: 30px;
     }
@@ -838,16 +853,18 @@ h2 {
     .footer-right {
       flex: 1.3;
       min-width: 300px;
-    
+
       flex-wrap: wrap;
-   
+
       padding-left: 30px;
     }
-    .logo2{
-     padding-left: 50px;
+
+    .logo2 {
+      padding-left: 50px;
     }
-    .logo5{
-       padding-left: 24%;
+
+    .logo5 {
+      padding-left: 24%;
     }
 
     .footer-right img {
@@ -869,102 +886,107 @@ h2 {
 
     /* -------- RESPONSIVE -------- */
 
-@media (max-width: 1024px) {
-  .footer-container {
-    padding: 50px 30px 25px;
-  }
-  .footer-content {
-    gap: 25px;
-  }
-}
+    @media (max-width: 1024px) {
+      .footer-container {
+        padding: 50px 30px 25px;
+      }
 
-@media (max-width: 768px) {
-  .footer-container {
-    padding: 40px 20px 20px;
-  }
-  .footer-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 40px;
-  }
+      .footer-content {
+        gap: 25px;
+      }
+    }
 
-  .footer-left, .footer-center, .footer-right {
-    padding: 0;
-    min-width: 100%;
-  }
+    @media (max-width: 768px) {
+      .footer-container {
+        padding: 40px 20px 20px;
+      }
 
-  .footer-right {
-    justify-content: flex-start;
-  }
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 40px;
+      }
 
-  .divider {
-    display: none;
-  }
+      .footer-left,
+      .footer-center,
+      .footer-right {
+        padding: 0;
+        min-width: 100%;
+      }
 
-  .footer-left p {
-    max-width: 100%;
-  }
+      .footer-right {
+        justify-content: flex-start;
+      }
 
-  .search-boxs {
-    width: 50%;
-  }
- 
-}
-span{
-  color: #8d6d2a;
-}
+      .divider {
+        display: none;
+      }
 
-@media (max-width: 480px) {
-  .left-sidebar{
-    display: none;
-  }
-  .footer-left img,
-  .footer-right img {
-    height: 50px;
-    width: 90px;
-  }
+      .footer-left p {
+        max-width: 100%;
+      }
 
-  .footer-left p {
-    font-size: 14px;
-  }
+      .search-boxs {
+        width: 50%;
+      }
 
-  .footer-center li,
-  .footer-left .socials i {
-    font-size: 14px;
-  }
+    }
 
-  .footer-center li:first-child {
-    font-size: 15px;
-  }
+    span {
+      color: #8d6d2a;
+    }
 
-  .footer-bottom {
-    font-size: 12px;
-    margin-top: 30px;
-  }
-}
- 
-    
+    @media (max-width: 480px) {
+      .left-sidebar {
+        display: none;
+      }
+
+      .footer-left img,
+      .footer-right img {
+        height: 50px;
+        width: 90px;
+      }
+
+      .footer-left p {
+        font-size: 14px;
+      }
+
+      .footer-center li,
+      .footer-left .socials i {
+        font-size: 14px;
+      }
+
+      .footer-center li:first-child {
+        font-size: 15px;
+      }
+
+      .footer-bottom {
+        font-size: 12px;
+        margin-top: 30px;
+      }
+    }
   </style>
 </head>
+
 <body>
-    <header class="main-header">
+  <header class="main-header">
     <div class="header-top">
       <div class="logo-social">
-         <a href="index.html">  <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
-     
-  </div>
+        <a href="index.html"> <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" /></a>
+
+      </div>
 
       <button class="hamburger" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
       </button>
 
       <div class="nav-links" id="navMenu">
-      <a href="about.html">About Us</a>
+        <a href="about.html">About Us</a>
         <a href="newss.html">News Section</a>
         <a href="morning.html">Morning Chatter</a>
         <a href="magzin.html">Magazine</a>
         <a href="service.html">Services</a>
-        <a href="#">Contact Us</a>
+        <a href="contant.html">Contact Us</a>
       </div>
 
       <div class="header-buttons" id="headerButtons">
@@ -981,44 +1003,44 @@ span{
         <i class="fab fa-instagram"></i>
         <i class="fab fa-youtube"></i>
       </div>
-<div class="search-bar-bg">
-  <div class="scrolling-track">
-    <div class="scrolling-content">
-      <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
-    </div>
-    <!-- Duplicate content for seamless loop -->
-    <div class="scrolling-content">
-      <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
-      <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
-    </div>
-  </div>
-</div>
+      <div class="search-bar-bg">
+        <div class="scrolling-track">
+          <div class="scrolling-content">
+            <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
+          </div>
+          <!-- Duplicate content for seamless loop -->
+          <div class="scrolling-content">
+            <span>Gold (Au) $3,378/oz <span class="down">-0.36%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Silver (Ag) $28.34/oz <span class="up">+0.45%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Copper (Cu) $4.12/lb <span class="down">-0.12%</span> &nbsp;&nbsp;&nbsp;</span>
+            <span>Platinum (Pt) $1,085/oz <span class="up">+0.87%</span> &nbsp;&nbsp;&nbsp;</span>
+          </div>
+        </div>
+      </div>
 
 
-     <div class="search-box">
-    <input type="text" id="searchInput" placeholder=" " />
-    <div class="animated-text-container">
-      <span id="animatedText">Search gold prices</span>
-    </div>
-    <button class="search-icon"><i class="fas fa-search"></i></button>
-  </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder=" " />
+        <div class="animated-text-container">
+          <span id="animatedText">Search gold prices</span>
+        </div>
+        <button class="search-icon"><i class="fas fa-search"></i></button>
+      </div>
     </div>
   </header>
-  
- <!-- Header + Dropdown -->
+
+  <!-- Header + Dropdown -->
   <div class="topbar">
     <h1 onclick="toggleDropdown()" id="newsToggle">
       Services
       <i class="fas fa-chevron-down"></i>
     </h1>
   </div>
-<!-- Dropdown Links -->
-   <div class="dropdown-links" id="dropdownMenu">
+  <!-- Dropdown Links -->
+  <div class="dropdown-links" id="dropdownMenu">
     <a href="service.html">Investor Campaigns</a>
     <a href="multimedia.html">Multimedia & you tube</a>
     <a href="newsynd.html">News Syndication</a>
@@ -1026,139 +1048,141 @@ span{
     <a href="branding.html">Digital Branding</a>
     <a href="Global.html">Global Outreach</a>
     <a href="media.html">Social Media Growth
-</a>
+    </a>
     <a href="podcast.html">Podcast & Interview Features</a>
     <a href="letter.html">Newsletter & Email Blasts</a>
     <a href="paid.html">Paid Ad Campaigns</a>
     <a href="pressoffice.html">Press Office</a>
-  
-  
-</div>
+
+
+  </div>
 
   <!-- Content Section -->
   <div class="container">
     <!-- Left -->
     <div class="left-sidebar">
-      <div class="box" id="bannerContainerGlobal">
-       <p>Loading banners...</p>
+      <div class="box" id="bannerContainer">
+        <p>Loading banners...</p>
       </div>
     </div>
 
     <!-- Main -->
     <div class="main-content">
-        <div class="left-section">
-      <h2 class="section-title">News Syndication</h2>
-      <p class="syndication-description">
-        We offer strategic <span class="highlight-text">news syndication services</span> to help your mining-related news, press releases, and announcements reach a broader, targeted audience.
-      </p>
+      <div class="left-section">
+        <h2 class="section-title">News Syndication</h2>
+        <p class="syndication-description">
+          We offer strategic <span class="highlight-text">news syndication services</span> to help your mining-related
+          news, press releases, and announcements reach a broader, targeted audience.
+        </p>
 
-      <div class="grid">
-        <div class="list-section">
-          <h4>What Can Be Syndicated</h4>
-          <ul>
-            <li>Press Releases</li>
-            <li>Industry Articles</li>
-            <li>Project Exploration</li>
-            <li>Product Launch Announcements</li>
-            <li>Market Reports Forecasts</li>
-          </ul>
+        <div class="grid">
+          <div class="list-section">
+            <h4>What Can Be Syndicated</h4>
+            <ul>
+              <li>Press Releases</li>
+              <li>Industry Articles</li>
+              <li>Project Exploration</li>
+              <li>Product Launch Announcements</li>
+              <li>Market Reports Forecasts</li>
+            </ul>
+          </div>
+          <div class="list-section">
+            <h4>How It Works</h4>
+            <ul>
+              <li>Submit Your News</li>
+              <li>Editorial Review</li>
+              <li>Multichannel Publishing</li>
+              <li>Performance Tracking</li>
+            </ul>
+          </div>
         </div>
-        <div class="list-section">
-          <h4>How It Works</h4>
-          <ul>
-            <li>Submit Your News</li>
-            <li>Editorial Review</li>
-            <li>Multichannel Publishing</li>
-            <li>Performance Tracking</li>
-          </ul>
-        </div>
-      </div>
 
-      <h4>Where It Gets Featured</h4>
-      <div class="where-featured">
-        <div class="feature-box">
+        <h4>Where It Gets Featured</h4>
+        <div class="where-featured">
+          <div class="feature-box">
             <img src="./image/mD new logo 6.png" height="60px">
-        </div>
-        <div class="feature-box">
+          </div>
+          <div class="feature-box">
             <img src="./image/Vector (3).png">
-            </div>
-        <div class="feature-box">
+          </div>
+          <div class="feature-box">
             <img src="./image/Group 93.png">
+          </div>
+        </div>
+        <div class="center">
+          <div class="why-section">
+            <h4>Why Choose Mining Discovery?</h4>
+            <ul>
+              <li>Targeted mining & minerals audience</li>
+              <li>Global reach with regional focus</li>
+              <li>Quick turnaround & editorial support</li>
+              <li>SEO-optimized content publishing</li>
+              <li>Optional paid boost for added visibility</li>
+            </ul>
+          </div>
+
+          <div class="illustration">
+            <img src="./image/Searching.png" alt="girl laptop">
+          </div>
+        </div>
+
+
+
+        <div class="cta">
+          <button>Submit Your News</button>
+          <button>Contact for Sales</button>
         </div>
       </div>
-      <div class="center">
- <div class="why-section">
-        <h4>Why Choose Mining Discovery?</h4>
-        <ul>
-          <li>Targeted mining & minerals audience</li>
-          <li>Global reach with regional focus</li>
-          <li>Quick turnaround & editorial support</li>
-          <li>SEO-optimized content publishing</li>
-          <li>Optional paid boost for added visibility</li>
-        </ul>
-      </div>
 
-      <div class="illustration">
-        <img src="./image/Searching.png" alt="girl laptop">
-      </div>
-      </div>
 
-     
-
-      <div class="cta">
-        <button>Submit Your News</button>
-        <button>Contact for Sales</button>
-      </div>
     </div>
-
-
-     </div>
 
     <!-- Right -->
     <div class="right-sidebar">
-              <h3>Projects</h3>
+      <h3>Projects</h3>
 
-      <div class="section-box" id="projectNewsSection" >
-  
+      <div class="section-box" id="projectNewsSection">
+
       </div>
       <h2>Reports</h2>
-        <div class="card-list">
-          <div class="card" id="researchReportsContainer">
+      <div class="card-list">
+        <div class="card" id="researchReportsContainer">
 
-          </div>
         </div>
-     
+      </div>
 
-      
+
+
     </div>
   </div>
-<!-- Footer Section -->
+  <!-- Footer Section -->
   <div class="footer-container">
     <div class="footer-content">
 
-     
-   
+
+
       <!-- Left -->
       <div class="footer-left">
-         <img src="./discoverylogo.jpg" alt="Mining Discovery Logo"  height="60px"/>
+        <img src="./discoverylogo.jpg" alt="Mining Discovery Logo" height="60px" />
         <p>
-          Mining Discovery provides daily mining news, a weekly mining newsletter,<br> a monthly mining magazine and an interactive mining website for mining<br> companies, mining associations and mining executives globally.
+          Mining Discovery provides daily mining news, a weekly mining newsletter,<br> a monthly mining magazine and an
+          interactive mining website for mining<br> companies, mining associations and mining executives globally.
         </p>
-         <div class="search-bar-container-last" id="searchContainer">
-      <div class="social-iconss">
-        <i class="fab fa-linkedin"></i>
-        <i class="fab fa-x-twitter"></i>
-        <i class="fab fa-facebook-f"></i>
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-youtube"></i>
-      </div>
+        <div class="search-bar-container-last" id="searchContainer">
+          <div class="social-iconss">
+            <i class="fab fa-linkedin"></i>
+            <i class="fab fa-x-twitter"></i>
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-youtube"></i>
+          </div>
 
-      <div class="search-boxs">
-        <input type="text" id="searchInput" placeholder="Search..." />
-        <button class="search-icon"><i class="fas fa-search"></i></button>
-      </div>
-       <div class="divider"></div>
-    </div>
+          <div class="search-boxs">
+            <input type="text" id="searchInput" placeholder="Search..." />
+            <button class="search-icon"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="divider"></div>
+        </div>
       </div>
 
       <!-- Center -->
@@ -1174,9 +1198,9 @@ span{
         </ul>
       </div>
 
-    
-      
-     
+
+
+
 
     </div>
 
@@ -1188,7 +1212,7 @@ span{
 
   </footer>
   </div>
-  
+
   <script>
     function toggleDropdown() {
       const dropdown = document.getElementById("dropdownMenu");
@@ -1196,7 +1220,7 @@ span{
       dropdown.classList.toggle("show");
       header.classList.toggle("rotate");
     }
-     // ===== PRELOADER FUNCTIONALITY =====
+    // ===== PRELOADER FUNCTIONALITY =====
     window.addEventListener('load', () => {
       const preloader = document.getElementById('preloader');
       if (preloader) {
@@ -1206,64 +1230,64 @@ span{
       }
     });
 
-   // ===== LOAD BANNERS =====
-async function loadBanners() {
-  const container = document.getElementById('bannerContainer');
-  if (!container) return;
+    // ===== LOAD BANNERS =====
+    async function loadBanners() {
+      const container = document.getElementById('bannerContainer');
+      if (!container) return;
 
-  container.innerHTML = '<p>Loading banners...</p>';
+      container.innerHTML = '<p>Loading banners...</p>';
 
-  try {
-    const res = await fetch('/api/banners'); // fetch all banners
+      try {
+        const res = await fetch('/api/banners'); // fetch all banners
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-    console.log('Banner API response:', data);
-
-    container.innerHTML = ''; // Clear previous content
-
-    if (!Array.isArray(data) || data.length === 0) {
-      container.innerHTML = '<p>No banners available.</p>';
-      return;
-    }
-
-    data.forEach((banner, index) => {
-      const imageUrl = banner.image;
-
-      const adDiv = document.createElement('div');
-      adDiv.className = 'left-ad';
-
-      if (imageUrl && imageUrl.startsWith('data:image')) {
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = banner.alt || `Banner ${index + 1}`;
-        img.className = 'logo-img';
-
-        if (banner.link) {
-          const anchor = document.createElement('a');
-          anchor.href = banner.link;
-          anchor.target = '_blank';
-          anchor.rel = 'noopener noreferrer';
-          anchor.appendChild(img);
-          adDiv.appendChild(anchor);
-        } else {
-          adDiv.appendChild(img);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
-      } else {
-        adDiv.innerHTML = '<p>Invalid image</p>';
+
+        const data = await res.json();
+        console.log('Banner API response:', data);
+
+        container.innerHTML = ''; // Clear previous content
+
+        if (!Array.isArray(data) || data.length === 0) {
+          container.innerHTML = '<p>No banners available.</p>';
+          return;
+        }
+
+        data.forEach((banner, index) => {
+          const imageUrl = banner.image;
+
+          const adDiv = document.createElement('div');
+          adDiv.className = 'left-ad';
+
+          if (imageUrl && imageUrl.startsWith('data:image')) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = banner.alt || `Banner ${index + 1}`;
+            img.className = 'logo-img';
+
+            if (banner.link) {
+              const anchor = document.createElement('a');
+              anchor.href = banner.link;
+              anchor.target = '_blank';
+              anchor.rel = 'noopener noreferrer';
+              anchor.appendChild(img);
+              adDiv.appendChild(anchor);
+            } else {
+              adDiv.appendChild(img);
+            }
+          } else {
+            adDiv.innerHTML = '<p>Invalid image</p>';
+          }
+
+          container.appendChild(adDiv);
+        });
+
+      } catch (err) {
+        console.error('Failed to load banners:', err);
+        container.innerHTML = '<p>Error loading banners.</p>';
       }
-
-      container.appendChild(adDiv);
-    });
-
-  } catch (err) {
-    console.error('Failed to load banners:', err);
-    container.innerHTML = '<p>Error loading banners.</p>';
-  }
-}
+    }
 
     // ====== Fetch Project News by tag ======
     async function fetchProjectNews() {
@@ -1296,7 +1320,7 @@ async function loadBanners() {
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadBannersGlobal();
+      loadBanners();
       fetchProjectNews();
     });
 
@@ -1350,4 +1374,5 @@ async function loadBanners() {
   </script>
 
 </body>
+
 </html>
