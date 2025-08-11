@@ -44,6 +44,10 @@ const uploadRoute = require('./routes/upload');
 const taggedPostRoutes = require('./routes/taggedPosts');
 const servicePostRoutes = require('./routes/servicePost');
 const magazineRoutes = require('./routes/magazine');
+const contactRoutes = require('./routes/contact');
+const ceoProfileRoutes = require('./routes/ceoProfile');
+const companyProfileRoutes = require('./routes/companyProfileRoutes');
+
 
 // Mount API routes
 app.use('/api/subscribe', subscribeRoute);
@@ -57,6 +61,9 @@ app.use('/api/upload', uploadRoute);
 app.use('/api/tagged-posts', taggedPostRoutes);
 app.use('/api/service-posts', servicePostRoutes);
 app.use('/api/magazines', magazineRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/ceos', ceoProfileRoutes);
+app.use('/api/company-profiles', companyProfileRoutes);
 
 
 // API Health Check

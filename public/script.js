@@ -297,6 +297,7 @@ async function loadLatestNewsSidebar() {
 }
 
 // ✅ Load Advertisements into a given section
+// ✅ Robust image src resolution + clickable link
 async function loadAdvertisements(sectionId) {
   try {
     const res = await fetch('/api/ads');
@@ -312,22 +313,37 @@ async function loadAdvertisements(sectionId) {
     adSection.innerHTML = '';
 
     ads.forEach(ad => {
+      console.log('ad.image:', ad.image); // helpful debugging
       const img = document.createElement('img');
 
-      if (ad.image.startsWith('data:image')) {
+      // Determine correct src
+      if (!ad.image) {
+        img.src = ''; // or a placeholder
+      } else if (ad.image.startsWith('data:image')) {
         img.src = ad.image;
-      } else if (ad.image.startsWith('http')) {
+      } else if (ad.image.startsWith('http://') || ad.image.startsWith('https://')) {
+        img.src = ad.image;
+      } else if (ad.image.startsWith('/uploads/')) {
+        // already normalized by backend
         img.src = ad.image;
       } else {
+        // maybe backend stored just the filename
         img.src = `/uploads/${ad.image}`;
       }
 
-      img.alt = 'Advertisement';
+      img.alt = ad.alt || 'Advertisement';
+      img.style.maxWidth = '100%';
+      img.style.display = 'block';
 
       if (ad.link) {
         const a = document.createElement('a');
         a.href = ad.link;
         a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.title = 'Visit advertiser';
+        a.style.cursor = 'pointer';
+
+        img.style.cursor = 'pointer';
         a.appendChild(img);
         adSection.appendChild(a);
       } else {

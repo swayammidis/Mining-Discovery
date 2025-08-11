@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post Company Profile</title>
+  <style>
+    /* Reset some default styles */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    input[type="file"]:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Post Company Profile</h1>
+  <form id="companyForm" enctype="multipart/form-data">
+    <label>
+      Company Name: <br />
+      <input type="text" name="name" required />
+    </label>
+
+    <label>
+      Company Logo Image (png/jpg): <br />
+      <input type="file" name="image" accept="image/*" required />
+    </label>
+
+    <label>
+      Upload PDF Profile (optional): <br />
+      <input type="file" name="pdf" accept="application/pdf" />
+    </label>
+
+    <label>
+      Or enter PDF URL (optional): <br />
+      <input type="url" name="pdfUrl" placeholder="https://example.com/profile.pdf" />
+    </label>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('companyForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const response = await fetch('/api/company-profiles', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('Company profile created!');
+        form.reset();
+      } else {
+        alert('Error creating profile');
+      }
+    });
+  </script>
+</body>
+</html>

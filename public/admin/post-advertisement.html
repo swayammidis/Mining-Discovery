@@ -46,6 +46,10 @@
     <label for="imageUrl">Or Provide Image URL:</label>
     <input type="text" name="imageUrl" id="imageUrl" placeholder="https://example.com/ad.jpg" />
 
+    <label for="adLink">Advertisement Link URL:</label>
+    <!-- Changed name from 'adLink' to 'link' to match backend -->
+    <input type="text" name="link" id="adLink" placeholder="https://example.com" required />
+
     <button type="submit">Post Advertisement</button>
 
     <div class="preview">
@@ -83,6 +87,22 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const linkValue = form.link.value.trim();
+      const file = imageFileInput.files[0];
+      const imageUrlValue = imageUrlInput.value.trim();
+
+      // Simple client-side validation
+      if (!linkValue) {
+        alert('Please provide a valid advertisement link URL.');
+        return;
+      }
+
+      if (!file && !imageUrlValue) {
+        alert('Please upload an image file or provide an image URL.');
+        return;
+      }
+
       const formData = new FormData(form);
 
       try {

@@ -2,22 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mining Discovery Magazine</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #fff;
-            color: #222;
+            background: #fff;
         }
 
         .main-header {
@@ -159,8 +154,8 @@
         }
 
         .search-box input {
-            width: 100%;
-            height: 25px;
+            width: 80%;
+            height: 15px;
             padding: 5px 15px;
             padding-right: 35px;
             border: 1px solid #ccc;
@@ -308,19 +303,6 @@
 
         /* main-header */
         /* === Header / Dropdown Toggle === */
-
-
-
-
-
-
-
-
-
-
-
-        /* main-header */
-        /* === Header / Dropdown Toggle === */
         .topbar {
             background: #1f1f1f;
             color: #fff;
@@ -391,516 +373,102 @@
 
 
 
-
-
-        /* === Header / Dropdown Toggle === */
-        .topbar {
-            background: #1f1f1f;
-            color: #fff;
-            padding: 15px 30px;
+        .container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
+            max-width: 1256px;
+            margin: auto;
+            padding: 20px;
+            gap: 20px;
         }
 
-        .topbar h1 {
-            font-size: 20px;
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .topbar h1 i {
-            font-size: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .topbar h1.rotate i {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-links {
-            display: none;
-            background: #1f1f1f;
-            padding: 10px 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 14px;
-            border-top: 1px solid #333;
-        }
-
-        .dropdown-links a {
-            color: #ccc;
-            text-decoration: none;
-            margin-right: 15px;
-            transition: 0.3s;
-        }
-
-        .dropdown-links a:hover,
-        .dropdown-links a.active {
-            color: gold;
-            border-bottom: 2px solid gold;
-            padding-bottom: 3px;
-        }
-
-        .dropdown-links.show {
-            display: flex;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /* === Header / Dropdown Toggle === */
-        .topbar {
-            background: #8d6d2a;
-            color: #fff;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            flex-wrap: wrap;
-        }
-
-        .topbar h1 {
-            font-size: 20px;
-            font-weight: normal;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .topbar h1 i {
-            font-size: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .topbar h1.rotate i {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-links {
-            display: none;
-            background: #1f1f1f;
-            padding: 10px 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-            font-size: 14px;
-            border-top: 1px solid #333;
-        }
-
-        .dropdown-links a {
-            color: #ccc;
-            text-decoration: none;
-            margin-right: 15px;
-            transition: 0.3s;
-        }
-
-        .dropdown-links a:hover,
-        .dropdown-links a.active {
-            color: gold;
-            border-bottom: 2px solid gold;
-            padding-bottom: 3px;
-        }
-
-        .dropdown-links.show {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        /* === Media Queries === */
-
-        /* Small phones */
-        @media (max-width: 480px) {
-            .topbar {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 10px 15px;
-            }
-
-            .topbar h1 {
-                font-size: 18px;
-                gap: 6px;
-            }
-
-            .dropdown-links {
-                flex-direction: column;
-                padding: 10px 15px;
-                gap: 8px;
-                font-size: 13px;
-            }
-
-            .dropdown-links a {
-                margin: 5px 0;
-            }
-        }
-
-        /* Tablets */
-        @media (min-width: 481px) and (max-width: 768px) {
-            .topbar {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 12px 20px;
-            }
-
-            .dropdown-links {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 12px;
-                padding: 12px 20px;
-            }
-        }
-
-        /* Desktops (already optimized, but just in case) */
-        @media (min-width: 769px) {
-            .topbar {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-
-            .dropdown-links {
-                flex-direction: row;
-                gap: 15px;
-            }
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: #111;
-            padding: 12px 20px;
-        }
-
-        .nav-links {
-            list-style: none;
-
-            justify-content: center;
-            gap: 25px;
-        }
-
-        .nav-links li a {
-            color: #fff;
-            font-size: 14px;
-            text-decoration: none;
-        }
-
-        /* Layout */
-        .main-container {
-            display: flex;
-            padding: 20px 30px;
-            gap: 30px;
-        }
-
-        /* Sidebar */
-        .left-sidebar {
-            width: 180px;
+        .sidebar {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        /* Main Content */
-        .magazine-section {
-            flex: 1;
+        .sidebar img {
+            width: 100%;
+            border: 1px solid #ccc;
         }
 
-        .dropdown-heading {
-            font-size: 28px;
+        .main {
+            flex: 3;
+        }
+
+        h2 {
             margin-bottom: 20px;
         }
 
-        .magazine-grid {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .magazine-info {
-            flex: 1;
-        }
-
-        .magazine-info h3 {
-            font-size: 32px;
-            margin-bottom: 6px;
-        }
-
-        .produced-by {
-
-            margin-bottom: 10px;
-            color: #8d6d2a;
-            font-size: 20px;
-        }
-
-        .desc {
-            font-size: 17px;
-            margin-bottom: 14px;
-        }
-
-        .features-list {
-            padding-left: 20px;
-            list-style: disc;
-            margin-bottom: 18px;
-            font-size: 17px;
-        }
-
-        .features-list li {
-            color: #8d6d2a;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .btn {
-            padding: 10px 15px;
-            font-size: 13px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            background-color: #8d6d2a;
-        }
-
-        .btn.dark {
-            background: #8d6d2a;
-            color: #fff;
-        }
-
-        .btn.gold {
-            background: #8d6d2a;
-
-            color: #fff;
-        }
-
-        .btn.subscribe {
-            background: #111;
-            color: white;
-            width: 50%;
-            margin-top: 8px;
-        }
-
-        .btns {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-left: -40px;
-
-        }
-
-
-
-        /* Magazine Cover */
-        .magazine-cover img {
-            width: 300px;
-            border-radius: 4px;
-        }
-
-        /* Editions */
-        .editions-title {
-            font-size: 22px;
-            margin: 40px 0 20px;
-        }
-
-        /* Slider Wrapper */
-        .slider-wrapper {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .editions-slider {
-            display: flex;
-            overflow-x: auto;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
-            scroll-behavior: smooth;
-            padding-bottom: 10px;
-            scroll-snap-type: x mandatory;
         }
 
-        .editions-slider::-webkit-scrollbar {
-            display: none;
-        }
-
-        .editions-slider {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        .edition-card {
-            flex: 0 0 calc(20% - 16px);
-            /* 5 cards per view with gap */
-            scroll-snap-align: start;
+        .card {
+            background: #222;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
             text-align: center;
+            height: 300px;
         }
 
-        .edition-card img {
-            width: 100%;
-            border-radius: 4px;
+        .card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: contain;
+            /* Changed from cover to contain */
+            background-color: #fff;
+            /* Adds clean background if image has transparency */
+            border: 3px solid #8d6d2a;
+            padding: 5px;
+            /* Space between image and border */
         }
 
-        .edition-card button {
-            margin-top: 8px;
-            padding: 8px 12px;
-            font-size: 13px;
-            background: #111;
+        .name {
+            font-size: 16px;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 16px;
+            color: #8d6d2a;
+            min-height: 40px;
+            font-weight: 500px;
+        }
+
+        .profile-btn {
+            display: inline-block;
+            background: none;
+            border: 1px solid white;
+            padding: 6px 12px;
             color: white;
-            border: none;
-            border-radius: 4px;
+            margin-top: 10px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* Slider arrows */
-        .slider-btn {
-            position: absolute;
-            top: 40%;
-            transform: translateY(-50%);
-            background: #111;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 2;
+        .profile-btn:hover {
+            background: white;
+            color: black;
         }
 
-        .slider-btn.prev {
-            left: 0;
-        }
-
-        .slider-btn.next {
-            right: 0;
-        }
-
-        /* Responsive: 3 per row on medium devices */
-        @media (max-width: 1024px) {
-            .edition-card {
-                flex: 0 0 calc(33.33% - 16px);
-            }
-        }
-
-        /* Responsive: 2 per row on small devices */
-        @media (max-width: 768px) {
-            .edition-card {
-                flex: 0 0 calc(50% - 16px);
-            }
-        }
-
-        /* Mobile: 1 per row */
-        @media (max-width: 480px) {
-            .edition-card {
-                flex: 0 0 100%;
-            }
-        }
-
-        /* Ultra small screens (360px and below) */
-        @media (max-width: 360px) {
-            .logo {
-                height: 50px;
-            }
-
-            .nav-links {
-                gap: 10px;
-            }
-
-            .dropdown-heading {
-                font-size: 18px;
-            }
-
-            .magazine-info h3 {
-                font-size: 18px;
-            }
-
-            .desc,
-            .features-list {
-                font-size: 13px;
-            }
-
-            .btn {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-
-            .search-box input {
-                font-size: 12px;
-            }
-
-            .scrolling-content {
-                font-size: 12px;
-            }
-
-            .slider-btn {
-                font-size: 16px;
-                padding: 8px;
-            }
-
-            .edition-card img {
-                width: 100%;
-            }
-        }
-
-        /* Mobile Layout Adjustments */
-        @media (max-width: 480px) {
-            .main-container {
+        @media(max-width: 768px) {
+            .container {
                 flex-direction: column;
-                padding: 25px;
             }
 
-            .left-sidebar {
-                width: 100%;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
+            .sidebar {
+                order: 2;
             }
 
-            .magazine-cover img {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .magazine-grid {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .magazine-info h3 {
-                font-size: 20px;
-            }
-
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .editions-grid {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .edition-card img {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .edition-card button {
-                width: 100%;
+            .main {
+                order: 1;
             }
         }
 
@@ -1123,23 +691,62 @@
                 margin-top: 30px;
             }
         }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .profile-card img {
+            max-width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .profile-card .name {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .profile-card button {
+            padding: 8px 14px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .profile-card button:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 
 <body>
-
-    <!-- Top Navbar -->
-
     <header class="main-header">
         <div class="header-top">
             <div class="logo-social">
-                <a href="index.html"><img src="./image/LOGO FOR Print.png" alt="Mining Discovery Logo"
-                        class="logo" /></a>
+                <a href="index.html"> <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" class="logo" />
+                </a>
             </div>
             <button class="hamburger" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </button>
-
 
             <div class="nav-links" id="navMenu">
                 <a href="about.html">About Us</a>
@@ -1195,100 +802,25 @@
             </div>
         </div>
     </header>
-
-
-
-
-    <div class="topbar">
-        <h1 onclick="toggleDropdown()" id="newsToggle">
-            Magzine
-            <i class="fas fa-chevron-down"></i>
-        </h1>
-    </div>
-
-    <!-- Dropdown Links -->
-    <div class="dropdown-links" id="dropdownMenu">
-        <a href="service.html">Investor Campaigns</a>
-        <a href="multimedia.html">Multimedia & you tube</a>
-        <a href="newsynd.html">News Syndication</a>
-        <a href="confrence.html">Conference Media Coverage</a>
-        <a href="branding.html">Digital Branding</a>
-        <a href="Global.html">Global Outreach</a>
-        <a href="media.html">Social Media Growth </a>
-        <a href="podcast.html">Podcast & Interview Features</a>
-        <a href="lett">Newsletter & Email Blasts</a>
-        <a href="paid.html">Paid Ad Campaigns</a>
-        <a href="pressoffice.html">Press Office</a>
-
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Left Sidebar Ads -->
-        <aside class="left-sidebar">
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
             <div class="section" id="bannerContainer">
                 <p>Loading banners...</p>
             </div>
-        </aside>
-<br>
-        <!-- Main Magazine Section -->
-        <main class="magazine-section">
-            <h2 class="dropdown-heading">Magzine 2025 ▼</h2>
+        </div>
 
-            <div class="magazine-grid">
-                <div class="magazine-info">
-                    <h3>Monthly Magzine July Edition 2025</h3>
-                    <p class="produced-by">Produced by Mining Discovery</p>
-                    <p class="desc">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <p>view more ▼</p>
-                    <ul class="features-list">
-                        <li>Exclusive CEO Interview: Future of Sustainable Mining...</li>
-                        <li>Exploration Hotspots in Latin America...</li>
-                        <li>Quarterly Commodity Price Forecasts...</li>
-                        <li>Top 10 Emerging Mining Startups...</li>
-                        <li>Watch Inside the July 2025 Magazine...</li>
-                        <li>Small Mining Companies Growth...</li>
-                    </ul>
-
-                    <!-- Black subscribe button stays below the magazine grid -->
-
-                    <div class="button">
-                        <button class="btn subscribe">Subscribe to Get the Access</button>
-                    </div>
-                </div>
-
-                <div class="magazine-cover">
-                    <img src="./image/WhatsApp Image 2025-08-04 at 17.09.17_43cfa992.png" alt="Magazine Cover"
-                        id="mainMagazine" />
-                    <!-- Yellow buttons placed directly under the image -->
-                    <div class="btns">
-
-                        <button class="btn">View Digital Flipbook</button>
-                        <button class="btn">View Digital PDF</button>
-                    </div>
-
-                </div>
-
-
+        <!-- Main Content -->
+        <div class="main">
+            <h2>Company Profile</h2>
+            <div class="grid" id="companyProfilesGrid">
+                <!-- Company cards will be injected here -->
             </div>
-
-
-            <!-- Editions 2025 Section -->
-            <h2 class="editions-title">Editions 2025</h2>
-
-            <div class="slider-wrapper">
-                <button class="slider-btn prev">&#10094;</button>
-                <div class="editions-slider" id="magazineContainer"></div>
-                <button class="slider-btn next">&#10095;</button>
-            </div>
-
+        </div>
     </div>
+
+
+    <!-- Footer Section -->
     <div class="footer-container">
         <div class="footers">
             <img src="image/discoverylogo.jpg" alt="Mining Discovery Logo" height="70px" />
@@ -1335,30 +867,13 @@
                     <li>LEGAL NOTICE</li>
                 </ul>
             </div>
-
-
-
-
-
         </div>
 
         <div class="footer-bottom">
             © 2025 Mining Discovery – Daily Mining Updates – Design by Mining Discovery.
         </div>
     </div>
-
-
     <script>
-        const thumbs = document.querySelectorAll('.thumb');
-        const mainMagazine = document.getElementById('mainMagazine');
-
-        thumbs.forEach(thumb => {
-            thumb.addEventListener('click', () => {
-                
-                mainMagazine.src = thumb.src;
-            });
-        });
-
         // ===== LOAD BANNERS =====
         async function loadBanners() {
             const container = document.getElementById('bannerContainer');
@@ -1367,7 +882,7 @@
             container.innerHTML = '<p>Loading banners...</p>';
 
             try {
-                const res = await fetch('/api/banners'); 
+                const res = await fetch('/api/banners'); // fetch all banners
 
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
@@ -1376,7 +891,7 @@
                 const data = await res.json();
                 console.log('Banner API response:', data);
 
-                container.innerHTML = ''; 
+                container.innerHTML = ''; // Clear previous content
 
                 if (!Array.isArray(data) || data.length === 0) {
                     container.innerHTML = '<p>No banners available.</p>';
@@ -1417,44 +932,65 @@
                 container.innerHTML = '<p>Error loading banners.</p>';
             }
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            loadBanners();
-        });
 
-        // for loading magazines
-        async function loadMagazines() {
-            const res = await fetch('/api/magazines');
-            const magazines = await res.json();
-            const container = document.getElementById('magazineContainer');
-            container.innerHTML = '';
+        // for fetching company profiles
 
-            magazines.forEach(mag => {
-                const div = document.createElement('div');
-                div.className = 'edition-card';
-                div.innerHTML = `
-        <img src="${mag.coverImage}" />
-        <p>${mag.month}</p>
-        <a href="${mag.pdf}" target="_blank"><button>View More</button></a>
-      `;
-                container.appendChild(div);
-            });
+        async function loadCompanyProfiles() {
+            try {
+                const res = await fetch('/api/company-profiles');
+                if (!res.ok) throw new Error('Failed to fetch company profiles');
+
+                const profiles = await res.json();
+                const container = document.getElementById('companyProfilesGrid');
+                container.innerHTML = ''; // clear any existing content
+
+                if (profiles.length === 0) {
+                    container.innerHTML = '<p>No company profiles found.</p>';
+                    return;
+                }
+
+                profiles.forEach(profile => {
+                    const pdfLink = profile.pdfFilePath || profile.pdfUrl || null;
+
+                    const card = document.createElement('div');
+                    card.className = 'profile-card';
+
+                    const img = document.createElement('img');
+                    img.src = profile.imageUrl;
+                    img.alt = profile.name + ' logo';
+                    card.appendChild(img);
+
+                    const name = document.createElement('div');
+                    name.className = 'name';
+                    name.textContent = profile.name;
+                    card.appendChild(name);
+
+                    const btn = document.createElement('button');
+                    btn.textContent = 'Profile';
+                    btn.disabled = !pdfLink;
+
+                    btn.onclick = () => {
+                        if (pdfLink) {
+                            window.open(pdfLink, '_blank');
+                        }
+                    };
+                    card.appendChild(btn);
+
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error(error);
+                const container = document.getElementById('companyProfilesGrid');
+                container.innerHTML = '<p>Error loading company profiles.</p>';
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadMagazines();
-
-            const slider = document.getElementById('magazineContainer');
-
-            document.querySelector('.slider-btn.next').addEventListener('click', () => {
-                const cardWidth = slider.querySelector('.edition-card')?.offsetWidth || 250;
-                slider.scrollLeft += cardWidth * 5;
-            });
-
-            document.querySelector('.slider-btn.prev').addEventListener('click', () => {
-                const cardWidth = slider.querySelector('.edition-card')?.offsetWidth || 250;
-                slider.scrollLeft -= cardWidth * 5;
-            });
+            loadBanners();
+            loadCompanyProfiles();
         });
+
+
     </script>
 </body>
 
