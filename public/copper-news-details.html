@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Copper News Details</title>
   <style>
+    /* Preloader styles */
     #preloader {
       position: fixed;
       top: 0;
@@ -12,7 +13,6 @@
       width: 100%;
       height: 100%;
       background-color: white;
-      /* or your site background */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -35,39 +35,80 @@
       }
     }
 
+    /* Body and container */
     body {
       font-family: Arial, sans-serif;
-      padding: 30px;
       background-color: #f8f9fa;
-      line-height: 1.6;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .container {
-      max-width: 900px;
-      margin: auto;
       background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      width: 100%;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      box-sizing: border-box;
+      overflow-y: auto;
+      max-height: 90vh;
     }
 
     h1 {
-      margin-bottom: 10px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 2rem;
+      color: #222;
     }
 
     .meta {
-      color: gray;
+      color: #666;
+      font-size: 0.9rem;
       margin-bottom: 20px;
+      font-style: italic;
     }
 
     img {
       max-width: 100%;
-      margin: 20px 0;
-      border-radius: 8px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: block;
     }
 
     .content {
-      margin-top: 20px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #333;
+      white-space: pre-wrap; /* preserve line breaks */
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -82,15 +123,24 @@
   </div>
 
   <script>
-    // ===== PRELOADER FUNCTIONALITY =====
     window.addEventListener('load', () => {
       const preloader = document.getElementById('preloader');
       if (preloader) {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
-        setTimeout(() => preloader.remove(), 500); // optional: remove it from DOM
+        setTimeout(() => preloader.remove(), 500);
       }
     });
+
+    function safeText(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function imageFallback(event) {
+      event.target.src = './image/pexels-urtimud-89-76108288-14263362 (1) 1.png';
+    }
 
     async function fetchCopperNewsDetails() {
       const params = new URLSearchParams(window.location.search);
@@ -103,21 +153,30 @@
       }
 
       try {
-        const res = await fetch(`/api/copper-news/${id}`);
-        const news = await res.json();
-
+        const res = await fetch('/api/tagged-posts/tag/cooper');
         if (!res.ok) {
-          container.innerHTML = `<p>Failed to load news: ${news.message}</p>`;
+          container.innerHTML = `<p>Failed to load news list. Status: ${res.status}</p>`;
           return;
         }
 
-        const date = new Date(news.createdAt).toLocaleDateString();
+        const newsList = await res.json();
+        const news = newsList.find(post => post._id === id);
+
+        if (!news) {
+          container.innerHTML = `<p>News not found.</p>`;
+          return;
+        }
+
+        const date = new Date(news.createdAt).toLocaleDateString(undefined, {
+          year: 'numeric', month: 'long', day: 'numeric'
+        });
 
         container.innerHTML = `
-          <h1>${news.title}</h1>
-          <p class="meta">By ${news.author || "Admin"} | ${date}</p>
-          <img src="${news.image}" alt="News Image" />
-          <div class="content">${news.description}</div>
+          <a href="copper-news.html" class="back-link">&larr; Back to Copper News</a>
+          <h1>${safeText(news.title)}</h1>
+          <p class="meta">By ${safeText(news.author || "Admin")} | ${date}</p>
+          <img src="${news.image || './image/pexels-urtimud-89-76108288-14263362 (1) 1.png'}" alt="News Image" onerror="imageFallback(event)" />
+          <div class="content">${news.description || '<p>No description available.</p>'}</div>
         `;
       } catch (err) {
         console.error(err);
@@ -127,7 +186,6 @@
 
     fetchCopperNewsDetails();
   </script>
-
 </body>
 
 </html>

@@ -1,73 +1,86 @@
-// ===== PRELOADER FUNCTIONALITY =====
-window.addEventListener('load', () => {
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    preloader.style.opacity = '0';
-    preloader.style.visibility = 'hidden';
-    setTimeout(() => preloader.remove(), 1000); // optional: remove it from DOM
+document.addEventListener("DOMContentLoaded", () => {
+  // ===== MOBILE MENU TOGGLE =====
+  const hamburger = document.querySelector(".hamburger");
+  const header = document.querySelector(".main-header");
+
+  if (hamburger && header) {
+    hamburger.addEventListener("click", () => {
+      header.classList.toggle("mobile-active");
+    });
   }
-});
 
-function toggleMenu() {
-  const header = document.querySelector('.main-header');
-  header.classList.toggle('mobile-active');
-}
+  // ===== DROPDOWN TOGGLE =====
+  const newsToggle = document.getElementById("newsToggle");
+  const dropdownMenu = document.getElementById("dropdownMenu");
 
-function toggleDropdown() {
-  const dropdown = document.getElementById("dropdownMenu");
-  const header = document.getElementById("newsToggle");
-  dropdown.classList.toggle("show");
-  header.classList.toggle("rotate");
-}
-const carousel = document.getElementById("carousel");
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
+  if (newsToggle && dropdownMenu) {
+    newsToggle.addEventListener("click", () => {
+      dropdownMenu.classList.toggle("show");
+      newsToggle.classList.toggle("rotate");
+    });
+  }
 
-prev.addEventListener("click", () => {
-  carousel.scrollBy({ left: -260, behavior: 'smooth' });
-});
+  // ===== PRELOADER FUNCTIONALITY =====
+  window.addEventListener("load", () => {
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+      preloader.style.opacity = "0";
+      preloader.style.visibility = "hidden";
+      setTimeout(() => preloader.remove(), 1000);
+    }
+  });
 
-next.addEventListener("click", () => {
-  carousel.scrollBy({ left: 260, behavior: 'smooth' });
-});
+  // ===== PRECIOUS METALS CAROUSEL =====
+  const carousel = document.getElementById("carousel");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
 
-const slider = document.getElementById("videoSlider");
-const leftBtn = document.querySelector(".arrow.left");
-const rightBtn = document.querySelector(".arrow.right");
+  prev?.addEventListener("click", () => {
+    carousel.scrollBy({ left: -260, behavior: "smooth" });
+  });
 
-leftBtn.addEventListener("click", () => {
-  slider.scrollBy({ left: -300, behavior: "smooth" });
-});
+  next?.addEventListener("click", () => {
+    carousel.scrollBy({ left: 260, behavior: "smooth" });
+  });
 
-rightBtn.addEventListener("click", () => {
-  slider.scrollBy({ left: 300, behavior: "smooth" });
-});
+  // ===== VIDEO SLIDER =====
+  const slider = document.getElementById("videoSlider");
+  const leftBtn = document.querySelector(".arrow.left");
+  const rightBtn = document.querySelector(".arrow.right");
 
-const messages = [
-  "Search gold prices",
-  "Search silver value",
-  "Search copper rates",
-  "Search platinum updates",
-  "Search latest news"
-];
+  leftBtn?.addEventListener("click", () => {
+    slider.scrollBy({ left: -300, behavior: "smooth" });
+  });
 
-let index = 0;
-const animatedText = document.getElementById("animatedText");
+  rightBtn?.addEventListener("click", () => {
+    slider.scrollBy({ left: 300, behavior: "smooth" });
+  });
 
-setInterval(() => {
-  index = (index + 1) % messages.length;
-  animatedText.innerText = messages[index];
-  animatedText.style.animation = "none"; // reset animation
-  void animatedText.offsetWidth;         // reflow to restart
-  animatedText.style.animation = "slideText 1s ease-in-out infinite";
-}, 5000);
+  // ===== ANIMATED SEARCH TEXT =====
+  const messages = [
+    "Search gold prices",
+    "Search silver value",
+    "Search copper rates",
+    "Search platinum updates",
+    "Search latest news"
+  ];
 
+  let index = 0;
+  const animatedText = document.getElementById("animatedText");
 
+  if (animatedText) {
+    setInterval(() => {
+      index = (index + 1) % messages.length;
+      animatedText.innerText = messages[index];
+      animatedText.style.animation = "none";
+      void animatedText.offsetWidth;
+      animatedText.style.animation = "slideText 1s ease-in-out infinite";
+    }, 5000);
+  }
 
-
-
-function loadIframe(el) {
-  el.outerHTML = `
+  // ===== YOUTUBE EMBED LOADERS =====
+  window.loadIframe = (el) => {
+    el.outerHTML = `
       <iframe width="560" height="315"
         src="https://www.youtube.com/embed/pzxdSK6t2Eo?autoplay=1"
         title="YouTube video player"
@@ -75,79 +88,76 @@ function loadIframe(el) {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen>
       </iframe>`;
-}
-function loadIframe2(el) {
-  el.outerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/D2S9tbVMDRQ?si=oYaYU3_svLfnWTij" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-}
+  };
 
-// youtube-popup
-window.addEventListener("load", () => {
+  window.loadIframe2 = (el) => {
+    el.outerHTML = `
+      <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/D2S9tbVMDRQ?si=oYaYU3_svLfnWTij"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>`;
+  };
+
+  // ===== YOUTUBE POPUP =====
   const popup = document.getElementById("popup");
   const closeBtn = document.getElementById("closeBtn");
   const youtubeIframe = document.getElementById("youtube-video");
-
   const youtubeLink = "https://www.youtube.com/embed/pzxdSK6t2Eo?autoplay=1";
 
-  // Show popup after 4 seconds
-  setTimeout(() => {
-    youtubeIframe.src = youtubeLink;
-    popup.style.display = "block";
-  }, 4000);
+  if (popup && youtubeIframe) {
+    setTimeout(() => {
+      youtubeIframe.src = youtubeLink;
+      popup.style.display = "block";
+    }, 4000);
 
-  // Close popup
-  closeBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-    youtubeIframe.src = ""; // Stop video
-  });
-});
-
-
-const moreCards = [
-  {
-    image: "./image/pexels-castorlystock-5139206 1.png",
-    title: "New Goldmine Discovery in Australia",
-    description: "Exploration companies have uncovered new gold veins in the Kalgoorlie region, expected to boost local economies.",
-    date: "July 25, 2025",
-    author: "AURA MINES"
-  },
-  {
-    image: "./image/pexels-castorlystock-5139206 1.png",
-    title: "Silver Demand Soars",
-    description: "Investors rush toward silver as green energy demand spikes globally. Analysts predict a 10% increase in demand.",
-    date: "July 26, 2025",
-    author: "SILVERSTREAM INC"
+    closeBtn?.addEventListener("click", () => {
+      popup.style.display = "none";
+      youtubeIframe.src = "";
+    });
   }
-];
 
-const showMoreBtn = document.querySelector(".btn-more");
-const container = document.getElementById("news-container");
+  // ===== LOAD MORE NEWS =====
+  const moreCards = [
+    {
+      image: "./image/pexels-castorlystock-5139206 1.png",
+      title: "New Goldmine Discovery in Australia",
+      description: "Exploration companies have uncovered new gold veins in the Kalgoorlie region, expected to boost local economies.",
+      date: "July 25, 2025",
+      author: "AURA MINES"
+    },
+    {
+      image: "./image/pexels-castorlystock-5139206 1.png",
+      title: "Silver Demand Soars",
+      description: "Investors rush toward silver as green energy demand spikes globally. Analysts predict a 10% increase in demand.",
+      date: "July 26, 2025",
+      author: "SILVERSTREAM INC"
+    }
+  ];
 
-showMoreBtn.addEventListener("click", function () {
-  moreCards.forEach(card => {
-    const cardDiv = document.createElement("div");
-    cardDiv.classList.add("news-card");
-    cardDiv.innerHTML = `
+  const showMoreBtn = document.querySelector(".btn-more");
+  const container = document.getElementById("news-container");
+
+  showMoreBtn?.addEventListener("click", () => {
+    moreCards.forEach(card => {
+      const cardDiv = document.createElement("div");
+      cardDiv.classList.add("news-card");
+      cardDiv.innerHTML = `
         <img src="${card.image}" alt="">
         <div class="text-content">
           <h3>${card.title}</h3>
           <p>${card.description} <span>read more.....</span></p>
           <span>${card.date}</span>
           <p>By: ${card.author}</p>
-        </div>
-      `;
-    container.appendChild(cardDiv);
+        </div>`;
+      container.appendChild(cardDiv);
+    });
+    showMoreBtn.style.display = "none";
   });
-
-  showMoreBtn.style.display = "none"; // hide button after showing
 });
-
-// ===== DROPDOWN TOGGLE =====
-function toggleDropdown() {
-  const dropdown = document.getElementById("dropdownMenu");
-  const header = document.getElementById("newsToggle");
-  dropdown?.classList.toggle("show");
-  header?.classList.toggle("rotate");
-}
 
 // ===== LOAD BANNERS =====
 async function loadBanners() {
@@ -404,6 +414,60 @@ async function fetchSponsoredPostsForIndex() {
   }
 }
 
+
+function stripHTML(html) {
+  if (!html) return '';
+  return html.replace(/<\/?[^>]+(>|$)/g, "");
+}
+
+async function fetchCooperNews() {
+  const container = document.getElementById('copperNewsContainer');
+
+  if (!container) {
+    console.error('Copper news container not found');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/tagged-posts/tag/cooper');
+    if (!res.ok) {
+      throw new Error(`Failed to fetch: ${res.status}`);
+    }
+
+    const news = await res.json();
+
+    container.innerHTML = '';
+
+    if (!Array.isArray(news) || news.length === 0) {
+      container.innerHTML = `<p>No Copper News available right now.</p>`;
+      return;
+    }
+
+    news.forEach(post => {
+      const card = document.createElement('div');
+      card.classList.add('right-box');  // <-- Use your existing CSS class
+
+      card.innerHTML = `
+        <div class="text-content">
+          <h3>
+            <a href="copper-news-details.html?id=${post._id}" class="copper-news-link">${post.title}</a>
+          </h3>
+          <hr class="custom-line" />
+          <p>
+            ${stripHTML(post.description || '').slice(0, 250)}
+            <span>read more...</span>
+          </p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error('Error loading copper news:', err);
+    container.innerHTML = `<p style="color:red;">Error loading Copper News.</p>`;
+  }
+}
+
 // Generic Tagged News Fetcher (for precious metals news) - SHOW ONLY 1
 async function fetchTaggedNews(tagName, containerId, detailPage) {
   try {
@@ -610,6 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAdvertisements('advertisementSection');   // First instance
   loadAdvertisements('advertisementSection2');  // Second instance
   fetchSponsoredPostsForIndex();
+  fetchCooperNews();
   fetchTaggedNews('precious metal', 'precious-metals-container', 'precious-metal-detail.html');
   loadWorldNewsIndex();
   loadCorporateNewsIndex();
